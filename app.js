@@ -1,27 +1,14 @@
-const { Sequelize } = require('sequelize');
-const config = require('./config/config.json');
+const mongoose = require('mongoose');
+const { connect } = require('./config/database');
 const User = require('./models/user');
 
-const sequelize = new Sequelize(
-  config.development.database,
-  config.development.username,
-  config.development.password,
-  {
-    host: config.development.host,
-    dialect: config.development.dialect
-  }
-);
+async function start() {
+    try {
+        await connect();
+        console.log('✅ Kết nối MongoDB thành công');
+    } catch (err) {
+        console.error('❌ Kết nối MongoDB thất bại:', err);
+    }
+}
 
-sequelize.authenticate()
-  .then(() => {
-    console.log('✅ Kết nối MySQL thành công');
-  })
-  .catch(err => {
-    console.error('❌ Kết nối MySQL thất bại:', err);
-  });
-
-sequelize.sync({ force: false }).then(() => {
-    console.log("✅ Database và các model đã được đồng bộ hóa!");
-}).catch((error) => {
-    console.error("❌ Lỗi đồng bộ hóa Database:", error);
-});
+start();

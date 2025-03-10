@@ -1,14 +1,16 @@
-// config/database.js
-const { Sequelize } = require('sequelize');
+const { MongoClient } = require('mongodb');
 
-const sequelize = new Sequelize('ten_database', 'ten_user', 'mat_khau', {
-    host: 'localhost',
-    dialect: 'mysql',
-    logging: false,
-});
+const uri = "mongodb://localhost:27017";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-sequelize.authenticate()
-    .then(() => console.log('✅ Kết nối MySQL thành công!'))
-    .catch((error) => console.error('❌ Kết nối MySQL thất bại:', error));
+async function connect() {
+    try {
+        await client.connect();
+        console.log("Connected to MongoDB");
+        return client.db('your_database_name');
+    } catch (err) {
+        console.error(err);
+    }
+}
 
-module.exports = sequelize;
+module.exports = { connect };
