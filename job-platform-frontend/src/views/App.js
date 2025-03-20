@@ -1,5 +1,14 @@
-import React from "react";
-import '../styles/global.css';
+import React, { useState } from "react";
+import "../styles/global.css";
+
+const jobCategoriesData = [
+  { name: "Kinh doanh/Bán hàng", jobs: ["Sales Executive", "Account Manager", "Sales Assistant", "Business Development", "Retail Manager", "Marketing Sales"] },
+  { name: "Marketing/PR/Quảng cáo", jobs: ["Digital Marketing", "PR Executive", "Brand Manager", "SEO Specialist", "Content Creator", "Social Media Manager"] },
+  { name: "Chăm sóc khách hàng", jobs: ["Customer Support", "Call Center Agent", "Help Desk", "Technical Support", "Client Service Manager", "Customer Relations"] },
+  { name: "Nhân sự/Hành chính/Pháp chế", jobs: ["HR Manager", "Recruitment Specialist", "Payroll Officer", "Legal Advisor", "Office Admin", "Corporate Lawyer"] },
+  { name: "Tài chính/Ngân hàng/Bảo hiểm", jobs: ["Bank Teller", "Financial Analyst", "Investment Advisor", "Loan Officer", "Insurance Agent", "Accountant"] },
+  { name: "Công nghệ Thông tin", jobs: ["Software Developer", "Data Analyst", "Cyber Security", "Cloud Engineer", "IT Support", "AI Engineer"] },
+];
 
 const Navbar = () => (
   <div className="navbar">
@@ -20,23 +29,55 @@ const SearchBar = () => (
   </div>
 );
 
-const JobCategories = () => (
-  <div className="job-categories">
-    <h2>Danh mục công việc</h2>
-    <ul>
-      {[
-        "Kinh doanh/Bán hàng",
-        "Marketing/PR/Quảng cáo",
-        "Chăm sóc khách hàng",
-        "Nhân sự/Hành chính/Pháp chế",
-        "Tài chính/Ngân hàng/Bảo hiểm",
-        "Công nghệ Thông tin",
-      ].map((item) => (
-        <li key={item}>{item}</li>
-      ))}
-    </ul>
-  </div>
-);
+const JobCategories = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredCategories = jobCategoriesData.filter((category) =>
+    category.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % filteredCategories.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + filteredCategories.length) % filteredCategories.length);
+  };
+
+  return (
+    <div className="job-categories">
+      <h2>Danh mục công việc</h2>
+      <input
+        type="text"
+        placeholder="Tìm danh mục công việc..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="category-search"
+      />
+      {filteredCategories.length > 0 ? (
+        <div className="category-container">
+          <button className="arrow-button left" onClick={handlePrev}>
+            &#9665;
+          </button>
+          <div className="category-content">
+            <h3>{filteredCategories[currentIndex].name}</h3>
+            <ul>
+              {filteredCategories[currentIndex].jobs.map((job, index) => (
+                <li key={index}>{job}</li>
+              ))}
+            </ul>
+          </div>
+          <button className="arrow-button right" onClick={handleNext}>
+            &#9655;
+          </button>
+        </div>
+      ) : (
+        <p>Không tìm thấy danh mục phù hợp.</p>
+      )}
+    </div>
+  );
+};
 
 const JobList = () => (
   <div className="job-list">

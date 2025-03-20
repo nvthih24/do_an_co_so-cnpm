@@ -105,6 +105,33 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+.category-search {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.category-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-button {
+  background: none;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  padding: 5px 15px;
+}
+
+.arrow-button:hover {
+  color: #007bff;
+}
+
 .job-categories h2 {
   font-size: 18px;
   font-weight: bold;
