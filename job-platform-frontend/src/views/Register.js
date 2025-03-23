@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";  // 👈 Import useNavigate
 
 const Register = () => {
+    const navigate = useNavigate();  // 👈 Hook để điều hướng
+
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -15,9 +18,9 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5000/api/auth/register", formData);
+            await axios.post("http://localhost:5000/api/auth/register", formData);
             alert("Đăng ký thành công!");
-            window.location.href = "/"; // Điều hướng về trang chủ
+            navigate("/");  // 👈 Điều hướng đúng cách trong React Router
         } catch (error) {
             console.error(error.response?.data?.message || "Lỗi đăng ký!");
             alert("Đăng ký thất bại!");

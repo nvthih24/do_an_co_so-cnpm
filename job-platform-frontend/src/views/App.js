@@ -16,8 +16,10 @@ const Navbar = () => (
     <h1>3TML</h1>
     <div className="nav-buttons">
       <button className="button outline">Đăng nhập</button>
-      <button className="button primary">
-    <Link to="/register" style={{ textDecoration: "none" }}>Đăng ký</Link></button>
+      <Link to="/Register" className="button primary" style={{ textDecoration: "none", color: "" }}>
+  Đăng ký
+</Link>
+
       <button className="button secondary">Đăng tuyển & tìm hồ sơ</button>
     </div>
   </div>
