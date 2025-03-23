@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/global.css";
+import { Link } from "react-router-dom";
 
 const jobCategoriesData = [
   { name: "Kinh doanh/Bán hàng", jobs: ["Sales Executive", "Account Manager", "Sales Assistant", "Business Development", "Retail Manager", "Marketing Sales"] },
@@ -15,7 +16,8 @@ const Navbar = () => (
     <h1>3TML</h1>
     <div className="nav-buttons">
       <button className="button outline">Đăng nhập</button>
-      <button className="button primary">Đăng ký</button>
+      <button className="button primary">
+    <Link to="/register" style={{ textDecoration: "none" }}>Đăng ký</Link></button>
       <button className="button secondary">Đăng tuyển & tìm hồ sơ</button>
     </div>
   </div>

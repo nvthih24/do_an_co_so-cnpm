@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"; // Sử dụng react-dom/client cho Rea
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./store/reducers/rootReducer";
-import App from "./views/App";
+import App from "./views/Homepage";
 
 const store = configureStore({
   reducer: rootReducer,
