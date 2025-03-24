@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/global.css";
-import { Link } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 
 const jobCategoriesData = [
   { name: "Kinh doanh/Bán hàng", jobs: ["Sales Executive", "Account Manager", "Sales Assistant", "Business Development", "Retail Manager", "Marketing Sales"] },
@@ -11,19 +12,22 @@ const jobCategoriesData = [
   { name: "Công nghệ Thông tin", jobs: ["Software Developer", "Data Analyst", "Cyber Security", "Cloud Engineer", "IT Support", "AI Engineer"] },
 ];
 
-const Navbar = () => (
-  <div className="navbar">
-    <h1>3TML</h1>
-    <div className="nav-buttons">
-      <button className="button outline">Đăng nhập</button>
-      <Link to="/Register" className="button primary" style={{ textDecoration: "none", color: "" }}>
-  Đăng ký
-</Link>
+const Navbar = () => {
+  const navigate = useNavigate(); // ✅ Thêm dòng này
 
-      <button className="button secondary">Đăng tuyển & tìm hồ sơ</button>
+  return (
+    <div className="navbar">
+      <h1>3TML</h1>
+      <div className="nav-buttons">
+        <button className="button outline">Đăng nhập</button>
+        <button className="button primary" onClick={() => navigate("/register")}>
+          Đăng ký
+        </button>
+        <button className="button secondary">Đăng tuyển & tìm hồ sơ</button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const SearchBar = () => (
   <div className="search-bar">
@@ -101,7 +105,9 @@ const JobList = () => (
   </div>
 );
 
-const HomePage = () => (
+const HomePage = () => {
+  console.log("HomePage Rendered");
+  return(
   <div className="container">
     <Navbar />
     <SearchBar />
@@ -110,6 +116,7 @@ const HomePage = () => (
       <JobList />
     </div>
   </div>
-);
+  );
+};
 
 export default HomePage;
