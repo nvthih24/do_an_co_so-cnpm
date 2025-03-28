@@ -1,32 +1,45 @@
 require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
-const connectDB = require("./config/db");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const User = require("./models/User");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
-// Kết nối MongoDB (chỉ gọi 1 lần)
-connectDB();
-
-// Middleware (CẦN ĐƯỢC KHAI BÁO TRƯỚC ROUTES)
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
-// Import routes
-const jobRoutes = require("./routes/jobRoutes");
-const authRoutes = require("./routes/authRoutes");
+// Kết nối MongoDB Atlas
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("✅ MongoDB Atlas connected"))
+.catch(err => console.log("❌ MongoDB Connection Error:", err));
 
-// Sử dụng routes
-app.use("/api/jobs", jobRoutes);
-app.use("/api/auth", authRoutes);
+// Đăng ký người dùng
+app.post("/register", async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    
+    // Kiểm tra xem email đã tồn tại chưa
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ message: "Email đã được sử dụng!" });
 
-// Route test
-app.get("/", (req, res) => {
-    res.send("API is running...");
+    // Hash mật khẩu trước khi lưu
+    const hashedPassword = await bcrypt.hash(password, 10);
+    
+    // Tạo user mới
+    const newUser = new User({ name, email, password: hashedPassword });
+    await newUser.save();
+    
+    res.status(201).json({ message: "Đăng ký thành công!" });
+  } catch (err) {
+    res.status(500).json({ message: "Lỗi server!" });
+  }
 });
 
-// Khởi động server
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-});
+// Chạy server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));

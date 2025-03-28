@@ -1,0 +1,88 @@
+/* Căn giữa form đăng ký */
+.register-page .register-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Tiêu đề */
+.register-page .register-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Ô nhập liệu */
+.register-page .register-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Hiệu ứng focus khi nhập */
+.register-page .register-container input:focus {
+    border-color: #4facfe;
+    box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+    outline: none;
+}
+
+/* Nút đăng ký */
+.register-page .button.primary {
+    width: 100%;
+    padding: 12px;
+    background: #4facfe;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.register-page .button.primary:hover {
+    background: #3a9cfb;
+}
+
+/* Nút đăng ký với Google */
+.register-page .button.google-btn {
+    width: 100%;
+    padding: 12px;
+    background: #db4437;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.register-page .button.google-btn:hover {
+    background: #c1351d;
+}
+
+/* Link chuyển đến trang đăng nhập */
+.register-page .register-container p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.register-page .link {
+    color: #4facfe;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.register-page .link:hover {
+    text-decoration: underline;
+}
