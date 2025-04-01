@@ -3,27 +3,113 @@ import "../styles/global.css";
 import { useNavigate } from "react-router-dom";
 
 const jobCategoriesData = [
-  { name: "Kinh doanh/Bán hàng", jobs: ["Sales Executive", "Account Manager", "Sales Assistant", "Business Development", "Retail Manager", "Marketing Sales"] },
-  { name: "Marketing/PR/Quảng cáo", jobs: ["Digital Marketing", "PR Executive", "Brand Manager", "SEO Specialist", "Content Creator", "Social Media Manager"] },
-  { name: "Chăm sóc khách hàng", jobs: ["Customer Support", "Call Center Agent", "Help Desk", "Technical Support", "Client Service Manager", "Customer Relations"] },
-  { name: "Nhân sự/Hành chính/Pháp chế", jobs: ["HR Manager", "Recruitment Specialist", "Payroll Officer", "Legal Advisor", "Office Admin", "Corporate Lawyer"] },
-  { name: "Tài chính/Ngân hàng/Bảo hiểm", jobs: ["Bank Teller", "Financial Analyst", "Investment Advisor", "Loan Officer", "Insurance Agent", "Accountant"] },
-  { name: "Công nghệ Thông tin", jobs: ["Software Developer", "Data Analyst", "Cyber Security", "Cloud Engineer", "IT Support", "AI Engineer"] },
+  {
+    name: "Kinh doanh/Bán hàng",
+    jobs: [
+      "Sales Executive",
+      "Account Manager",
+      "Sales Assistant",
+      "Business Development",
+      "Retail Manager",
+      "Marketing Sales",
+    ],
+  },
+  {
+    name: "Marketing/PR/Quảng cáo",
+    jobs: [
+      "Digital Marketing",
+      "PR Executive",
+      "Brand Manager",
+      "SEO Specialist",
+      "Content Creator",
+      "Social Media Manager",
+    ],
+  },
+  {
+    name: "Chăm sóc khách hàng",
+    jobs: [
+      "Customer Support",
+      "Call Center Agent",
+      "Help Desk",
+      "Technical Support",
+      "Client Service Manager",
+      "Customer Relations",
+    ],
+  },
+  {
+    name: "Nhân sự/Hành chính/Pháp chế",
+    jobs: [
+      "HR Manager",
+      "Recruitment Specialist",
+      "Payroll Officer",
+      "Legal Advisor",
+      "Office Admin",
+      "Corporate Lawyer",
+    ],
+  },
+  {
+    name: "Tài chính/Ngân hàng/Bảo hiểm",
+    jobs: [
+      "Bank Teller",
+      "Financial Analyst",
+      "Investment Advisor",
+      "Loan Officer",
+      "Insurance Agent",
+      "Accountant",
+    ],
+  },
+  {
+    name: "Công nghệ Thông tin",
+    jobs: [
+      "Software Developer",
+      "Data Analyst",
+      "Cyber Security",
+      "Cloud Engineer",
+      "IT Support",
+      "AI Engineer",
+    ],
+  },
 ];
 
 const Navbar = () => {
-  const navigate = useNavigate(); // ✅ Thêm dòng này
+  const navigate = useNavigate(); // Thêm dòng này
 
   return (
     <div className="navbar">
-      <h1>3TML</h1>
-      <div className="nav-buttons">
-        <button className="button outline">Đăng nhập</button>
-        <button className="button primary" onClick={() => navigate("/register")}>
-          Đăng ký
-        </button>
-        <button className="button secondary">Đăng tuyển & tìm hồ sơ</button>
+      <div className="logo" onClick={() => navigate("/")}>
+        <img src="/Job247.jpg" alt="Logo" />
       </div>
+      <ul className="nav navbar-nav navbar-left">
+        <li className="navbar-left__item group">
+          <a href="#">Việc làm</a>
+          <div className="navbar__item__dropdown-menu">
+            <ul className="navbar-menu">
+              <li className="navbar-menu__item tag-border">
+                <a href="#" className="text-sm">
+                  <i className="icon fa-regular fa-magnifying-glass"></i> Tìm
+                  việc làm
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <ul className="nav navbar-nav navbar-right">
+        <li className="nav-buttons">
+          <button className="button outline">Đăng nhập</button>
+        </li>
+        <li className="nav-buttons">
+          <button
+            className="button primary"
+            onClick={() => navigate("/register")}
+          >
+            Đăng ký
+          </button>
+        </li>
+        <li className="nav-buttons">
+          <button className="button secondary">Đăng tuyển & tìm hồ sơ</button>
+        </li>
+      </ul>
     </div>
   );
 };
@@ -49,7 +135,10 @@ const JobCategories = () => {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + filteredCategories.length) % filteredCategories.length);
+    setCurrentIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + filteredCategories.length) % filteredCategories.length
+    );
   };
 
   return (
@@ -106,15 +195,15 @@ const JobList = () => (
 
 const HomePage = () => {
   console.log("HomePage Rendered");
-  return(
-  <div className="container">
-    <Navbar />
-    <SearchBar />
-    <div className="content">
-      <JobCategories />
-      <JobList />
+  return (
+    <div className="container">
+      <Navbar />
+      <SearchBar />
+      <div className="content">
+        <JobCategories />
+        <JobList />
+      </div>
     </div>
-  </div>
   );
 };
 

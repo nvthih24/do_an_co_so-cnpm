@@ -28,10 +28,107 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
+  .logo {
+    display: flex;
+    align-items: center;
+    /* Canh giữa logo */
+  }
+
+  .logo img {
+    width: 50px;
+    /* Kích thước logo */
+    height: auto;
+    cursor: pointer;
+    /* Để con trỏ chuột khi di chuyển qua logo */
+  }
+
   .navbar h1 {
     font-size: 24px;
     font-weight: bold;
     color: var(--primary-color);
+  }
+
+  .navbar-left__item {
+    position: relative; /* Để dropdown menu được hiển thị đúng vị trí */
+    cursor: pointer;
+  }
+
+  .navbar-left__item a {
+    text-decoration: none;
+    color: var(--primary-color); /* Màu chữ cho mục Việc làm */
+    font-size: 16px; /* Cỡ chữ lớn hơn */
+    font-weight: bold;
+    padding: 10px 15px;
+    display: inline-block; /* Đảm bảo viền bao quanh mục Việc làm */
+    transition: all 0.3s ease;
+  }
+
+  .navbar-left__item a:hover {
+    background-color: var(--primary-color);
+    color: white; /* Đổi màu chữ khi hover */
+    border-radius: 5px; /* Bo góc khi hover */
+  }
+  
+  .navbar-left__item:hover .navbar__item__dropdown-menu {
+    display: block; /* Hiển thị menu khi hover vào item */
+  }
+  
+  .navbar__item__dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px 20px;
+    border-radius: 8px;
+    width: 200px;
+    transition: 0.3s ease;
+  }
+  
+  .navbar-left__item:hover .navbar__item__dropdown-menu {
+    opacity: 1;
+    visibility: visible; /* Hiển thị khi hover */
+  }
+
+  .navbar-menu {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .navbar-menu__item {
+    padding: 10px 0;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+    font-weight: normal;
+    transition: 0.3s;
+  }
+  
+  .navbar-menu__item:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+
+  .navbar-menu__item a {
+    text-decoration: none;
+    color: inherit; /* Dùng màu chữ mặc định */
+  }
+
+  .navbar-menu__item i {
+    margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+  }
+
+  .navbar-right {
+    display: flex;
+    gap: 10px;
+    /* Khoảng cách giữa các nút */
+  }
+
+  .navbar-nav {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
   }
 
   .nav-buttons {
@@ -213,4 +310,13 @@
   .content {
     display: flex;
     gap: 20px;
+  }
+
+  /* Responsive Layout */
+  @media screen and (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      /* Khi màn hình nhỏ, xếp theo chiều dọc */
+      align-items: flex-start;
+    }
   }

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";  // ❌ Không import BrowserRouter
+import { Routes, Route } from "react-router-dom"; // ❌ Không import BrowserRouter
 import HomePage from "./views/HomePage";
 import RegisterPage from "./views/RegisterPage";
 
