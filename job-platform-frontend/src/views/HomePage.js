@@ -122,7 +122,7 @@ const SearchBar = () => (
   </div>
 );
 
-const JobCategories = () => {
+const JobCategories = () => { 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
