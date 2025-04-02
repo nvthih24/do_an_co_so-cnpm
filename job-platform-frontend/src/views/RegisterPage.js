@@ -20,7 +20,7 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/register",
+        "http://localhost:5000/api/auth/register",
         formData
       );
       alert(response.data.message);
