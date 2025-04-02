@@ -72,28 +72,58 @@ const jobCategoriesData = [
 ];
 
 const Navbar = () => {
-  const navigate = useNavigate(); // Thêm dòng này
+  const navigate = useNavigate();
 
   return (
     <div className="navbar">
       <div className="logo" onClick={() => navigate("/")}>
         <img src="/Job247.jpg" alt="Logo" />
       </div>
+
       <ul className="nav navbar-nav navbar-left">
         <li className="navbar-left__item group">
           <a href="#">Việc làm</a>
           <div className="navbar__item__dropdown-menu">
+            {/* Tách "Tìm việc làm" ra thành một mục riêng */}
+            <div className="dropdown-section">
+              <a href="#" className="dropdown-item">
+                <i className="icon fa-regular fa-magnifying-glass"></i> Tìm việc
+                làm
+              </a>
+            </div>
+
+            {/* Các mục còn lại */}
             <ul className="navbar-menu">
-              <li className="navbar-menu__item tag-border">
+              <li className="navbar-menu__item">
                 <a href="#" className="text-sm">
-                  <i className="icon fa-regular fa-magnifying-glass"></i> Tìm
-                  việc làm
+                  Việc làm phù hợp
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Việc làm IT
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Việc làm Senior
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Danh sách công ty
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Top công ty
                 </a>
               </li>
             </ul>
           </div>
         </li>
       </ul>
+
       <ul className="nav navbar-nav navbar-right">
         <li className="nav-buttons">
           <button className="button outline">Đăng nhập</button>
