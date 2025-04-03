@@ -43,6 +43,24 @@ app.post("/register", async (req, res) => {
   }
 });
 
+app.post("/api/auth/google", async (req, res) => {
+  try {
+    const { name, email, googleId } = req.body;
+
+    // Kiểm tra user đã tồn tại chưa
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = new User({ name, email, googleId });
+      await user.save();
+    }
+
+    res.status(200).json({ message: "Đăng ký với Google thành công!" });
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi server!" });
+  }
+});
+
 // Chạy server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));

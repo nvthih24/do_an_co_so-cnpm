@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { auth, googleProvider, signInWithPopup } from "../firebaseConfig";
 import "../styles/RegisterPage.css";
 
 const RegisterPage = () => {
@@ -29,6 +30,27 @@ const RegisterPage = () => {
       setError(error.response?.data?.message || "Lỗi đăng ký!");
     }
   };
+
+   // Xử lý đăng ký với Google
+   const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      // Gửi thông tin user lên Backend để lưu vào MongoDB
+      await axios.post("http://localhost:5000/api/auth/google", {
+        name: user.displayName,
+        email: user.email,
+        googleId: user.uid,
+      });
+
+      alert("Đăng ký thành công!");
+      navigate("/"); // Chuyển hướng về trang chủ
+    } catch (error) {
+      setError("Lỗi đăng ký với Google!");
+    }
+  };
+
 
   return (
     <div className="register-page">
@@ -64,7 +86,9 @@ const RegisterPage = () => {
             Đăng ký
           </button>
         </form>
-        <button className="button google-btn">Đăng ký với Google</button>
+        <button className="button google-btn" onClick={handleGoogleSignIn}>
+          Đăng ký với Google
+        </button>
         <p>
           Đã có tài khoản?{" "}
           <span onClick={() => navigate("/login")} className="link">
