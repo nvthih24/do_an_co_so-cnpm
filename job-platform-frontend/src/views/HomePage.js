@@ -181,7 +181,9 @@ const Navbar = () => {
 
       <ul className="nav navbar-nav navbar-right">
         <li className="nav-buttons">
-          <button className="button outline">Đăng nhập</button>
+          <button className="button outline"
+          onClick={() => navigate("/login")}
+          >Đăng nhập</button>
         </li>
         <li className="nav-buttons">
           <button
