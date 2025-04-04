@@ -62,7 +62,7 @@
     /* Màu chữ cho mục Việc làm */
     font-size: 14px;
     /* Cỡ chữ lớn hơn */
-    font-weight: 600;
+    font-weight: bold;
     line-height: 20px;
     padding: 10px 15px;
     display: inline-block;
@@ -144,6 +144,13 @@
     display: flex;
     gap: 10px;
     /* Khoảng cách giữa các nút */
+  }
+
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Khoảng cách giữa logo và các mục khác */
   }
 
   .navbar-nav {
@@ -241,11 +248,13 @@
 
   /* 📌 Job Categories */
   .job-categories {
-    width: 25%;
+    width: 30%;
+    text-align: auto;
     background-color: white;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
   }
 
   .category-search {

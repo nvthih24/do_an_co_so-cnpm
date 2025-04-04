@@ -84,16 +84,12 @@ const Navbar = () => {
         <li className="navbar-left__item group">
           <a href="#">Việc làm</a>
           <div className="navbar__item__dropdown-menu">
-            {/* Tách "Tìm việc làm" ra thành một mục riêng */}
-            <div className="dropdown-section">
-              <a href="#" className="dropdown-item">
-                <i className="icon fa-regular fa-magnifying-glass"></i> Tìm việc
-                làm
-              </a>
-            </div>
-
-            {/* Các mục còn lại */}
             <ul className="navbar-menu">
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Tìm việc làm
+                </a>
+              </li>
               <li className="navbar-menu__item">
                 <a href="#" className="text-sm">
                   Việc làm phù hợp
@@ -121,6 +117,65 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
+        </li>
+        <li className="navbar-left__item group">
+          <a href="#">Hồ sơ & CV</a>
+          <div className="navbar__item__dropdown-menu">
+            <ul className="navbar-menu">
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Tạo CV
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Dịch vụ tư vấn CV
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Hồ sơ của tôi
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li className="navbar-left__item group">
+          <a href="#">Công cụ</a>
+            <div className="navbar__item__dropdown-menu">
+              <ul className="navbar-menu">
+                <li className="navbar-menu__item">
+                  <a href="#" className="text-sm">
+                    TopCV Skills
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a href="#" className="text-sm">
+                    Tính thuế TNCN
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a href="#" className="text-sm">
+                    Tính bảo hiểm
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a href="#" className="text-sm">
+                    Tính lương
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a href="#" className="text-sm">
+                    Tính lãi suất kép
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a href="#" className="text-sm">
+                    Lập kế hoạch tiết kiệm
+                  </a>
+                </li>
+              </ul>
+            </div>
         </li>
       </ul>
 
@@ -152,7 +207,7 @@ const SearchBar = () => (
   </div>
 );
 
-const JobCategories = () => { 
+const JobCategories = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
