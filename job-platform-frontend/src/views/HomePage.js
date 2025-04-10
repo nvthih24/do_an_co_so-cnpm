@@ -142,48 +142,85 @@ const Navbar = () => {
         </li>
         <li className="navbar-left__item group">
           <a href="#">Công cụ</a>
-            <div className="navbar__item__dropdown-menu">
-              <ul className="navbar-menu">
-                <li className="navbar-menu__item">
-                  <a href="#" className="text-sm">
-                    TopCV Skills
-                  </a>
-                </li>
-                <li className="navbar-menu__item">
-                  <a href="#" className="text-sm">
-                    Tính thuế TNCN
-                  </a>
-                </li>
-                <li className="navbar-menu__item">
-                  <a href="#" className="text-sm">
-                    Tính bảo hiểm
-                  </a>
-                </li>
-                <li className="navbar-menu__item">
-                  <a href="#" className="text-sm">
-                    Tính lương
-                  </a>
-                </li>
-                <li className="navbar-menu__item">
-                  <a href="#" className="text-sm">
-                    Tính lãi suất kép
-                  </a>
-                </li>
-                <li className="navbar-menu__item">
-                  <a href="#" className="text-sm">
-                    Lập kế hoạch tiết kiệm
-                  </a>
-                </li>
-              </ul>
-            </div>
+          <div className="navbar__item__dropdown-menu">
+            <ul className="navbar-menu">
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  TopCV Skills
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Tính thuế TNCN
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Tính bảo hiểm
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Tính lương
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Tính lãi suất kép
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Lập kế hoạch tiết kiệm
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li className="navbar-left__item group">
+          <a href="#">Cẩm nang nghề nghiệp</a>
+          <div className="navbar__item__dropdown-menu">
+            <ul className="navbar-menu">
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Tư vấn nghề nghiệp
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Thị trường và xu hướng ngành nghề
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Chế độ lương thưởng
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Bí quyết tìm việc
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Kiến thức chuyên ngành
+                </a>
+              </li>
+              <li className="navbar-menu__item">
+                <a href="#" className="text-sm">
+                  Hành trang nghề nghiệp
+                </a>
+              </li>
+            </ul>
+          </div>
         </li>
       </ul>
 
       <ul className="nav navbar-nav navbar-right">
         <li className="nav-buttons">
-          <button className="button outline"
-          onClick={() => navigate("/login")}
-          >Đăng nhập</button>
+          <button className="button outline" onClick={() => navigate("/login")}>
+            Đăng nhập
+          </button>
         </li>
         <li className="nav-buttons">
           <button
@@ -218,45 +255,48 @@ const JobCategories = () => {
   );
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % filteredCategories.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % jobCategoriesData.length);
   };
 
   const handlePrev = () => {
     setCurrentIndex(
       (prevIndex) =>
-        (prevIndex - 1 + filteredCategories.length) % filteredCategories.length
+        (prevIndex - 1 + jobCategoriesData.length) % jobCategoriesData.length
     );
   };
 
+  const totalPages = filteredCategories.length; // Tổng số trang
+
   return (
     <div className="job-categories">
-      <h2>Danh mục công việc</h2>
-      <input
-        type="text"
-        placeholder="Tìm danh mục công việc..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="category-search"
-      />
-      {filteredCategories.length > 0 ? (
+      {jobCategoriesData.length > 0 && (
         <div className="category-container">
-          <button className="arrow-button left" onClick={handlePrev}>
-            &#9665;
-          </button>
           <div className="category-content">
-            <h3>{filteredCategories[currentIndex].name}</h3>
+            <h3>{jobCategoriesData[currentIndex].name}</h3>
             <ul>
-              {filteredCategories[currentIndex].jobs.map((job, index) => (
+              {jobCategoriesData[currentIndex].jobs.map((job, index) => (
                 <li key={index}>{job}</li>
               ))}
             </ul>
           </div>
-          <button className="arrow-button right" onClick={handleNext}>
-            &#9655;
-          </button>
+
+          {/* Phần chứa số trang */}
+          <div className="category-page-number">
+            <span className="page-number">
+              {currentIndex + 1} / {totalPages} {/* Hiển thị số trang */}
+            </span>
+          </div>
+
+          {/* Phần chứa các nút mũi tên */}
+          <div className="category-buttons">
+            <button className="arrow-button left" onClick={handlePrev}>
+              &#9665; {/* Mũi tên trái */}
+            </button>
+            <button className="arrow-button right" onClick={handleNext}>
+              &#9655; {/* Mũi tên phải */}
+            </button>
+          </div>
         </div>
-      ) : (
-        <p>Không tìm thấy danh mục phù hợp.</p>
       )}
     </div>
   );
@@ -288,6 +328,8 @@ const HomePage = () => {
       <SearchBar />
       <div className="content">
         <JobCategories />
+      </div>
+      <div className="content">
         <JobList />
       </div>
     </div>
