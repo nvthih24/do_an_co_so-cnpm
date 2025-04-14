@@ -46,7 +46,16 @@ router.post("/login", async (req, res) => {
       // Tạo JWT Token
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1d" });
   
-      res.status(200).json({ token, message: "Đăng nhập thành công!" });
+      res.status(200).json({
+        token,
+        user: {
+          name: user.name,
+          email: user.email,
+          //role: user.role, // nếu cần
+        },
+        message: "Đăng nhập thành công!",
+      });
+      
     } catch (err) {
       res.status(500).json({ message: "Lỗi server!" });
     }

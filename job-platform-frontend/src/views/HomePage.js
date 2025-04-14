@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/global.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const jobCategoriesData = [
   {
@@ -73,6 +74,7 @@ const jobCategoriesData = [
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
 
   return (
     <div className="navbar">
@@ -217,19 +219,31 @@ const Navbar = () => {
       </ul>
 
       <ul className="nav navbar-nav navbar-right">
-        <li className="nav-buttons">
-          <button className="button outline" onClick={() => navigate("/login")}>
-            Đăng nhập
-          </button>
-        </li>
-        <li className="nav-buttons">
-          <button
-            className="button primary"
-            onClick={() => navigate("/register")}
-          >
-            Đăng ký
-          </button>
-        </li>
+        {!currentUser ? (
+          <>
+            <li className="nav-buttons">
+              <button className="button outline" onClick={() => navigate("/login")}>
+                Đăng nhập
+              </button>
+            </li>
+            <li className="nav-buttons">
+              <button className="button primary" onClick={() => navigate("/register")}>
+                Đăng ký
+              </button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li className="nav-buttons">
+              <span>Xin chào, {currentUser.name}</span>
+            </li>
+            <li className="nav-buttons">
+              <button className="button outline" onClick={logout}>
+                Đăng xuất
+              </button>
+            </li>
+          </>
+        )}
         <li className="nav-buttons">
           <button className="button secondary">Đăng tuyển & tìm hồ sơ</button>
         </li>
