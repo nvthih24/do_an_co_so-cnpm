@@ -248,7 +248,8 @@
 
   /* 📌 Job Categories */
   .job-categories {
-    width: 30%;
+    
+    width: 50%;
     background-color: white;
     padding: 15px;
     border-radius: 10px;

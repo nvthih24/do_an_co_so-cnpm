@@ -53,7 +53,13 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h2>Đăng nhập</h2>
+        <button className="home-button" onClick={() => navigate("/")}>
+          <img src="/Job247.jpg" alt="Logo" className="logo-img" />
+        </button>
+        <h2 className="welcome-title">Chào mừng bạn đã quay trở lại</h2>
+        <p className="welcome-subtitle">
+          Cùng xây dựng một hồ sơ nổi bật và nhận được các cơ hội sự nghiệp lý tưởng
+        </p>
         {error && <p className="error">{error}</p>}
         <form onSubmit={handleSubmit}>
           <input
