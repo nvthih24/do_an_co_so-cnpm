@@ -75,11 +75,14 @@ const LoginPage = () => {
           <button type="submit" className="button primary">Đăng nhập</button>
         </form>
         <button className="button google-btn" onClick={handleGoogleSignIn}>
-          Đăng nhập với Google
+          Đăng nhập với Google  
         </button>
         <p>
           Chưa có tài khoản?{" "}
           <span onClick={() => navigate("/register")} className="link">Đăng ký ngay</span>
+        </p>
+        <p>
+          <span onClick={() => navigate("/forgot-password")} className="link">Quên mật khẩu?</span>
         </p>
       </div>
     </div>

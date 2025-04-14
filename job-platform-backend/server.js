@@ -6,11 +6,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("./models/User");
 const authRoutes = require("./routes/authRoutes");
+const forgotPasswordRoutes = require('./routes/forgotPassword');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/api/auth", authRoutes);
+app.use('/api/forgot-password', forgotPasswordRoutes);
 
 
 // Kết nối MongoDB Atlas
