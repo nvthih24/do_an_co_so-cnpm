@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { auth, googleProvider, signInWithPopup } from "../firebaseConfig"; // Import Firebase
-//import "../styles/LoginPage.css"; // Đảm bảo có CSS
+import "../styles/LoginPage.css"; // Đảm bảo có CSS
 
 const LoginPage = () => {
   const navigate = useNavigate();

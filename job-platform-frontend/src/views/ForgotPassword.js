@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import "../styles/ForgotPassword.css";
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1);
@@ -13,7 +14,7 @@ const ForgotPassword = () => {
       await axios.post('/api/forgot-password/send-otp', { email });
       setStep(2);
     } catch (err) {
-      alert(err.response.data.message);
+      alert(err.response?.data?.message || "Lỗi khi gửi mã OTP");
     }
   };
 
@@ -22,7 +23,7 @@ const ForgotPassword = () => {
       await axios.post('/api/forgot-password/verify-otp', { email, otp });
       setStep(3);
     } catch (err) {
-      alert(err.response.data.message);
+      alert(err.response?.data?.message || "Mã OTP không hợp lệ");
     }
   };
 
@@ -42,7 +43,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: 'auto' }}>
+    <div className="forgot-password-container">
       <h2>Quên mật khẩu</h2>
 
       {step === 1 && (
@@ -53,7 +54,16 @@ const ForgotPassword = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <button onClick={sendOtp}>Gửi mã xác nhận</button>
+          <button onClick={sendOtp}>Tạo lại mật khẩu</button>
+
+          <div className="links">
+            <span className="link" onClick={() => window.location.href = "/login"}>
+              Quay lại đăng nhập
+            </span>
+            <span className="link" onClick={() => window.location.href = "/register"}>
+              Đăng ký tài khoản mới
+            </span>
+          </div>
         </>
       )}
 
@@ -66,6 +76,12 @@ const ForgotPassword = () => {
             onChange={(e) => setOtp(e.target.value)}
           />
           <button onClick={verifyOtp}>Xác minh</button>
+
+          <div className="links">
+            <span className="link" onClick={() => setStep(1)}>
+              Quay lại nhập email
+            </span>
+          </div>
         </>
       )}
 
@@ -84,6 +100,12 @@ const ForgotPassword = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
           <button onClick={resetPassword}>Đổi mật khẩu</button>
+
+          <div className="links">
+            <span className="link" onClick={() => setStep(1)}>
+              Quay lại đăng nhập
+            </span>
+          </div>
         </>
       )}
     </div>
