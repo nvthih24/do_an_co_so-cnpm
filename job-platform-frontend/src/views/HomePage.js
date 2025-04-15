@@ -5,75 +5,6 @@ import { useAuth } from "../contexts/AuthContext";
 import RecruiterSelectionModal from "../views/RecruiterSelectionModal";
 
 
-const jobCategoriesData = [
-  {
-    name: "Kinh doanh/Bán hàng",
-    jobs: [
-      "Sales Executive",
-      "Account Manager",
-      "Sales Assistant",
-      "Business Development",
-      "Retail Manager",
-      "Marketing Sales",
-    ],
-  },
-  {
-    name: "Marketing/PR/Quảng cáo",
-    jobs: [
-      "Digital Marketing",
-      "PR Executive",
-      "Brand Manager",
-      "SEO Specialist",
-      "Content Creator",
-      "Social Media Manager",
-    ],
-  },
-  {
-    name: "Chăm sóc khách hàng",
-    jobs: [
-      "Customer Support",
-      "Call Center Agent",
-      "Help Desk",
-      "Technical Support",
-      "Client Service Manager",
-      "Customer Relations",
-    ],
-  },
-  {
-    name: "Nhân sự/Hành chính/Pháp chế",
-    jobs: [
-      "HR Manager",
-      "Recruitment Specialist",
-      "Payroll Officer",
-      "Legal Advisor",
-      "Office Admin",
-      "Corporate Lawyer",
-    ],
-  },
-  {
-    name: "Tài chính/Ngân hàng/Bảo hiểm",
-    jobs: [
-      "Bank Teller",
-      "Financial Analyst",
-      "Investment Advisor",
-      "Loan Officer",
-      "Insurance Agent",
-      "Accountant",
-    ],
-  },
-  {
-    name: "Công nghệ Thông tin",
-    jobs: [
-      "Software Developer",
-      "Data Analyst",
-      "Cyber Security",
-      "Cloud Engineer",
-      "IT Support",
-      "AI Engineer",
-    ],
-  },
-];
-
 const Navbar = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
@@ -268,62 +199,6 @@ const SearchBar = () => (
   </div>
 );
 
-const JobCategories = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredCategories = jobCategoriesData.filter((category) =>
-    category.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % jobCategoriesData.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + jobCategoriesData.length) % jobCategoriesData.length
-    );
-  };
-
-  const totalPages = filteredCategories.length; // Tổng số trang
-
-  return (
-    <div className="job-categories">
-      {jobCategoriesData.length > 0 && (
-        <div className="category-container">
-          <div className="category-content">
-            <h3>{jobCategoriesData[currentIndex].name}</h3>
-            <ul>
-              {jobCategoriesData[currentIndex].jobs.map((job, index) => (
-                <li key={index}>{job}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Phần chứa số trang */}
-          <div className="category-page-number">
-            <span className="page-number">
-              {currentIndex + 1} / {totalPages} {/* Hiển thị số trang */}
-            </span>
-          </div>
-
-          {/* Phần chứa các nút mũi tên */}
-          <div className="category-buttons">
-            <button className="arrow-button left" onClick={handlePrev}>
-              &#9665; {/* Mũi tên trái */}
-            </button>
-            <button className="arrow-button right" onClick={handleNext}>
-              &#9655; {/* Mũi tên phải */}
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
 const JobList = () => (
   <div className="job-list">
     <h2>Việc làm tốt nhất</h2>
@@ -348,9 +223,6 @@ const HomePage = () => {
     <div className="container">
       <Navbar />
       <SearchBar />
-      <div className="content">
-        <JobCategories />
-      </div>
       <div className="content">
         <JobList />
       </div>
