@@ -25,6 +25,8 @@ import CheDoLuongPage from "./views/CAMNANG/CHEDOLUONGPage";
 import BiQuyetPage from "./views/CAMNANG/BIQUYETTIMVIECPage";
 import ChuyenNganhPage from "./views/CAMNANG/KIENTHUCCHUYENNGANHPage";
 import HanhTrangPage from "./views/CAMNANG/HANHTRANGNGHENGIEPPage";
+import RecruiterRegisterPage from "./views/RecruiterRegisterPage";
+
 
 function App() {
   return (
@@ -55,6 +57,7 @@ function App() {
       <Route path="/bi-quyet-tim-viec" element={<BiQuyetPage/>} />
       <Route path="/kien-thuc-chuyen-nganh" element={<ChuyenNganhPage/>} />
       <Route path="hanh-trang-nghe-nghiep" element={<HanhTrangPage/>} />
+      <Route path="/dang-ky-nha-tuyen-dung" element={<RecruiterRegisterPage />} />
 
     </Routes>
     </AuthProvider>

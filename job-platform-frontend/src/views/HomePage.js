@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../styles/global.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import RecruiterSelectionModal from "../views/RecruiterSelectionModal";
+
 
 const jobCategoriesData = [
   {
@@ -75,8 +77,10 @@ const jobCategoriesData = [
 const Navbar = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
+  const [showModal, setShowModal] = useState(false); 
 
   return (
+    <>
     <div className="navbar">
       <div className="logo" onClick={() => navigate("/")}>
         <img src="/Job247.jpg" alt="Logo" />
@@ -245,10 +249,14 @@ const Navbar = () => {
           </>
         )}
         <li className="nav-buttons">
-          <button className="button secondary">Đăng tuyển & tìm hồ sơ</button>
+          <button className="button secondary" onClick={() => setShowModal(true)}>Đăng tuyển & tìm hồ sơ</button>
         </li>
       </ul>
     </div>
+    {showModal && (
+        <RecruiterSelectionModal onClose={() => setShowModal(false)} />
+      )}
+    </>
   );
 };
 
