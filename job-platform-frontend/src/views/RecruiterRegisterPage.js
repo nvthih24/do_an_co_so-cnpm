@@ -8,7 +8,7 @@ const RecruiterRegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/");
+    navigate("/employer");
   };
 
   return (
