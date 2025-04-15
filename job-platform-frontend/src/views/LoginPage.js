@@ -30,12 +30,15 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", formData);
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        formData
+      );
       const { token, user } = response.data;
       console.log("API trả về user:", user);
 
       localStorage.setItem("token", token); // Lưu token vào localStorage
-      login(user);  // Cập nhật currentUser trong AuthContext
+      login(user); // Cập nhật currentUser trong AuthContext
 
       alert("Đăng nhập thành công!");
       navigate("/"); // Chuyển hướng về trang chủ
@@ -63,21 +66,65 @@ const LoginPage = () => {
     }
   };
 
+  const handleFacebookSignIn = () => {
+    console.log("Đăng nhập với Facebook");
+  };
+
+  const handleGithubSignIn = () => {
+    console.log("Đăng nhập với GitHub");
+  };
+
+  const handleLinkedInSignIn = () => {
+    console.log("Đăng nhập với LinkedIn");
+  };
+
   return (
     <div className="login-page">
       <div className="login-container">
-        <button className="home-button" onClick={() => navigate("/")}>
-          <img src="/Job247.jpg" alt="Logo" className="logo-img" />
-        </button>
-        <h2 className="welcome-title">Chào mừng bạn đã quay trở lại</h2>
-        <p className="welcome-subtitle">
-          Cùng xây dựng một hồ sơ nổi bật và nhận được các cơ hội sự nghiệp lý tưởng
-        </p>
+        <h2 className="welcome-title">Đăng nhập</h2>
         {error && <p className="error">{error}</p>}
 
         {/* Kiểm tra nếu currentUser không có thì hiển thị form đăng nhập */}
         {!currentUser ? (
           <>
+            <div className="social-login">
+              <button
+                className="social-btn google"
+                onClick={handleGoogleSignIn}
+              >
+                <img
+                  src="https://img.icons8.com/color/48/000000/google-logo.png"
+                  alt="Google Icon"
+                />
+              </button>
+              <button
+                className="social-btn facebook"
+                onClick={handleFacebookSignIn}
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/1024px-2023_Facebook_icon.svg.png"
+                  alt="Facebook Icon"
+                />
+              </button>
+              <button
+                className="social-btn github"
+                onClick={handleGithubSignIn}
+              >
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+                  alt="Github Icon"
+                />
+              </button>
+              <button
+                className="social-btn linkedin"
+                onClick={handleLinkedInSignIn}
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/LinkedIn_icon.svg/2048px-LinkedIn_icon.svg.png"
+                  alt="LinkedIn Icon"
+                />
+              </button>
+            </div>
             <form onSubmit={handleSubmit}>
               <input
                 type="email"
@@ -95,25 +142,36 @@ const LoginPage = () => {
                 onChange={handleChange}
                 required
               />
-              <button type="submit" className="button primary">Đăng nhập</button>
+              <button type="submit" className="button primary">
+                Đăng nhập
+              </button>
             </form>
-
-            <button className="button google-btn" onClick={handleGoogleSignIn}>
-              Đăng nhập với Google  
-            </button>
 
             <p>
               Chưa có tài khoản?{" "}
-              <span onClick={() => navigate("/register")} className="link">Đăng ký ngay</span>
+              <span onClick={() => navigate("/register")} className="link">
+                Đăng ký ngay
+              </span>
             </p>
             <p>
-              <span onClick={() => navigate("/forgot-password")} className="link">Quên mật khẩu?</span>
+              <span
+                onClick={() => navigate("/forgot-password")}
+                className="link"
+              >
+                Quên mật khẩu?
+              </span>
             </p>
           </>
         ) : (
           <div>
             <p>Chào, {currentUser.email}!</p>
-            <button onClick={() => { login(null); localStorage.removeItem("token"); navigate("/"); }}>
+            <button
+              onClick={() => {
+                login(null);
+                localStorage.removeItem("token");
+                navigate("/");
+              }}
+            >
               Đăng xuất
             </button>
           </div>

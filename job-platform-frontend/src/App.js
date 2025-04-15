@@ -68,9 +68,10 @@ function App() {
       <Route path="hanh-trang-nghe-nghiep" element={<HanhTrangPage/>} />
       <Route path="/dang-ky-nha-tuyen-dung" element={<RecruiterRegisterPage />} />
       <Route path="/employer" element={<Employer />} />
-
+      
     </Routes>
     </AuthProvider>
+      
   );
 }
 

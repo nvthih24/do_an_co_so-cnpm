@@ -3,7 +3,6 @@ import "../styles/global.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import RecruiterSelectionModal from "../views/RecruiterSelectionModal";
-
 // Mock danh sách việc làm để hiển thị
 const allJobs = [
   {
