@@ -162,7 +162,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/tinh-baohiem")}>
                   Tính lương
                 </a>
               </li>
