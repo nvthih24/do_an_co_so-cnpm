@@ -54,7 +54,7 @@ function App() {
       <Route path="/tu-van-cv" element={<TuVanCVPage />} />
       <Route path="/your-cv" element={<HoSoCuaToiPage />} />
       <Route path="/cong-cu" element={<CongCuPage/>} />
-      <Route path="/cv-skill" element={<CVSkillPage />} />
+<Route path="/cv-skill" element={<CVSkillPage />} />
       <Route path="/thue-tncn" element={<ThueTNCNPage />} />
       <Route path="/tinh-baohiem" element={<BaoHiemPage />} />
       <Route path="/tinh-luong" element={<LuongPage />} />
@@ -69,10 +69,10 @@ function App() {
       <Route path="hanh-trang-nghe-nghiep" element={<HanhTrangPage/>} />
       <Route path="/dang-ky-nha-tuyen-dung" element={<RecruiterRegisterPage />} />  
       <Route path="/employer" element={<Employer />} />
+      <Route path="/job-post-form" element={<JobPostForm />} />
 
     </Routes>
     </AuthProvider>
-      
   );
 }
 
