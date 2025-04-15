@@ -16,6 +16,15 @@ import HoSoCuaToiPage from "./views/HOSO_CV/HoSoCuaToiPage";
 import CVSkillPage from "./views/CONGCU/CVSkillPage";
 import ThueTNCNPage from "./views/CONGCU/ThueTNCNPage";
 import BaoHiemPage from "./views/CONGCU/BAOHIEMPage";
+import LuongPage from "./views/CONGCU/LUONGPage";
+import LaiKepPage from "./views/CONGCU/TINHLAIKEPPage";
+import TietKiemPage from "./views/CONGCU/KEHOACHTIETKIEMPage";
+import TuVanNghePage from "./views/CAMNANG/TUVANNGHENGHIEPPage";
+import XuHuongPage from "./views/CAMNANG/XUHUONGPage";
+import CheDoLuongPage from "./views/CAMNANG/CHEDOLUONGPage";
+import BiQuyetPage from "./views/CAMNANG/BIQUYETTIMVIECPage";
+import ChuyenNganhPage from "./views/CAMNANG/KIENTHUCCHUYENNGANHPage";
+import HanhTrangPage from "./views/CAMNANG/HANHTRANGNGHENGIEPPage";
 
 function App() {
   return (
@@ -37,6 +46,16 @@ function App() {
       <Route path="/cv-skill" element={<CVSkillPage />} />
       <Route path="/thue-tncn" element={<ThueTNCNPage />} />
       <Route path="/tinh-baohiem" element={<BaoHiemPage />} />
+      <Route path="/tinh-luong" element={<LuongPage />} />
+      <Route path="/tinh-lai-kep" element={<LaiKepPage />} />
+      <Route path="/ke-hoach-tiet-kiem" element={<TietKiemPage />} />
+      <Route path="/tu-van-nghe-nghiep" element={<TuVanNghePage/>} />
+      <Route path="/thi-truong-va-xu-huong" element={<XuHuongPage/>} />
+      <Route path="/che-do-luong" element={<CheDoLuongPage/>} />
+      <Route path="/bi-quyet-tim-viec" element={<BiQuyetPage/>} />
+      <Route path="/kien-thuc-chuyen-nganh" element={<ChuyenNganhPage/>} />
+      <Route path="hanh-trang-nghe-nghiep" element={<HanhTrangPage/>} />
+
     </Routes>
     </AuthProvider>
   );

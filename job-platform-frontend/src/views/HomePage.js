@@ -162,17 +162,17 @@ const Navbar = () => {
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a className="text-sm" onClick={() => navigate("/tinh-baohiem")}>
+              <a className="text-sm" onClick={() => navigate("/tinh-luong")}>
                   Tính lương
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/tinh-lai-kep")}>
                   Tính lãi suất kép
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/ke-hoach-tiet-kiem")}>
                   Lập kế hoạch tiết kiệm
                 </a>
               </li>
@@ -184,32 +184,32 @@ const Navbar = () => {
           <div className="navbar__item__dropdown-menu">
             <ul className="navbar-menu">
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/tu-van-nghe-nghiep")}>
                   Tư vấn nghề nghiệp
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/thi-truong-va-xu-huong")}>
                   Thị trường và xu hướng ngành nghề
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/che-do-luong")}>
                   Chế độ lương thưởng
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/bi-quyet-tim-viec")}>
                   Bí quyết tìm việc
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/kien-thuc-chuyen-nganh")}>
                   Kiến thức chuyên ngành
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/hanh-trang-nghe-nghiep")}>
                   Hành trang nghề nghiệp
                 </a>
               </li>
