@@ -1,27 +1,23 @@
 import React from "react";
 import "../styles/employer_.css";
+import { useAuth } from "../contexts/AuthContext"; // Import context
+import JobPostForm from "../views/JobPostForm";
 
 const Employer = () => {
+  const { currentUser } = useAuth(); // Lấy người dùng hiện tại
+
   return (
     <div className="dashboard">
       <aside className="sidebar">
         <div className="profile">
-          <h3>Nguyễn Văn Thịnh</h3>
+          <h3>{currentUser?.name || "Người dùng"}</h3> {/* Hiển thị tên đăng nhập */}
           <p>Employer</p>
         </div>
-        <ul>
-          <li>Bảng tin</li>
-          <li>TopCV Insights</li>
-          <li>TopCV Rewards</li>
-          <li>Chiến dịch tuyển dụng</li>
-          <li>Quản lý CV</li>
-          <li>Báo cáo tuyển dụng</li>
-        </ul>
       </aside>
 
       <main className="content">
-        <h2>Xin chào, Nguyễn Văn Thịnh</h2>
-        <p>Hoàn thành các bước để nhận +8 Top Point</p>
+        <h2>Xin chào, {currentUser?.name || "Người dùng"}</h2>
+
         <ul className="verify-list">
           <li onClick={() => alert("Xác thực số điện thoại")}>
             Xác thực số điện thoại
@@ -36,6 +32,9 @@ const Employer = () => {
             <span className="arrow">&rarr;</span>
           </li>
         </ul>
+
+        {/* Thêm form chi tiết công việc */}
+        <JobPostForm />
       </main>
     </div>
   );

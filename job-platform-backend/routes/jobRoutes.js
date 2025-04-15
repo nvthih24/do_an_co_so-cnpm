@@ -1,18 +1,27 @@
 const express = require("express");
-const Job = require("../models/job");
+const Job = require("../models/job"); // model Job
 const router = express.Router();
 
-// Lấy danh sách công việc
-router.get("/", async (req, res) => {
-    const jobs = await Job.find();
-    res.json(jobs);
-});
-
-// Thêm công việc mới
+// POST endpoint to create a job post
 router.post("/", async (req, res) => {
-    const newJob = new Job(req.body);
-    await newJob.save();
-    res.json({ message: "Job added", job: newJob });
+  try {
+    const {
+      position, companyName, salary, address,
+      email, recruitmentTime, deadline, description
+    } = req.body;
+
+    // Create a new Job document
+    const job = new Job({
+      position, companyName, salary, address,
+      email, recruitmentTime, deadline, description
+    });
+
+    await job.save();
+    res.status(201).json({ message: "Job posted successfully!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to post job" });
+  }
 });
 
 module.exports = router;

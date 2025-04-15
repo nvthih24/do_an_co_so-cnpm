@@ -31,7 +31,7 @@ const RecruiterRegisterPage = () => {
           <label>Số điện thoại</label>
           <input type="text" required />
         </div>
-        <div className="form-group">
+        <div className="form-group">  
           <label>Công ty</label>
           <input type="text" />
         </div>
