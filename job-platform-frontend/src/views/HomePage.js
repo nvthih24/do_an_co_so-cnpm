@@ -88,32 +88,32 @@ const Navbar = () => {
           <div className="navbar__item__dropdown-menu">
             <ul className="navbar-menu">
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/find-jobs")}>
                   Tìm việc làm
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+              <a className="text-sm" onClick={() => navigate("/viec-lam-phu-hop")}>
                   Việc làm phù hợp
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/it-jobs")}>
                   Việc làm IT
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/senior-jobs")}>
                   Việc làm Senior
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/company-list")}>
                   Danh sách công ty
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/top-company")}>
                   Top công ty
                 </a>
               </li>
@@ -125,17 +125,17 @@ const Navbar = () => {
           <div className="navbar__item__dropdown-menu">
             <ul className="navbar-menu">
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/tao-cv")}>
                   Tạo CV
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/tu-van-cv")}>
                   Dịch vụ tư vấn CV
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/your-cv")}>
                   Hồ sơ của tôi
                 </a>
               </li>
@@ -147,17 +147,17 @@ const Navbar = () => {
           <div className="navbar__item__dropdown-menu">
             <ul className="navbar-menu">
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
-                  TopCV Skills
+              <a className="text-sm" onClick={() => navigate("/cv-skill")}>
+                  CV Skills
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/thue-tncn")}>
                   Tính thuế TNCN
                 </a>
               </li>
               <li className="navbar-menu__item">
-                <a href="#" className="text-sm">
+                <a className="text-sm" onClick={() => navigate("/tinh-baohiem")}>
                   Tính bảo hiểm
                 </a>
               </li>
