@@ -30,6 +30,7 @@ import JobPage from "./views/VIECLAM/JobPage";
 import HSCVPage from "./views/HOSO_CV/HoSoCVPage";
 import CongCuPage from "./views/CONGCU/CongCuPage";
 import CamNangPage from "./views/CAMNANG/CamNangPage";
+import Employer from "./views/Employer";
 
 
 function App() {
@@ -66,7 +67,7 @@ function App() {
       <Route path="/kien-thuc-chuyen-nganh" element={<ChuyenNganhPage/>} />
       <Route path="hanh-trang-nghe-nghiep" element={<HanhTrangPage/>} />
       <Route path="/dang-ky-nha-tuyen-dung" element={<RecruiterRegisterPage />} />
-      
+      <Route path="/employer" element={<Employer />} />
 
     </Routes>
     </AuthProvider>

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import RecruiterSelectionModal from "../views/RecruiterSelectionModal";
 
-
 const jobCategoriesData = [
   {
     name: "Kinh doanh/Bán hàng",
@@ -72,7 +71,6 @@ const HomePage = () => {
         <div className="logo" onClick={() => navigate("/")}>
           <img src="/Job247.jpg" alt="Logo" />
         </div>
-
         <ul className="nav navbar-nav navbar-left">
           <li className="navbar-left__item group">
             <a className="text-sm" onClick={() => navigate("/viec-lam")}>Việc làm</a>
@@ -125,51 +123,6 @@ const HomePage = () => {
           </li>
         </ul>
 
-      <ul className="nav navbar-nav navbar-right">
-        {!currentUser ? (
-          <>
-            <li className="nav-buttons">
-              <button className="button outline" onClick={() => navigate("/login")}>
-                Đăng nhập
-              </button>
-            </li>
-            <li className="nav-buttons">
-              <button className="button primary" onClick={() => navigate("/register")}>
-                Đăng ký
-              </button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li className="nav-buttons">
-              <span>Xin chào, {currentUser.name}</span>
-            </li>
-            <li className="nav-buttons">
-              <button className="button outline" onClick={logout}>
-                Đăng xuất
-              </button>
-            </li>
-          </>
-        )}
-        <li className="nav-buttons">
-          <button className="button secondary" onClick={() => setShowModal(true)}>Đăng tuyển & tìm hồ sơ</button>
-        </li>
-      </ul>
-    </div>
-    {showModal && (
-        <RecruiterSelectionModal onClose={() => setShowModal(false)} />
-      )}
-    </>
-  );
-};
-
-const SearchBar = () => (
-  <div className="search-bar">
-    <input type="text" placeholder="Vị trí tuyển dụng, tên công ty" />
-    <input type="text" placeholder="Địa điểm" />
-    <button className="button primary">Tìm kiếm</button>
-  </div>
-);
         <ul className="nav navbar-nav navbar-right">
           {!currentUser ? (
             <>
@@ -220,34 +173,6 @@ const SearchBar = () => (
         </div>
       </div>
 
-const JobList = () => (
-  <div className="job-list">
-    <h2>Việc làm tốt nhất</h2>
-    <div className="job-grid">
-      {[...Array(6)].map((_, index) => (
-        <div key={index} className="job-card">
-          <h3>Nhân viên kinh doanh</h3>
-          <p className="company">Công ty ABC - Hà Nội</p>
-          <div className="job-footer">
-            <p className="salary">12-15 triệu</p>
-            <button className="button outline">Ứng tuyển</button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-const HomePage = () => {
-  console.log("HomePage Rendered");
-  return (
-    <div className="container">
-      <Navbar />
-      <SearchBar />
-      <div className="content">
-        <JobList />
-      </div>
-    </div>
       <div className="content">
         <div className="job-list">
           <h2>Việc làm tốt nhất</h2>
