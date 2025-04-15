@@ -88,7 +88,7 @@ const Navbar = () => {
 
       <ul className="nav navbar-nav navbar-left">
         <li className="navbar-left__item group">
-          <a href="#">Việc làm</a>
+        <a className="text-sm" onClick={() => navigate("/viec-lam")}>Việc làm</a>
           <div className="navbar__item__dropdown-menu">
             <ul className="navbar-menu">
               <li className="navbar-menu__item">
@@ -125,7 +125,7 @@ const Navbar = () => {
           </div>
         </li>
         <li className="navbar-left__item group">
-          <a href="#">Hồ sơ & CV</a>
+        <a className="text-sm" onClick={() => navigate("/ho-so-cv")}>Hồ sơ & CV</a>
           <div className="navbar__item__dropdown-menu">
             <ul className="navbar-menu">
               <li className="navbar-menu__item">
@@ -147,7 +147,7 @@ const Navbar = () => {
           </div>
         </li>
         <li className="navbar-left__item group">
-          <a href="#">Công cụ</a>
+        <a className="text-sm" onClick={() => navigate("/cong-cu")}>Công cụ</a>
           <div className="navbar__item__dropdown-menu">
             <ul className="navbar-menu">
               <li className="navbar-menu__item">
@@ -184,7 +184,7 @@ const Navbar = () => {
           </div>
         </li>
         <li className="navbar-left__item group">
-          <a href="#">Cẩm nang nghề nghiệp</a>
+        <a className="text-sm" onClick={() => navigate("/cam-nang")}>Cẩm nang nghề nghiệp</a>
           <div className="navbar__item__dropdown-menu">
             <ul className="navbar-menu">
               <li className="navbar-menu__item">

@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/RecruiterRegister.css";
+//import "../styles/RecruiterRegister.css";
 
 
 const RecruiterRegisterPage = () => {

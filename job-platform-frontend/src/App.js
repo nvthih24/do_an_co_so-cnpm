@@ -26,6 +26,10 @@ import BiQuyetPage from "./views/CAMNANG/BIQUYETTIMVIECPage";
 import ChuyenNganhPage from "./views/CAMNANG/KIENTHUCCHUYENNGANHPage";
 import HanhTrangPage from "./views/CAMNANG/HANHTRANGNGHENGIEPPage";
 import RecruiterRegisterPage from "./views/RecruiterRegisterPage";
+import JobPage from "./views/VIECLAM/JobPage";
+import HSCVPage from "./views/HOSO_CV/HoSoCVPage";
+import CongCuPage from "./views/CONGCU/CongCuPage";
+import CamNangPage from "./views/CAMNANG/CamNangPage";
 
 
 function App() {
@@ -36,21 +40,25 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} /> 
       <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/viec-lam" element={<JobPage />} />
       <Route path="/find-jobs" element={<FindJobPage />} />
       <Route path="/it-jobs" element={<ITJobPage />} />
       <Route path="/viec-lam-phu-hop" element={<ViecLamPhuHopPage />} />
       <Route path="/senior-jobs" element={<SeniorJobPage />} />
       <Route path="/company-list" element={<CompanyListPage />} />
       <Route path="/top-company" element={<TopCompanyPage />} />
+      <Route path="/ho-so-cv" element={<HSCVPage />} />
       <Route path="/tao-cv" element={<TaoCVPage />} />
       <Route path="/tu-van-cv" element={<TuVanCVPage />} />
       <Route path="/your-cv" element={<HoSoCuaToiPage />} />
+      <Route path="/cong-cu" element={<CongCuPage/>} />
       <Route path="/cv-skill" element={<CVSkillPage />} />
       <Route path="/thue-tncn" element={<ThueTNCNPage />} />
       <Route path="/tinh-baohiem" element={<BaoHiemPage />} />
       <Route path="/tinh-luong" element={<LuongPage />} />
       <Route path="/tinh-lai-kep" element={<LaiKepPage />} />
       <Route path="/ke-hoach-tiet-kiem" element={<TietKiemPage />} />
+      <Route path="/cam-nang" element={<CamNangPage/>} />
       <Route path="/tu-van-nghe-nghiep" element={<TuVanNghePage/>} />
       <Route path="/thi-truong-va-xu-huong" element={<XuHuongPage/>} />
       <Route path="/che-do-luong" element={<CheDoLuongPage/>} />
@@ -58,6 +66,7 @@ function App() {
       <Route path="/kien-thuc-chuyen-nganh" element={<ChuyenNganhPage/>} />
       <Route path="hanh-trang-nghe-nghiep" element={<HanhTrangPage/>} />
       <Route path="/dang-ky-nha-tuyen-dung" element={<RecruiterRegisterPage />} />
+      
 
     </Routes>
     </AuthProvider>
