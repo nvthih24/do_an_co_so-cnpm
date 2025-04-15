@@ -31,6 +31,7 @@ import HSCVPage from "./views/HOSO_CV/HoSoCVPage";
 import CongCuPage from "./views/CONGCU/CongCuPage";
 import CamNangPage from "./views/CAMNANG/CamNangPage";
 import Employer from "./views/Employer";
+import JobPostForm from "./views/JobPostForm";
 
 
 function App() {
@@ -66,8 +67,9 @@ function App() {
       <Route path="/bi-quyet-tim-viec" element={<BiQuyetPage/>} />
       <Route path="/kien-thuc-chuyen-nganh" element={<ChuyenNganhPage/>} />
       <Route path="hanh-trang-nghe-nghiep" element={<HanhTrangPage/>} />
-      <Route path="/dang-ky-nha-tuyen-dung" element={<RecruiterRegisterPage />} />
+      <Route path="/dang-ky-nha-tuyen-dung" element={<RecruiterRegisterPage />} />  
       <Route path="/employer" element={<Employer />} />
+      <Route path="/job-post-form" element={<JobPostForm />} />
 
     </Routes>
     </AuthProvider>
