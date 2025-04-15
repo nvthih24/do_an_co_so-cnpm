@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../styles/jobpostform.css"; // Import your CSS file
 
 const JobPostForm = () => {
   const [formData, setFormData] = useState({

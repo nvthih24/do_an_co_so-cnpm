@@ -255,15 +255,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
-
-  .category-container {
-    display: flex;
-    justify-content: space-between;
-    /* Đảm bảo khoảng cách giữa các phần tử */
-    align-items: center;
-    /* Căn giữa các phần tử theo chiều dọc */
-  }
-
+  
   .category-page-number {
     flex: 1;
     text-align: center;
@@ -337,7 +329,7 @@
 
   /* 📌 Job List */
   .job-list {
-    width: 75%;
+    width: 100%;
     background-color: white;
     padding: 15px;
     border-radius: 10px;
@@ -384,13 +376,6 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 10px;
-  }
-
-  /* 📌 Layout chung */
-  .container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
   }
 
   .content {
