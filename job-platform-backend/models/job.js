@@ -9,6 +9,7 @@ const jobSchema = new mongoose.Schema({
   recruitmentTime: Date,
   deadline: Date,
   description: String, // Description for the job
+  isApproved: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model("Job", jobSchema);
