@@ -2,26 +2,27 @@ const express = require("express");
 const Job = require("../models/job"); // model Job
 const router = express.Router();
 
-// POST endpoint to create a job post
-router.post("/", async (req, res) => {
+
+// Lấy job chưa duyệt
+router.get("/pending", async (req, res) => {
   try {
-    const {
-      position, companyName, salary, address,
-      email, recruitmentTime, deadline, description
-    } = req.body;
-
-    // Create a new Job document
-    const job = new Job({
-      position, companyName, salary, address,
-      email, recruitmentTime, deadline, description
-    });
-
-    await job.save();
-    res.status(201).json({ message: "Job posted successfully!" });
+    const jobs = await Job.find({ isApproved: false });
+    res.json(jobs);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to post job" });
+    res.status(500).json({ error: "Lỗi khi lấy job chưa duyệt" });
   }
 });
+
+// Duyệt job
+router.put("/:id/approve", async (req, res) => {
+  try {
+    const job = await Job.findByIdAndUpdate(req.params.id, { isApproved: true }, { new: true });
+    res.json(job);
+  } catch (err) {
+    res.status(500).json({ error: "Lỗi khi duyệt job" });
+  }
+});
+
+
 
 module.exports = router;
