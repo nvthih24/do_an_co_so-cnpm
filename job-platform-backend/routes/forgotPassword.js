@@ -27,6 +27,8 @@ router.post("/send-otp", async (req, res) => {
     res.json({ message: "Mã xác nhận đã được gửi!" });
   } catch (err) {
     res.status(500).json({ message: "Gửi email thất bại!", error: err.message });
+    console.error("Lỗi gửi email:", err);
+
   }
 });
 
