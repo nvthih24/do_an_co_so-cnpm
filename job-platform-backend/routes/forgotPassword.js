@@ -22,7 +22,23 @@ router.post("/send-otp", async (req, res) => {
       from: process.env.FROM_EMAIL,
       to: email,
       subject: "Mã xác nhận đặt lại mật khẩu",
-      html: `<p>Mã OTP của bạn là: <strong>${otp}</strong></p>`,
+      html: `<p>Xin chào ${user.name},</p>
+              <p>Bạn đã yêu cầu đặt lại mật khẩu cho tài khoản của mình.</p>
+              <p>Mã OTP của bạn là:</p>
+              <p><strong>${otp}</strong></p>
+              <p>Vui lòng không chia sẻ mã này với bất kỳ ai.</p>
+              <p>Nếu bạn không yêu cầu đặt lại mật khẩu, vui lòng bỏ qua email này.</p>
+              <p>Trân trọng,<br>Đội ngũ hỗ trợ 3TML</p>
+              <p>-----------------------------</p>
+              <p>Đây là email tự động, vui lòng không trả lời.</p>
+              <p>-----------------------------</p>
+              <p>Để biết thêm thông tin, vui lòng truy cập trang web của chúng tôi.</p>
+              <p>-----------------------------</p>
+              <p>Đây là đồ án của nhóm 3TML chúng tôi, vui lòng không sao chép.</p>
+              <p>-----------------------------</p>
+              <p>3TML!</p>
+              <p>-----------------------------</p>  
+              </p>`,
     });
     res.json({ message: "Mã xác nhận đã được gửi!" });
   } catch (err) {
