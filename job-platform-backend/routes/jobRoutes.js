@@ -45,6 +45,16 @@ router.put("/:id/approve", async (req, res) => {
   }
 });
 
+// Lấy các job đã được duyệt
+router.get("/approved", async (req, res) => {
+  try {
+    const approvedJobs = await Job.find({ isApproved: true });
+    res.json(approvedJobs);
+  } catch (err) {
+    res.status(500).json({ error: "Lỗi khi lấy danh sách job đã duyệt" });
+  }
+});
+
 
 
 module.exports = router;
