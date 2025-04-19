@@ -3,7 +3,7 @@ import "../styles/global.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import RecruiterSelectionModal from "../views/RecruiterSelectionModal";
-// Mock danh sách việc làm để hiển thị
+
 const allJobs = [
   {
     title: "Nhân viên kinh doanh",
@@ -56,43 +56,41 @@ const HomePage = () => {
       job.location.toLowerCase().includes(searchLocation.toLowerCase())
   );
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
 
   return (
     <>
       <div className="navbar">
         <div className="logo" onClick={() => navigate("/")}>
-          <img src="/Job247.jpg" alt="Logo" />
+          {" "}
+          <img src="/Job247.jpg" alt="Logo" />{" "}
         </div>
         <ul className="nav navbar-nav navbar-left">
           <li className="navbar-left__item group">
-            <a className="text-sm" onClick={() => navigate("/viec-lam")}>
-              Việc làm
-            </a>
+            <a onClick={() => navigate("/viec-lam")}>Việc làm</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/find-jobs")}>Tìm việc làm</a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/viec-lam-phu-hop")}>
                     Việc làm phù hợp
                   </a>
                 </li>
-                <li>
-                  <a onClick={() => navigate("/it-jobs")}>Việc làm IT</a>
-                </li>
-                <li>
-                  <a onClick={() => navigate("/senior-jobs")}>
-                    Việc làm Senior
-                  </a>
-                </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/company-list")}>
                     Danh sách công ty
                   </a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/top-company")}>Top công ty</a>
                 </li>
               </ul>
@@ -102,15 +100,15 @@ const HomePage = () => {
             <a onClick={() => navigate("/ho-so-cv")}>Hồ sơ & CV</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/tao-cv")}>Tạo CV</a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/tu-van-cv")}>
                     Dịch vụ tư vấn CV
                   </a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/your-cv")}>Hồ sơ của tôi</a>
                 </li>
               </ul>
@@ -120,27 +118,14 @@ const HomePage = () => {
             <a onClick={() => navigate("/cong-cu")}>Công cụ</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
-                <li>
-                  <a onClick={() => navigate("/cv-skill")}>CV Skills</a>
-                </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/thue-tncn")}>Tính thuế TNCN</a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/tinh-baohiem")}>Tính bảo hiểm</a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/tinh-luong")}>Tính lương</a>
-                </li>
-                <li>
-                  <a onClick={() => navigate("/tinh-lai-kep")}>
-                    Tính lãi suất kép
-                  </a>
-                </li>
-                <li>
-                  <a onClick={() => navigate("/ke-hoach-tiet-kiem")}>
-                    Lập kế hoạch tiết kiệm
-                  </a>
                 </li>
               </ul>
             </div>
@@ -149,32 +134,32 @@ const HomePage = () => {
             <a onClick={() => navigate("/cam-nang")}>Cẩm nang nghề nghiệp</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/tu-van-nghe-nghiep")}>
                     Tư vấn nghề nghiệp
                   </a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/thi-truong-va-xu-huong")}>
                     Thị trường & xu hướng
                   </a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/che-do-luong")}>
                     Chế độ lương thưởng
                   </a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/bi-quyet-tim-viec")}>
                     Bí quyết tìm việc
                   </a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/kien-thuc-chuyen-nganh")}>
                     Kiến thức chuyên ngành
                   </a>
                 </li>
-                <li>
+                <li className="navbar-menu__item">
                   <a onClick={() => navigate("/hanh-trang-nghe-nghiep")}>
                     Hành trang nghề nghiệp
                   </a>
@@ -187,7 +172,7 @@ const HomePage = () => {
         <ul className="nav navbar-nav navbar-right">
           {!currentUser ? (
             <>
-              <li>
+              <li key="login">
                 <button
                   className="button outline"
                   onClick={() => navigate("/login")}
@@ -195,7 +180,7 @@ const HomePage = () => {
                   Đăng nhập
                 </button>
               </li>
-              <li>
+              <li key="register">
                 <button
                   className="button primary"
                   onClick={() => navigate("/register")}
@@ -206,11 +191,13 @@ const HomePage = () => {
             </>
           ) : (
             <>
-              <li>
-                <span>Xin chào, {currentUser.name}</span>
+              <li key="greeting">
+                <span className="user-greeting">
+                  Xin chào, {currentUser.name}
+                </span>
               </li>
-              <li>
-                <button className="button outline" onClick={logout}>
+              <li key="logout">
+                <button className="button outline" onClick={handleLogout}>
                   Đăng xuất
                 </button>
               </li>
@@ -246,6 +233,7 @@ const HomePage = () => {
         />
         <button className="button primary">Tìm kiếm</button>
       </div>
+
       <div className="content">
         <div className="job-list">
           <h2>Việc làm tốt nhất</h2>

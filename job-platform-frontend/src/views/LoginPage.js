@@ -81,7 +81,7 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <div className="login-container">
-        <h2 className="welcome-title">Đăng nhập</h2>
+        <h2 className="welcome-title">Đăng nhập tài khoản</h2>
         {error && <p className="error">{error}</p>}
 
         {/* Kiểm tra nếu currentUser không có thì hiển thị form đăng nhập */}
@@ -142,7 +142,7 @@ const LoginPage = () => {
                 onChange={handleChange}
                 required
               />
-              <button type="submit" className="button primary">
+              <button type="submit" className="button primary_login">
                 Đăng nhập
               </button>
             </form>

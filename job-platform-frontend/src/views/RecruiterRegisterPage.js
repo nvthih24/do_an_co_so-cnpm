@@ -39,7 +39,7 @@ const RecruiterRegisterPage = () => {
           <label>Địa điểm làm việc</label>
           <input type="text" placeholder="TP.HCM, Hà Nội..." />
         </div>
-        <button className="button primary" type="submit">Hoàn tất</button>
+        <button className="button primary_rrp" type="submit">Hoàn tất</button>
       </form>
     </div>
   );

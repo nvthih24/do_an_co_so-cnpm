@@ -49,11 +49,13 @@
   }
 
   .navbar-left__item {
-    position: relative;
+    position: absolute;
     /* Để dropdown menu được hiển thị đúng vị trí */
     cursor: pointer;
     padding: auto 10px;
     /* Khoảng cách giữa các mục */
+
+
   }
 
 
@@ -69,7 +71,8 @@
     padding: 10px 12px;
     display: inline-block;
     /* Đảm bảo viền bao quanh mục Việc làm */
-    transition: all 0.3s ease;
+    transition: width 0.3s ease;
+    /* Hiệu ứng chuyển động khi hover */
   }
 
   .navbar-left__item a:hover {
@@ -93,12 +96,8 @@
     z-index: 9999;
     box-sizing: border-box;
     white-space: nowrap;
-    /* Ngăn chặn việc xuống dòng */
     overflow: hidden;
-    /* Đảm bảo không bị tràn ra ngoài */
     text-overflow: ellipsis;
-    /* Thêm dấu chấm lửng nếu chữ quá dài */
-
   }
 
   .navbar-left__item:hover .navbar__item__dropdown-menu {
@@ -106,26 +105,13 @@
     /* Hiển thị menu khi hover vào item */
   }
 
-  .navbar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
   .navbar-menu__item {
-    font-size: 16px;
-    /* Kích thước chữ */
-    padding: 12px 0;
-    /* Khoảng cách giữa các mục */
-    cursor: pointer;
-    transition: 0.3s;
-    border-radius: 5px;
-    /* Bo góc cho các mục */
-    white-space: nowrap;
-    /* Ngăn không cho văn bản bị xuống dòng */
-    overflow: hidden;
-    /* Đảm bảo không bị tràn ra ngoài */
-    margin-bottom: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+    transition: all 0.3s ease;
   }
 
   .navbar-menu__item:hover {
@@ -133,21 +119,6 @@
     color: black;
     border-radius: 5px;
     padding: 12px 20px;
-  }
-
-  .navbar-menu__item:last-child {
-    border-bottom: none;
-    /* Loại bỏ border cho mục cuối cùng */
-  }
-
-  .navbar-menu__item a {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .navbar-menu__item i {
-    margin-right: 8px;
-    /* Khoảng cách giữa icon và chữ */
   }
 
   .navbar-right {
@@ -184,6 +155,26 @@
     display: inline-block;
   }
 
+  .user-greeting {
+    display: flex;
+    align-items: center;
+
+    height: 100%;
+    padding: 10px 0px;
+    font-weight: 500;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-wrap: nowrap;
+    /* Không cho phép xuống dòng */
+    overflow: hidden;
+    /* Ẩn phần chữ không vừa với khung */
+    animation: typing 2.5s steps(22) cursor .4s step-end infinite
+      /* Hiệu ứng gõ chữ cho tên người dùng */
+      alternate-reverse;
+    /* Đảo ngược chiều gõ chữ */
+    width: 30ch;
+    /* Độ dài của hiệu ứng gõ chữ */
+  }
 
   /* 📌 Button */
   .button {
@@ -248,14 +239,14 @@
 
   /* 📌 Job Categories */
   .job-categories {
-    
+
     width: 50%;
     background-color: white;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
-  
+
   .category-page-number {
     flex: 1;
     text-align: center;
@@ -396,5 +387,17 @@
     .navbar .navbar-nav.navbar-left>li>a {
       margin: 13px 5px;
       padding: 13px 5px;
+    }
+  }
+
+  @keyframes typing {
+    from {
+      width: 0ch;
+    }
+  }
+
+  @keyframes cursor {
+    50% {
+      border-color: transparent;
     }
   }
