@@ -1,0 +1,23 @@
+.admin-job-approval {
+    padding: 20px;
+  }
+  
+  .job-card {
+    border: 1px solid #ccc;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+  }
+  .job-card h3 {
+    margin: 0;
+  }
+  .job-card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  

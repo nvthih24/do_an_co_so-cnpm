@@ -51,7 +51,7 @@ router.post("/login", async (req, res) => {
         user: {
           name: user.name,
           email: user.email,
-          //role: user.role, // nếu cần
+          role: user.role,
         },
         message: "Đăng nhập thành công!",
       });

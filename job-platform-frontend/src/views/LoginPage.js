@@ -16,12 +16,17 @@ const LoginPage = () => {
 
   // Kiểm tra xem currentUser có được cập nhật sau khi đăng nhập thành công
   useEffect(() => {
-    console.log("useEffect chạy với currentUser:", currentUser);
+    const role = localStorage.getItem("role");
+  
     if (currentUser) {
-      console.log("User is logged in:", currentUser); // Debug
-      navigate("/"); // Nếu đã đăng nhập, chuyển hướng về trang chủ
+      if (role === "admin") {
+        navigate("/admin/job-approval");
+      } else {
+        navigate("/");
+      }
     }
   }, [currentUser, navigate]);
+  
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,13 +41,19 @@ const LoginPage = () => {
       );
       const { token, user } = response.data;
       console.log("API trả về user:", user);
+      console.log("user.role:", user.role);
 
-      localStorage.setItem("token", token); // Lưu token vào localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", user.role); // Lưu token vào localStorage
+
       login(user); // Cập nhật currentUser trong AuthContext
 
       alert("Đăng nhập thành công!");
-      navigate("/"); // Chuyển hướng về trang chủ
-    } catch (error) {
+      if (user.role === "admin") {
+        navigate("/admin/job-approval");
+      } else {
+        navigate("/");
+      }    } catch (error) {
       setError(error.response?.data?.message || "Lỗi đăng nhập!");
     }
   };

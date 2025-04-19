@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../styles/jobpostform.css"; // Import your CSS file
+import "../styles/jobpostform.css";
 
 const JobPostForm = () => {
   const [formData, setFormData] = useState({
@@ -23,21 +23,17 @@ const JobPostForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData();
-    for (let key in formData) {
-      data.append(key, formData[key]);
-    }
-
+  
     setLoading(true);
-    setError("");  // Reset any previous error
-
+    setError("");
+  
     try {
-      const response = await axios.post("http://localhost:5000/api/jobs", data, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await axios.post("http://localhost:5000/api/jobs", formData, {
+        headers: { "Content-Type": "application/json" },
       });
+  
       if (response.status === 201) {
         alert("Đăng tuyển thành công!");
-        // Optionally, reset form after success
         setFormData({
           position: "",
           companyName: "",
@@ -56,15 +52,18 @@ const JobPostForm = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <form onSubmit={handleSubmit} className="job-form">
       <h3>Thêm chi tiết công việc</h3>
       {error && <p className="error">{error}</p>}
+
       <input
         type="text"
         name="position"
         placeholder="Vị trí tuyển dụng *"
+        value={formData.position}
         onChange={handleChange}
         required
       />
@@ -72,6 +71,7 @@ const JobPostForm = () => {
         type="text"
         name="companyName"
         placeholder="Tên công ty *"
+        value={formData.companyName}
         onChange={handleChange}
         required
       />
@@ -79,36 +79,40 @@ const JobPostForm = () => {
         type="text"
         name="salary"
         placeholder="Lương"
+        value={formData.salary}
         onChange={handleChange}
       />
       <input
         type="text"
         name="address"
         placeholder="Địa chỉ"
+        value={formData.address}
         onChange={handleChange}
       />
       <input
         type="email"
         name="email"
         placeholder="Email *"
+        value={formData.email}
         onChange={handleChange}
         required
       />
       <input
         type="date"
         name="recruitmentTime"
-        placeholder="Thời gian tuyển dụng"
+        value={formData.recruitmentTime}
         onChange={handleChange}
       />
       <input
         type="date"
         name="deadline"
-        placeholder="Hạn nộp hồ sơ"
+        value={formData.deadline}
         onChange={handleChange}
       />
       <textarea
         name="description"
         placeholder="Mô tả công việc"
+        value={formData.description}
         onChange={handleChange}
       />
       <button type="submit" disabled={loading}>

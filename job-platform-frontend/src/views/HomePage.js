@@ -1,60 +1,42 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import "../styles/global.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import RecruiterSelectionModal from "../views/RecruiterSelectionModal";
 
-const allJobs = [
-  {
-    title: "Nhân viên kinh doanh",
-    company: "Công ty ABC",
-    location: "Hà Nội",
-    salary: "12-15 triệu",
-  },
-  {
-    title: "Digital Marketing",
-    company: "Công ty XYZ",
-    location: "TP.HCM",
-    salary: "15-20 triệu",
-  },
-  {
-    title: "Data Analyst",
-    company: "DataTech",
-    location: "Đà Nẵng",
-    salary: "18-22 triệu",
-  },
-  {
-    title: "Nhân viên chăm sóc khách hàng",
-    company: "SupportCo",
-    location: "Hà Nội",
-    salary: "10-12 triệu",
-  },
-  {
-    title: "Brand Manager",
-    company: "BrandHouse",
-    location: "TP.HCM",
-    salary: "25-30 triệu",
-  },
-  {
-    title: "IT Support",
-    company: "TechCare",
-    location: "Cần Thơ",
-    salary: "14-16 triệu",
-  },
-];
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout } = useAuth();   
   const [showModal, setShowModal] = useState(false);
   const [searchTitle, setSearchTitle] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
+  const [allJobs, setAllJobs] = useState([]);
 
-  const filteredJobs = allJobs.filter(
-    (job) =>
-      job.title.toLowerCase().includes(searchTitle.toLowerCase()) &&
-      job.location.toLowerCase().includes(searchLocation.toLowerCase())
-  );
+  // Gọi API để lấy dữ liệu việc làm đã được admin duyệt
+  useEffect(() => {
+    const fetchApprovedJobs = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/api/jobs/approved"); // API lấy danh sách việc làm đã được duyệt
+        const data = await res.json();
+        setAllJobs(data);
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách việc làm:", error);
+      }
+    };
+
+    fetchApprovedJobs();
+  }, []);
+
+
+
+const filteredJobs = allJobs.filter(
+  (job) =>
+    job.position?.toLowerCase().includes(searchTitle.toLowerCase()) &&
+    job.address?.toLowerCase().includes(searchLocation.toLowerCase())
+);
+
 
   const handleLogout = async () => {
     try {
@@ -238,18 +220,18 @@ const HomePage = () => {
         <div className="job-list">
           <h2>Việc làm tốt nhất</h2>
           <div className="job-grid">
-            {filteredJobs.map((job, index) => (
-              <div key={index} className="job-card">
-                <h3>{job.title}</h3>
-                <p className="company">
-                  {job.company} - {job.location}
-                </p>
-                <div className="job-footer">
-                  <p className="salary">{job.salary}</p>
-                  <button className="button outline">Ứng tuyển</button>
-                </div>
+          {filteredJobs.map((job, index) => (
+            <div key={index} className="job-card">
+              <h3>{job.position}</h3>
+              <p className="company">
+                {job.companyName} - {job.address}
+              </p>
+              <div className="job-footer">
+                <p className="salary">{job.salary}</p>
+                <button className="button outline">Ứng tuyển</button>
               </div>
-            ))}
+            </div>
+          ))}
             {filteredJobs.length === 0 && (
               <p>Không tìm thấy việc làm phù hợp.</p>
             )}
