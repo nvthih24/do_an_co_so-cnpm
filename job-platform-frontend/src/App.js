@@ -4,7 +4,6 @@ import RegisterPage from "./views/RegisterPage";
 import LoginPage from "./views/LoginPage";
 import ForgotPassword from "./views/ForgotPassword";
 import { AuthProvider } from "./contexts/AuthContext";
-import FindJobPage from "./views/VIECLAM/FindJobPage";
 import ITJobPage from "./views/VIECLAM/ITJobPage";
 import ViecLamPhuHopPage from "./views/VIECLAM/ViecLamPhuHopPage";
 import SeniorJobPage from "./views/VIECLAM/SeniorJobPage";
@@ -26,7 +25,6 @@ import BiQuyetPage from "./views/CAMNANG/BIQUYETTIMVIECPage";
 import ChuyenNganhPage from "./views/CAMNANG/KIENTHUCCHUYENNGANHPage";
 import HanhTrangPage from "./views/CAMNANG/HANHTRANGNGHENGIEPPage";
 import RecruiterRegisterPage from "./views/RecruiterRegisterPage";
-import JobPage from "./views/VIECLAM/JobPage";
 import HSCVPage from "./views/HOSO_CV/HoSoCVPage";
 import CongCuPage from "./views/CONGCU/CongCuPage";
 import CamNangPage from "./views/CAMNANG/CamNangPage";
@@ -43,8 +41,7 @@ function App() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} /> 
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/viec-lam" element={<JobPage />} />
-      <Route path="/find-jobs" element={<FindJobPage />} />
+      <Route path="/viec-lam" element={<HomePage />} />
       <Route path="/it-jobs" element={<ITJobPage />} />
       <Route path="/viec-lam-phu-hop" element={<ViecLamPhuHopPage />} />
       <Route path="/senior-jobs" element={<SeniorJobPage />} />

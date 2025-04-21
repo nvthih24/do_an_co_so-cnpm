@@ -4,9 +4,13 @@ import axios from "axios";
 import { auth, googleProvider, signInWithPopup } from "../firebaseConfig";
 import { useAuth } from "../contexts/AuthContext";
 import "../styles/LoginPage.css";
+import { useLocation } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath =
+    new URLSearchParams(location.search).get("redirect") || "/";
   const { login, currentUser } = useAuth(); // Lấy currentUser từ context
   const [formData, setFormData] = useState({
     email: "",
@@ -17,16 +21,15 @@ const LoginPage = () => {
   // Kiểm tra xem currentUser có được cập nhật sau khi đăng nhập thành công
   useEffect(() => {
     const role = localStorage.getItem("role");
-  
+
     if (currentUser) {
       if (role === "admin") {
         navigate("/admin/job-approval");
       } else {
-        navigate("/");
+        navigate(redirectPath);
       }
     }
-  }, [currentUser, navigate]);
-  
+  }, [currentUser, navigate, redirectPath]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,8 +55,9 @@ const LoginPage = () => {
       if (user.role === "admin") {
         navigate("/admin/job-approval");
       } else {
-        navigate("/");
-      }    } catch (error) {
+        navigate(redirectPath);
+      }
+    } catch (error) {
       setError(error.response?.data?.message || "Lỗi đăng nhập!");
     }
   };
@@ -71,7 +75,7 @@ const LoginPage = () => {
       login({ name: user.displayName, email: user.email }); // Cập nhật currentUser sau khi đăng nhập thành công
 
       alert("Đăng nhập thành công!");
-      navigate("/"); // Chuyển hướng về trang chủ
+      navigate(redirectPath); // Chuyển hướng về trang chủ
     } catch (error) {
       setError("Lỗi đăng nhập với Google!");
     }

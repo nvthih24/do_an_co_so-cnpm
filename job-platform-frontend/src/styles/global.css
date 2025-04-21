@@ -40,6 +40,14 @@
     padding: 15px 30px;
     background-color: white;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 20px 20px;
+    z-index: 1000;
+    top: 0;
+    position: fixed;
+    /* Đặt navbar ở vị trí cố định */
+    left: 0;
+    width: 100%;
+    /* Chiều rộng 100% */
   }
 
   .navbar h1 {
@@ -49,13 +57,11 @@
   }
 
   .navbar-left__item {
-    position: absolute;
+    position: relative;
     /* Để dropdown menu được hiển thị đúng vị trí */
     cursor: pointer;
     padding: auto 10px;
     /* Khoảng cách giữa các mục */
-
-
   }
 
 
@@ -168,12 +174,17 @@
     /* Không cho phép xuống dòng */
     overflow: hidden;
     /* Ẩn phần chữ không vừa với khung */
-    animation: typing 2.5s steps(22) cursor .4s step-end infinite
+    animation: typing 2.5s steps(22) infinite
       /* Hiệu ứng gõ chữ cho tên người dùng */
       alternate-reverse;
     /* Đảo ngược chiều gõ chữ */
-    width: 30ch;
+    width: 32ch;
     /* Độ dài của hiệu ứng gõ chữ */
+  }
+
+  .page-wrapper {
+    padding-top: 100px;
+    /* Đẩy toàn bộ phần dưới xuống để không bị navbar che */
   }
 
   /* 📌 Button */
@@ -220,10 +231,12 @@
     gap: 10px;
     padding: 15px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 40px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
     margin-bottom: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
   }
 
   .search-bar input {
@@ -234,7 +247,8 @@
   }
 
   .search-bar button {
-    padding: 10px;
+    padding: auto 20px;
+    border-radius: 18px;
   }
 
   /* 📌 Job Categories */
@@ -332,6 +346,8 @@
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
+    text-align: left;
+    margin-left: 10px;
   }
 
   .job-grid {
@@ -396,8 +412,8 @@
     }
   }
 
-  @keyframes cursor {
+  /* @keyframes cursor {
     50% {
       border-color: transparent;
     }
-  }
+  } */

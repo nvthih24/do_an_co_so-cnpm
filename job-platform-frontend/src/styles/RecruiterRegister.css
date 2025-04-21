@@ -1,61 +1,69 @@
 .container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-family: "Segoe UI", sans-serif;
-  }
-  
-  h2 {
-    text-align: center;
-    color: #00b14f;
-    margin-bottom: 25px;
-  }
-  
-  .recruiter-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    font-weight: bold;
-    margin-bottom: 6px;
-    color: #333;
-  }
-  
-  .form-group input {
-    padding: 12px 16px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 15px;
-    transition: border 0.2s ease;
-  }
-  
-  .form-group input:focus {
-    outline: none;
-    border-color: #00b14f;
-  }
-  
-  .button.primary_rrp {
-    background-color: #00b14f;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .button.primary:hover {
-    background-color: #009645;
-  }
-  
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+  flex-direction: column;
+}
+
+h2 {
+  text-align: center;
+  color: #00b14f;
+  margin-bottom: 25px;
+}
+
+.recruiter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.form-group input {
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: border 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #00b14f;
+}
+
+.button.primary_rrp {
+  background-color: #00b14f;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button.primary:hover {
+  background-color: #009645;
+}
+
+.form-title {
+  text-align: center;
+  color: #00b14f;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

@@ -5,10 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import RecruiterSelectionModal from "../views/RecruiterSelectionModal";
 
-
 const HomePage = () => {
   const navigate = useNavigate();
-  const { currentUser, logout } = useAuth();   
+  const { currentUser, logout } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [searchTitle, setSearchTitle] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
@@ -29,14 +28,11 @@ const HomePage = () => {
     fetchApprovedJobs();
   }, []);
 
-
-
-const filteredJobs = allJobs.filter(
-  (job) =>
-    job.position?.toLowerCase().includes(searchTitle.toLowerCase()) &&
-    job.address?.toLowerCase().includes(searchLocation.toLowerCase())
-);
-
+  const filteredJobs = allJobs.filter(
+    (job) =>
+      job.position?.toLowerCase().includes(searchTitle.toLowerCase()) &&
+      job.address?.toLowerCase().includes(searchLocation.toLowerCase())
+  );
 
   const handleLogout = async () => {
     try {
@@ -47,10 +43,18 @@ const filteredJobs = allJobs.filter(
     }
   };
 
+  const handleJobClick = () => {
+    if (!currentUser) {
+      navigate("/login?redirect=/viec-lam-phu-hop"); // Điều hướng đến trang đăng nhập nếu chưa đăng nhập
+    } else {
+      navigate("/viec-lam-phu-hop"); // Điều hướng đến trang việc làm phù hợp nếu đã đăng nhập
+    }
+  };
+
   return (
     <>
       <div className="navbar">
-        <div className="logo" onClick={() => navigate("/")}>
+        <div className="logo" onClick={() => navigate("/viec-lam")}>
           {" "}
           <img src="/Job247.jpg" alt="Logo" />{" "}
         </div>
@@ -60,10 +64,10 @@ const filteredJobs = allJobs.filter(
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/find-jobs")}>Tìm việc làm</a>
+                  <a onClick={() => navigate("/viec-lam")}>Tìm việc làm</a>
                 </li>
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/viec-lam-phu-hop")}>
+                  <a onClick={() => handleJobClick("/viec-lam-phu-hop")}>
                     Việc làm phù hợp
                   </a>
                 </li>
@@ -195,49 +199,50 @@ const filteredJobs = allJobs.filter(
           </li>
         </ul>
       </div>
-
       {showModal && (
         <RecruiterSelectionModal onClose={() => setShowModal(false)} />
       )}
+      <div className="page-wrapper">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Vị trí tuyển dụng, tên công ty"
+            value={searchTitle}
+            onChange={(e) => setSearchTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Địa điểm"
+            value={searchLocation}
+            onChange={(e) => setSearchLocation(e.target.value)}
+          />
+          <button className="button primary">Tìm kiếm</button>
+        </div>
 
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Vị trí tuyển dụng, tên công ty"
-          value={searchTitle}
-          onChange={(e) => setSearchTitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Địa điểm"
-          value={searchLocation}
-          onChange={(e) => setSearchLocation(e.target.value)}
-        />
-        <button className="button primary">Tìm kiếm</button>
-      </div>
-
-      <div className="content">
-        <div className="job-list">
-          <h2>Việc làm tốt nhất</h2>
-          <div className="job-grid">
-          {filteredJobs.map((job, index) => (
-            <div key={index} className="job-card">
-              <h3>{job.position}</h3>
-              <p className="company">
-                {job.companyName} - {job.address}
-              </p>
-              <div className="job-footer">
-                <p className="salary">{job.salary}</p>
-                <button className="button outline">Ứng tuyển</button>
-              </div>
+        <div className="content">
+          <div className="job-list">
+            <h2>Việc làm tốt nhất</h2>
+            <div className="job-grid">
+              {filteredJobs.map((job, index) => (
+                <div key={index} className="job-card">
+                  <h3>{job.position}</h3>
+                  <p className="company">
+                    {job.companyName} - {job.address}
+                  </p>
+                  <div className="job-footer">
+                    <p className="salary">{job.salary}</p>
+                    <button className="button outline">Ứng tuyển</button>
+                  </div>
+                </div>
+              ))}
+              {filteredJobs.length === 0 && (
+                <p>Không tìm thấy việc làm phù hợp.</p>
+              )}
             </div>
-          ))}
-            {filteredJobs.length === 0 && (
-              <p>Không tìm thấy việc làm phù hợp.</p>
-            )}
           </div>
         </div>
-      </div>
+      </div>{" "}
+      {/* ← đóng page-wrapper */}
     </>
   );
 };

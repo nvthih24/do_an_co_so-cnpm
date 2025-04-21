@@ -1,0 +1,123 @@
+/* Container chính */
+.container {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa các phần tử bên trong */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    padding: auto;
+    /* Khoảng cách bên trong container */
+    margin: auto;
+    /* Đặt margin tự động để căn giữa container */
+    max-width: auto;
+    /* Chiều rộng tối đa của container */
+    min-height: auto;
+    /* Chiều cao tối thiểu của container */
+    background-color: #f9f9f9;
+    /* Màu nền cho toàn bộ trang */
+}
+
+
+/*phan chinh*/
+.main-content {
+    display: flex;
+    /* Sử dụng flexbox để căn chỉnh các phần tử bên trong */
+    flex: auto;
+    /* Chiếm toàn bộ không gian còn lại */
+    padding: 20px;
+    /* Khoảng cách bên trong main-content */
+    margin-top: 60px;
+    /* Để tránh bị che bởi navbar */
+    background-color: transparent; /* Thay nền trắng bằng trong suốt */
+    /* Màu nền cho nội dung chính */
+    justify-content: space-between;
+}
+
+/* Phần bên phải (Thông tin cá nhân) */
+.right-panel {
+    flex: 1;
+    background-color: #fff; /* Nền trắng cho phần này */
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+.right-panel h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.right-panel p {
+    font-size: 14px;
+    color: #666;
+}
+
+.left-panel,
+.right-panel {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Phần bên trái (Việc làm phù hợp) */
+.left-panel {
+    flex: 3;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    
+}
+
+.left-panel h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.left-panel .job-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.job-card {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .job-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .job-card p {
+    font-size: 14px;
+    margin: 10px 0;
+  }
+
+  .apply-btn {
+    background-color: #00b14f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .apply-btn:hover {
+    background-color: #008f3c;
+  }
+
+  /* Điều chỉnh responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .main-content {
+      flex-direction: row;
+    }
+  }

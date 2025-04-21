@@ -13,7 +13,7 @@ const RecruiterRegisterPage = () => {
 
   return (
     <div className="container">
-      <h2>Đăng ký tài khoản Nhà tuyển dụng</h2>
+      <h2 className="form-title">Đăng ký tài khoản Nhà tuyển dụng</h2>
       <form className="recruiter-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Email đăng nhập</label>
@@ -31,7 +31,7 @@ const RecruiterRegisterPage = () => {
           <label>Số điện thoại</label>
           <input type="text" required />
         </div>
-        <div className="form-group">  
+        <div className="form-group">
           <label>Công ty</label>
           <input type="text" />
         </div>
@@ -39,7 +39,9 @@ const RecruiterRegisterPage = () => {
           <label>Địa điểm làm việc</label>
           <input type="text" placeholder="TP.HCM, Hà Nội..." />
         </div>
-        <button className="button primary_rrp" type="submit">Hoàn tất</button>
+        <button className="button primary_rrp" type="submit">
+          Hoàn tất
+        </button>
       </form>
     </div>
   );
