@@ -9,7 +9,7 @@
   flex-direction: column;
 }
 
-h2 {
+.form-title {
   text-align: center;
   color: #00b14f;
   margin-bottom: 25px;

@@ -1,12 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-
-
+import RecruiterSelectionModal from "../RecruiterSelectionModal";
+import "../../styles/companylistpage.css";
 const CompanyListPage = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [showModal, setShowModal] = React.useState(false);
+  const [searchTitle, setSearchTitle] = React.useState("");
+  const [searchLocation, setSearchLocation] = React.useState("");
+  const [allJobs, setAllJobs] = React.useState([]);
 
   const handleLogout = async () => {
     try {
@@ -25,8 +28,15 @@ const CompanyListPage = () => {
     }
   };
 
+  const filteredJobs = allJobs.filter(
+    (job) =>
+      job.position?.toLowerCase().includes(searchTitle.toLowerCase()) &&
+      job.address?.toLowerCase().includes(searchLocation.toLowerCase())
+  );
+
   return (
-    <div className="navbar">
+    <>
+      <div className="navbar">
         <div className="logo" onClick={() => navigate("/viec-lam")}>
           {" "}
           <img src="/Job247.jpg" alt="Logo" />{" "}
@@ -172,7 +182,55 @@ const CompanyListPage = () => {
           </li>
         </ul>
       </div>
-      
+
+      {showModal && (
+        <RecruiterSelectionModal onClose={() => setShowModal(false)} />
+      )}
+      <div className="company-list-page">
+        <div className="container_d-flex">
+          <div className="box-search">
+            <ul className="navbar-header-left">
+              <li className="navbar-header-left__item group">
+                <a onClick={() => navigate("/company-list")}>
+                  Danh sách công ty
+                </a>
+              </li>
+              <li className="navbar-header-left__item group">
+                <a onClick={() => navigate("/top-cong-ty")}>Top công ty</a>
+              </li>
+            </ul>
+            <div className="captions">
+              <h1 class="tille">Khám Phá 1.000+ Công Ty Nổi Bật</h1>
+              <p class="descriptions">
+                Tra cứu thông tin công ty, tìm hiểu về văn hóa doanh nghiệp và
+                cơ hội nghề nghiệp tại đây.
+              </p>
+            </div>
+            <form action="" className="search-navbar">
+              <input
+                type="text"
+                placeholder="Nhập tên công ty..."
+                className="search-input"
+              />
+              <button className="search-button">Tìm kiếm</button>
+            </form>
+          </div>
+          <div className="box-image">
+            <img
+              src="https://static.topcv.vn/v4/image/brand-identity/company-billBoard.png?v=1.0.0"
+              alt="Company List"
+            />
+          </div>
+        </div>
+        <div className="company-list-cty">
+          <div className="container-list-cty">
+            <div>
+              <h2 className="list-cty__title">DANH SÁCH CÁC CÔNG TY NỔI BẬT</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

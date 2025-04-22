@@ -1,0 +1,168 @@
+/* Layout container chính */
+.company-list-page {
+    padding-bottom: 50px;
+    background-color: #f5f6fa;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Box chứa toàn bộ phần nội dung: tìm kiếm và ảnh */
+.container_d-flex {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1100px;
+    margin: 0 auto;
+    gap: 60px;
+    flex-wrap: wrap;
+    /* Cho responsive */
+    align-items: flex-start;
+    background-color: #ddd;
+}
+
+/* Phần trái: tìm kiếm và tiêu đề */
+.box-search {
+    flex: 1;
+    max-width: 600px;
+    padding-right: 20px;
+}
+
+/* Thanh menu phụ bên trái */
+.navbar-header-left {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding-bottom: 10px;
+    justify-content: flex-start;
+    margin-top: 80px;
+}
+
+.navbar-header-left__item a {
+    text-decoration: none;
+    color: #00b14f;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.navbar-header-left__item a:hover {
+    background-color: rgba(0, 177, 79, 0.1);
+}
+
+/* Tiêu đề chính */
+.tille {
+    font-size: 28px;
+    color: #222;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.descriptions {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* Form tìm kiếm */
+.search-navbar {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 40px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 16px;
+    border-radius: 40px;
+    border: transparent;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #00b14f;
+}
+
+.search-button {
+    padding: 12px 24px;
+    background-color: #00b14f;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-button:hover {
+    background-color: #009645;
+}
+
+/* Box hình ảnh bên phải */
+.box-image img{
+    padding-top: 100px;
+}
+
+/* danh sách công ty */
+.company-list-cty{
+    display:flex;
+}
+
+.container-list-cty{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+    
+
+}
+
+.list-cty__title{
+    font-size: 20px;
+    color: #222;
+    font-weight: bold;
+    margin-bottom: 10px;
+    
+}
+
+
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .container_d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .box-search,
+    .box-image {
+        max-width: 100%;
+    }
+
+    .search-navbar {
+        flex-direction: column;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+
+    .tille {
+        text-align: center;
+    }
+
+    .descriptions {
+        text-align: center;
+    }
+
+    .box-image {
+        padding-top: 20px; /* Trên mobile thì đỡ trống */
+      }
+}

@@ -39,7 +39,6 @@
     align-items: center;
     padding: 15px 30px;
     background-color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 0 0 20px 20px;
     z-index: 1000;
     top: 0;
@@ -164,7 +163,6 @@
   .user-greeting {
     display: flex;
     align-items: center;
-
     height: 100%;
     padding: 10px 0px;
     font-weight: 500;
