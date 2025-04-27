@@ -4,20 +4,14 @@ import RegisterPage from "./views/RegisterPage";
 import LoginPage from "./views/LoginPage";
 import ForgotPassword from "./views/ForgotPassword";
 import { AuthProvider } from "./contexts/AuthContext";
-import ITJobPage from "./views/VIECLAM/ITJobPage";
 import ViecLamPhuHopPage from "./views/VIECLAM/ViecLamPhuHopPage";
-import SeniorJobPage from "./views/VIECLAM/SeniorJobPage";
 import CompanyListPage from "./views/VIECLAM/CompanyListPage";
 import TopCompanyPage from "./views/VIECLAM/TopCompanyPage";
 import TaoCVPage from "./views/HOSO_CV/TaoCVPage";
-import TuVanCVPage from "./views/HOSO_CV/TuVanCVPage";
 import HoSoCuaToiPage from "./views/HOSO_CV/HoSoCuaToiPage";
-import CVSkillPage from "./views/CONGCU/CVSkillPage";
 import ThueTNCNPage from "./views/CONGCU/ThueTNCNPage";
-import BaoHiemPage from "./views/CONGCU/BAOHIEMPage";
+import BaoHiemThatNghiepPage from "./views/CONGCU/BAOHIEMTHATNGHIEPPage";
 import LuongPage from "./views/CONGCU/LUONGPage";
-import LaiKepPage from "./views/CONGCU/TINHLAIKEPPage";
-import TietKiemPage from "./views/CONGCU/KEHOACHTIETKIEMPage";
 import TuVanNghePage from "./views/CAMNANG/TUVANNGHENGHIEPPage";
 import XuHuongPage from "./views/CAMNANG/XUHUONGPage";
 import CheDoLuongPage from "./views/CAMNANG/CHEDOLUONGPage";
@@ -25,12 +19,12 @@ import BiQuyetPage from "./views/CAMNANG/BIQUYETTIMVIECPage";
 import ChuyenNganhPage from "./views/CAMNANG/KIENTHUCCHUYENNGANHPage";
 import HanhTrangPage from "./views/CAMNANG/HANHTRANGNGHENGIEPPage";
 import RecruiterRegisterPage from "./views/RecruiterRegisterPage";
-import HSCVPage from "./views/HOSO_CV/HoSoCVPage";
-import CongCuPage from "./views/CONGCU/CongCuPage";
+import HuongDanVietCVPage from "./views/HOSO_CV/HuongDanVietCV";
 import CamNangPage from "./views/CAMNANG/CamNangPage";
 import Employer from "./views/Employer";
 import JobPostForm from "./views/JobPostForm";
 import AdminJobApproval from "./views/AdminJobApproval";
+import QuanLyCVPage from "./views/HOSO_CV/QuanLyCVPage";
 
 
 function App() {
@@ -42,22 +36,16 @@ function App() {
       <Route path="/login" element={<LoginPage />} /> 
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/viec-lam" element={<HomePage />} />
-      <Route path="/it-jobs" element={<ITJobPage />} />
       <Route path="/viec-lam-phu-hop" element={<ViecLamPhuHopPage />} />
-      <Route path="/senior-jobs" element={<SeniorJobPage />} />
       <Route path="/company-list" element={<CompanyListPage />} />
       <Route path="/top-company" element={<TopCompanyPage />} />
-      <Route path="/ho-so-cv" element={<HSCVPage />} />
-      <Route path="/tao-cv" element={<TaoCVPage />} />
-      <Route path="/tu-van-cv" element={<TuVanCVPage />} />
+      <Route path="/mau-cv" element={<TaoCVPage />} />
+      <Route path="/huong-dan-viet-cv" element={<HuongDanVietCVPage />} />
+      <Route path="/quan-ly-cv" element={<QuanLyCVPage />} />
       <Route path="/your-cv" element={<HoSoCuaToiPage />} />
-      <Route path="/cong-cu" element={<CongCuPage/>} />
-      <Route path="/cv-skill" element={<CVSkillPage />} />
       <Route path="/thue-tncn" element={<ThueTNCNPage />} />
-      <Route path="/tinh-baohiem" element={<BaoHiemPage />} />
+      <Route path="/tinh-bao-hiem-that-nghiep" element={<BaoHiemThatNghiepPage />} />
       <Route path="/tinh-luong" element={<LuongPage />} />
-      <Route path="/tinh-lai-kep" element={<LaiKepPage />} />
-      <Route path="/ke-hoach-tiet-kiem" element={<TietKiemPage />} />
       <Route path="/cam-nang" element={<CamNangPage/>} />
       <Route path="/tu-van-nghe-nghiep" element={<TuVanNghePage/>} />
       <Route path="/thi-truong-va-xu-huong" element={<XuHuongPage/>} />

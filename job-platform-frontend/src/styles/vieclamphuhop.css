@@ -66,7 +66,6 @@
     flex: 3;
     background-color: #ffffff;
     padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     
 }
@@ -78,7 +77,7 @@
     margin-bottom: 20px;
 }
 
-.left-panel .job-list {
+.left-panel .job-list-phu-hop {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;

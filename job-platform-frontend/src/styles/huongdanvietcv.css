@@ -1,0 +1,191 @@
+/* trong huongdanvietcv.css */
+.huongdanvietcv-page {
+    background-color: #f5f5f5;
+    padding-left: 0 !important;
+}
+
+.container-huongdanvietcv-header {
+    display: flex;
+    justify-content: space-between;
+    /* đẩy 2 bên trái – phải */
+    align-items: center;
+    /* căn giữa theo chiều dọc */
+    gap: 20px;
+    padding: 0 20px;
+    height: 400px;
+    /* hoặc tuỳ chỉnh cho phù hợp */
+    max-width: 1400px;
+    margin: 120px auto 40px;
+    box-sizing: border-box;
+}
+
+/* 2) Cho div trái co 1 phần, div phải co 2 phần để hình lớn hơn 1 chút */
+.container-huongdanvietcv-header-left {
+    flex: 1;
+}
+
+.container-huongdanvietcv-header-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    /* căn hình giữa khối phải */
+}
+
+.huongdanvietcv-header-image {
+    max-width: 70%;
+    /* không rộng quá container */
+    max-height: calc(100vh - 200px);
+    /* cao tối đa = chiều cao màn hình – một ít padding */
+    height: auto;
+    object-fit: contain;
+}
+
+.huongdanvietcv-header-title {
+    font-size: 40px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.huongdanvietcv-header-description {
+    line-height: 1.5;
+    color: darkgray;
+    font-size: 16px;
+}
+
+/* Phần section danh mục chung */
+.container-huongdanvietcv-list {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px 0 20px 0;
+    box-sizing: border-box;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+/* Dùng .row để bọc, có thể để flex cho dễ mở rộng */
+.row {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+/* Bảng danh mục bên trái */
+.bang {
+    min-width: 280px;
+    /* rộng tối thiểu sidebar */
+    max-width: 350px;
+    /* rộng tối đa sidebar */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.07);
+    margin-right: 32px;
+    /* Cách nội dung chính phía bên phải */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tiêu đề danh mục */
+.danh-muc-bang .danh-muc-title {
+    padding: 20px;
+    background: #00b14f;
+    border-radius: .4rem .4rem 0 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: white;
+    margin: 0;
+}
+
+/* Danh sách các mục */
+.danh-muc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.danh-muc-list li {
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.2s, color 0.2s;
+    padding: 10px 8px;
+}
+
+.danh-muc-list li:hover {
+    background: #e9f9f1;
+    color: #00b14f;
+}
+
+.chi-tiet-danh-muc-label {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.box-cate {
+    border: .1rem solid #e8e8e8;
+    margin-bottom: 2.5rem;
+    border-radius: .4rem;
+    padding: 2rem 6rem;
+}
+
+.box-title {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.noi-dung-box {
+    position: relative;
+    padding-left: 18px;
+    list-style: none;
+}
+
+.noi-dung-box::before {
+    content: "•";
+    color: #333;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+.box-reference ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 2 cột chia đều */
+    gap: 16px 24px;
+    /* gap dọc 16px, ngang 24px */
+    padding: 0;
+    margin: 0;
+}
+
+.box-reference ul li a {
+    font-weight: 400;
+    text-decoration: underline;
+    color: blue;
+    font-size: 16px;
+}
+
+.single-line {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.chi-tiet-bang {
+    flex: 1;
+}
+
+
+@media (min-width: 992px) {
+    .bang {
+        width: 25%;
+    }
+}

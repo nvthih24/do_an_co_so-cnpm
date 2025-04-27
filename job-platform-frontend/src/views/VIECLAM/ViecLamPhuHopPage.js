@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../styles/vieclamphuhop.css";
 import { useAuth } from "../../contexts/AuthContext";
+import RecruiterSelectionModal from "../RecruiterSelectionModal";
 
 const JobSuggestions = () => {
   const [jobs, setJobs] = useState([]);
@@ -46,14 +47,13 @@ const JobSuggestions = () => {
 
   return (
     <>
-      {/* Sử dụng className "navbar" từ global.css */}
       <div className="navbar">
-        {/* Đặt Navbar ở đây */}
-        <div className="logo" onClick={() => navigate("/")}>
-          <img src="/Job247.jpg" alt="Logo" />
+        <div className="logo" onClick={() => navigate("/viec-lam")}>
+          {" "}
+          <img src="/Job247.jpg" alt="Logo" />{" "}
         </div>
         <ul className="nav navbar-nav navbar-left">
-          <li className="navbar-left__item group">
+          <div className="navbar-left__item group">
             <a onClick={() => navigate("/viec-lam")}>Việc làm</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
@@ -75,17 +75,17 @@ const JobSuggestions = () => {
                 </li>
               </ul>
             </div>
-          </li>
+          </div>
           <li className="navbar-left__item group">
-            <a onClick={() => navigate("/ho-so-cv")}>Hồ sơ & CV</a>
+            <a onClick={() => navigate("/mau-cv")}>Tạo CV</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/tao-cv")}>Tạo CV</a>
+                  <a onClick={() => navigate("/quan-ly-cv")}>Quản lý CV</a>
                 </li>
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/tu-van-cv")}>
-                    Dịch vụ tư vấn CV
+                  <a onClick={() => navigate("/huong-dan-viet-cv")}>
+                    Hướng dẫn viết CV
                   </a>
                 </li>
                 <li className="navbar-menu__item">
@@ -95,14 +95,16 @@ const JobSuggestions = () => {
             </div>
           </li>
           <li className="navbar-left__item group">
-            <a onClick={() => navigate("/cong-cu")}>Công cụ</a>
+            <a onClick={() => navigate("#")}>Công cụ</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
                 <li className="navbar-menu__item">
                   <a onClick={() => navigate("/thue-tncn")}>Tính thuế TNCN</a>
                 </li>
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/tinh-baohiem")}>Tính bảo hiểm</a>
+                  <a onClick={() => navigate("/tinh-bao-hiem-that-nghiep")}>
+                    Tính bảo hiểm thất nghiệp
+                  </a>
                 </li>
                 <li className="navbar-menu__item">
                   <a onClick={() => navigate("/tinh-luong")}>Tính lương</a>
@@ -193,12 +195,15 @@ const JobSuggestions = () => {
           </li>
         </ul>
       </div>
+      {showModal && (
+        <RecruiterSelectionModal onClose={() => setShowModal(false)} />
+      )}
 
       <div className="main-content">
         <div className="left-panel">
           <h2>Việc làm phù hợp</h2>
           <p>Tìm thấy {jobs.length} việc làm phù hợp với yêu cầu của bạn</p>
-          <div className="job-list">
+          <div className="job-list-phu-hop">
             {loading ? (
               <p>Đang tải...</p>
             ) : (
@@ -222,6 +227,30 @@ const JobSuggestions = () => {
           {/* Hiển thị thông tin cá nhân ở đây */}
         </div>
       </div>
+
+      <footer id="footer-desktop">
+        <div className="footer-common-search-keywords">
+          <div className="footer-common-search-keywords">
+            <div className="container-keyword-seo">
+              <a title="cv là gì?" target="_blank" href="#">
+                CV là gì?
+              </a>
+              <a title="cách viết cv" target="_blank" href="#">
+                Cách viết CV
+              </a>
+              <a title="cv xin việc" target="_blank" href="#">
+                CV xin việc
+              </a>
+              <a title="cv xin việc là gì?" target="_blank" href="#">
+                CV xin việc là gì?
+              </a>
+              <a title="cv xin việc mẫu" target="_blank" href="#">
+                CV xin việc mẫu
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 };

@@ -1,0 +1,68 @@
+.luong-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.luong-page {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 700px;
+    margin-top: 90px;
+}
+
+.salary-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.salary-form input,
+.salary-form select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 30%;
+}
+
+.btn-calc {
+    padding: 10px;
+    background-color: #00b14f;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+}
+
+.salary-result {
+    background-color: #e9f9ee;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 6px;
+}
+
+.qc-luong-page {
+    width: 320px;
+    min-width: 200px;
+    margin: 54px 0 0 0;
+    /* Căn trái bên ngoài form tính thuế */
+}
+
+.box-qc-luong {
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.info-box {
+    font-size: 20px;
+    color: #00b14f;
+    margin-top: 3px;
+    /* căn chỉnh icon nếu cần */
+    flex-shrink: 0;
+}

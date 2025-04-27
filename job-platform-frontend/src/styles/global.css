@@ -158,6 +158,7 @@
   .navbar-left__item.group {
     position: relative;
     display: inline-block;
+    cursor: pointer;
   }
 
   .user-greeting {
@@ -181,8 +182,26 @@
   }
 
   .page-wrapper {
-    padding-top: 100px;
+    padding-top: 80px;
     /* Đẩy toàn bộ phần dưới xuống để không bị navbar che */
+  }
+
+  .text-name {
+    text-align: center;
+    margin-bottom: 20px;
+    z-index: 1;
+  }
+
+  .text-name h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .text-name p {
+    font-size: 16px;
+    color: #666;
+    margin-top: 10px;
   }
 
   /* 📌 Button */
@@ -333,25 +352,68 @@
   /* 📌 Job List */
   .job-list {
     width: 100%;
-    background-color: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    background-color: transparent;
+    padding: auto;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  .job-list h2 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: left;
-    margin-left: 10px;
+  .job-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    margin-left: 0;
   }
+
+  .job-filter-title {
+    margin-right: 16px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #00b14f;
+    margin-bottom: 10px;
+  }
+
+  .dropdown-loc-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #d4d4d4;
+    font-size: 16px;
+    background: #fff;
+    outline: none;
+    margin-right: 10px;
+    min-width: 130px;
+  }
+
+  .badge-filter-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 8px 18px;
+    border-radius: 22px;
+    border: none;
+    background: #ececec;
+    color: #222;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: all 0.2s;
+  }
+
+  .badge.active {
+    background: #00b14f;
+    color: #fff;
+  }
+
 
   .job-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 18px;
   }
 
   .job-card {
@@ -383,9 +445,59 @@
     margin-top: 10px;
   }
 
-  .content {
+  #footer-desktop {
+    width: 100vw;
+    /* Kéo sát 2 bên màn hình */
+    margin-left: calc(-50vw + 50%);
+    /* Kéo phần tử tràn trái, chỉ dùng nếu nằm trong container bị bó */
+    position: relative;
+    left: 0;
+    background: #fff;
+    padding: 24px 0;
+    border-radius: 0;
+    box-sizing: border-box;
+    z-index: 2;
+  }
+
+  .footer-common-search-keywords {
+    width: 100%;
+    padding: 0;
+    /* bo góc = 0 nếu muốn vuông */
+  }
+
+  .container-keyword-seo {
+    width: 100%;
     display: flex;
-    gap: 20px;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 0 24px;
+    margin: 0;
+  }
+
+  .container-keyword-seo a {
+    color: #212f3f;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 30px;
+    margin-right: 15px;
+    text-decoration: none;
+    /* Ẩn gạch chân ở trạng thái bình thường */
+    transition: text-decoration 0.2s;
+  }
+
+  .container-keyword-seo a:hover {
+    text-decoration: underline;
+    /* Hiện gạch chân khi hover */
+  }
+
+  /*📌 QC Page */
+  .body-qc {
+    position: relative;
+    width: 100%;
+    background-image: url('https://png.pngtree.com/background/20210709/original/pngtree-simple-jobs-business-web-page-picture-image_935522.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 20px 20px;
   }
 
   /* Responsive Layout */
@@ -409,9 +521,3 @@
       width: 0ch;
     }
   }
-
-  /* @keyframes cursor {
-    50% {
-      border-color: transparent;
-    }
-  } */

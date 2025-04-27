@@ -12,9 +12,32 @@ const HomePage = () => {
   const [searchTitle, setSearchTitle] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const [allJobs, setAllJobs] = useState([]);
+  const [filterType, setFilterType] = useState("Địa điểm"); // Lọc theo gì
+  const [selectedBadge, setSelectedBadge] = useState("Tất cả"); // Badge được chọn
+
+  // Badge từng loại filter
+  const locationBadges = [
+    "Hà Nội",
+    "Ba Đình",
+    "Hoàn Kiếm",
+    "Hai Bà Trưng",
+    "Đống Đa",
+    "Tây Hồ",
+    "Cầu Giấy",
+    "HCM",
+  ];
+  const salaryBadges = ["< 10tr", "10tr - 20tr", "20tr - 30tr", "> 30tr"];
+  const expBadges = [
+    "Chưa có kinh nghiệm",
+    "Dưới 1 năm",
+    "1-2 năm",
+    "Trên 2 năm",
+  ];
+  const positionBadges = ["IT", "Marketing", "Kế toán", "Kinh doanh", "Design"];
 
   // Gọi API để lấy dữ liệu việc làm đã được admin duyệt
   useEffect(() => {
+    setSelectedBadge("Tất cả");
     const fetchApprovedJobs = async () => {
       try {
         const res = await fetch("http://localhost:5000/api/jobs/approved"); // API lấy danh sách việc làm đã được duyệt
@@ -26,13 +49,51 @@ const HomePage = () => {
     };
 
     fetchApprovedJobs();
-  }, []);
+  }, [filterType]);
 
-  const filteredJobs = allJobs.filter(
-    (job) =>
-      job.position?.toLowerCase().includes(searchTitle.toLowerCase()) &&
-      job.address?.toLowerCase().includes(searchLocation.toLowerCase())
-  );
+  const filteredJobs = allJobs.filter((job) => {
+    // Tìm kiếm chung theo title/location
+    const matchTitle = job.position
+      ?.toLowerCase()
+      .includes(searchTitle.toLowerCase());
+    const matchLocation = job.address
+      ?.toLowerCase()
+      .includes(searchLocation.toLowerCase());
+
+    // Nếu đang tìm kiếm theo input (giống filter của bạn cũ)
+    if (searchTitle || searchLocation) {
+      return matchTitle && matchLocation;
+    }
+    // Nếu không tìm kiếm gì thì trả về tất cả việc làm
+    if (selectedBadge === "Tất cả") return true;
+
+    // Nếu lọc badge filter
+    if (selectedBadge) {
+      if (filterType === "Địa điểm") {
+        if (selectedBadge === "Tất cả") return true;
+        // Đảm bảo trường này trùng với field trong dữ liệu
+        return job.address?.toLowerCase().includes(selectedBadge.toLowerCase());
+      }
+      if (filterType === "Mức lương") {
+        if (selectedBadge === "Tất cả") return true;
+        return job.salary?.toLowerCase().includes(selectedBadge.toLowerCase());
+      }
+      if (filterType === "Kinh nghiệm") {
+        if (selectedBadge === "Tất cả") return true;
+        // Đảm bảo trường này trùng với field trong dữ liệu
+        return job.exp?.toLowerCase().includes(selectedBadge.toLowerCase());
+      }
+      if (filterType === "Ngành nghề") {
+        if (selectedBadge === "Tất cả") return true;
+        // Đảm bảo trường này trùng với field trong dữ liệu
+        return job.position
+          ?.toLowerCase()
+          .includes(selectedBadge.toLowerCase());
+      }
+    }
+    // Nếu không filter gì
+    return true;
+  });
 
   const handleLogout = async () => {
     try {
@@ -51,6 +112,21 @@ const HomePage = () => {
     }
   };
 
+  // Badge hiện tại dựa theo filterType
+  const getBadgeList = () => {
+    if (filterType === "Địa điểm") return locationBadges;
+    if (filterType === "Mức lương") return salaryBadges;
+    if (filterType === "Kinh nghiệm") return expBadges;
+    if (filterType === "Ngành nghề") return positionBadges;
+    return [];
+  };
+  const badgeList = {
+    "Địa điểm": locationBadges,
+    "Kinh nghiệm": expBadges,
+    "Mức lương": salaryBadges,
+    "Ngành nghề": positionBadges,
+  };
+
   return (
     <>
       <div className="navbar">
@@ -59,7 +135,7 @@ const HomePage = () => {
           <img src="/Job247.jpg" alt="Logo" />{" "}
         </div>
         <ul className="nav navbar-nav navbar-left">
-          <li className="navbar-left__item group">
+          <div className="navbar-left__item group">
             <a onClick={() => navigate("/viec-lam")}>Việc làm</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
@@ -81,17 +157,17 @@ const HomePage = () => {
                 </li>
               </ul>
             </div>
-          </li>
+          </div>
           <li className="navbar-left__item group">
-            <a onClick={() => navigate("/ho-so-cv")}>Hồ sơ & CV</a>
+            <a onClick={() => navigate("/mau-cv")}>Tạo CV</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/tao-cv")}>Tạo CV</a>
+                  <a onClick={() => navigate("/quan-ly-cv")}>Quản lý CV</a>
                 </li>
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/tu-van-cv")}>
-                    Dịch vụ tư vấn CV
+                  <a onClick={() => navigate("/huong-dan-viet-cv")}>
+                    Hướng dẫn viết CV
                   </a>
                 </li>
                 <li className="navbar-menu__item">
@@ -101,14 +177,16 @@ const HomePage = () => {
             </div>
           </li>
           <li className="navbar-left__item group">
-            <a onClick={() => navigate("/cong-cu")}>Công cụ</a>
+            <a onClick={() => navigate("#")}>Công cụ</a>
             <div className="navbar__item__dropdown-menu">
               <ul className="navbar-menu">
                 <li className="navbar-menu__item">
                   <a onClick={() => navigate("/thue-tncn")}>Tính thuế TNCN</a>
                 </li>
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/tinh-baohiem")}>Tính bảo hiểm</a>
+                  <a onClick={() => navigate("/tinh-bao-hiem-that-nghiep")}>
+                    Tính bảo hiểm thất nghiệp
+                  </a>
                 </li>
                 <li className="navbar-menu__item">
                   <a onClick={() => navigate("/tinh-luong")}>Tính lương</a>
@@ -203,25 +281,71 @@ const HomePage = () => {
         <RecruiterSelectionModal onClose={() => setShowModal(false)} />
       )}
       <div className="page-wrapper">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Vị trí tuyển dụng, tên công ty"
-            value={searchTitle}
-            onChange={(e) => setSearchTitle(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Địa điểm"
-            value={searchLocation}
-            onChange={(e) => setSearchLocation(e.target.value)}
-          />
-          <button className="button primary">Tìm kiếm</button>
+        <div className="body-qc">
+          <div className="text-name">
+            <h1>Tìm việc làm nhanh 24h, việc làm mới nhất trên toàn quốc</h1>
+            <p>
+              Tiếp cận 40,000+ tin tuyển dụng việc làm mỗi ngày từ hàng nghìn
+              doanh nghiệp uy tín tại Việt Nam
+            </p>
+          </div>
+          <div className="search-bar">
+            <input
+              type="text"
+              placeholder="Vị trí tuyển dụng, tên công ty"
+              value={searchTitle}
+              onChange={(e) => setSearchTitle(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Địa điểm"
+              value={searchLocation}
+              onChange={(e) => setSearchLocation(e.target.value)}
+            />
+            <button className="button primary">Tìm kiếm</button>
+          </div>
         </div>
 
         <div className="content">
           <div className="job-list">
-            <h2>Việc làm tốt nhất</h2>
+            <h2 className="job-filter-title">Việc làm tốt nhất</h2>
+            <div className="job-filter-bar">
+              <select
+                className="dropdown-loc-btn"
+                value={filterType}
+                onChange={(e) => {
+                  setFilterType(e.target.value);
+                  setSelectedBadge("");
+                }}
+              >
+                <option>Địa điểm</option>
+                <option>Mức lương</option>
+                <option>Kinh nghiệm</option>
+                <option>Ngành nghề</option>
+              </select>
+              <div className="badge-filter-row">
+                <button
+                  className={`badge ${
+                    selectedBadge === "Tất cả" ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedBadge("Tất cả")}
+                >
+                  Tất cả
+                </button>
+                {badgeList[filterType]?.map((item) => (
+                  <button
+                    className={`badge ${
+                      selectedBadge === item ? "active" : ""
+                    }`}
+                    onClick={() => setSelectedBadge(item)}
+                    key={item}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </div>
+              {/* --- End filter --- */}
+            </div>
             <div className="job-grid">
               {filteredJobs.map((job, index) => (
                 <div key={index} className="job-card">
@@ -241,8 +365,31 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </div>{" "}
+      </div>
       {/* ← đóng page-wrapper */}
+      <footer id="footer-desktop">
+        <div className="footer-common-search-keywords">
+          <div className="footer-common-search-keywords">
+            <div className="container-keyword-seo">
+              <a title="cv là gì?" target="_blank" href="#">
+                CV là gì?
+              </a>
+              <a title="cách viết cv" target="_blank" href="#">
+                Cách viết CV
+              </a>
+              <a title="cv xin việc" target="_blank" href="#">
+                CV xin việc
+              </a>
+              <a title="cv xin việc là gì?" target="_blank" href="#">
+                CV xin việc là gì?
+              </a>
+              <a title="cv xin việc mẫu" target="_blank" href="#">
+                CV xin việc mẫu
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </>
   );
 };

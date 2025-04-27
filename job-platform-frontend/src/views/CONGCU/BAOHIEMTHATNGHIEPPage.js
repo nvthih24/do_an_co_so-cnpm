@@ -1,64 +1,32 @@
 import React, { useState } from "react";
-import "../../styles/thuetncn.css"; // Import CSS styles for the component
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import "../../styles/baohiemthatnghiep.css";
+import RecruiterSelectionModal from "../../views/RecruiterSelectionModal";
 
-const ThueTNCNPage = () => {
-  const [salary, setSalary] = useState("");
-  const [soNguoiPhuThuoc, setSoNguoiPhuThuoc] = useState(0);
-  const [ketQua, setKetQua] = useState(null);
+const vung_Options = [
+  { value: "I", label: "Vùng I", luongToiThieu: 4680000 },
+  { value: "II", label: "Vùng II", luongToiThieu: 4160000 },
+  { value: "III", label: "Vùng III", luongToiThieu: 3640000 },
+  { value: "IV", label: "Vùng IV", luongToiThieu: 3250000 },
+];
+
+// Hàm format số có dấu phẩy
+function formatNumberWithCommas(value) {
+  if (!value) return "";
+  value = value.replace(/[^0-9]/g, "");
+  return value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const BaoHiemThatNghiepPage = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [showModal, setShowModal] = useState(false);
-  const [chonRule, setChonRule] = useState("new");
+
+  const [luong, setLuong] = useState("");
+  const [vung, setVung] = useState("I");
+  const [ketQua, setKetQua] = useState(null);
   const [rule, setRule] = useState("new");
-
-  const giamTruBanThan = 11000000;
-  const giamTruPhuThuoc = 4400000;
-
-  function tinhThueTNCN(thueChiuThue) {
-    let bac = [
-      { max: 5000000, rate: 0.05 },
-      { max: 10000000, rate: 0.1 },
-      { max: 18000000, rate: 0.15 },
-      { max: 32000000, rate: 0.2 },
-      { max: 52000000, rate: 0.25 },
-      { max: 80000000, rate: 0.3 },
-      { max: Infinity, rate: 0.35 },
-    ];
-    let tienThue = 0,
-      conLai = thueChiuThue;
-    let last = 0;
-    for (let i = 0; i < bac.length && conLai > 0; i++) {
-      let muc = Math.min(conLai, bac[i].max - last);
-      tienThue += muc * bac[i].rate;
-      conLai -= muc;
-      last = bac[i].max;
-    }
-    return tienThue;
-  }
-
-  const handleTinhThue = () => {
-    const gross = parseInt(salary) || 0;
-    const giamTru = giamTruBanThan + soNguoiPhuThuoc * giamTruPhuThuoc;
-    const thuNhapChiuThue = Math.max(0, gross - giamTru);
-
-    const thueTNCN = tinhThueTNCN(thuNhapChiuThue);
-
-    setKetQua({
-      thuNhapChiuThue,
-      thueTNCN,
-      thuNhapSauThue: gross - thueTNCN,
-    });
-  };
-
-  const handleJobClick = () => {
-    if (!currentUser) {
-      navigate("/login?redirect=/viec-lam-phu-hop"); // Điều hướng đến trang đăng nhập nếu chưa đăng nhập
-    } else {
-      navigate("/viec-lam-phu-hop"); // Điều hướng đến trang việc làm phù hợp nếu đã đăng nhập
-    }
-  };
 
   const handleLogout = async () => {
     try {
@@ -69,12 +37,42 @@ const ThueTNCNPage = () => {
     }
   };
 
+  const handleJobClick = () => {
+    if (!currentUser) {
+      navigate("/login?redirect=/viec-lam-phu-hop");
+    } else {
+      navigate("/viec-lam-phu-hop");
+    }
+  };
+
+  // Xử lý nhập lương có dấu phẩy tự động
+  const handleLuongChange = (e) => {
+    const raw = e.target.value.replace(/,/g, "");
+    setLuong(formatNumberWithCommas(raw));
+  };
+
+  // Tính toán BHTN
+  const handleTinh = () => {
+    const { luongToiThieu } = vung_Options.find((v) => v.value === vung);
+    const luongMax = luongToiThieu * 20;
+    const rawLuong = Number(luong.replace(/,/g, "")) || 0;
+    const luongTinh = Math.min(rawLuong, luongMax);
+    const bhNguoiLaoDong = luongTinh * 0.01;
+    const bhNguoiSuDungLaoDong = luongTinh * 0.01;
+    setKetQua({
+      luongTinh,
+      bhNguoiLaoDong,
+      bhNguoiSuDungLaoDong,
+      tong: bhNguoiLaoDong + bhNguoiSuDungLaoDong,
+    });
+  };
+
   return (
     <>
+      {/* Navbar giữ nguyên */}
       <div className="navbar">
         <div className="logo" onClick={() => navigate("/viec-lam")}>
-          {" "}
-          <img src="/Job247.jpg" alt="Logo" />{" "}
+          <img src="/Job247.jpg" alt="Logo" />
         </div>
         <ul className="nav navbar-nav navbar-left">
           <div className="navbar-left__item group">
@@ -126,9 +124,7 @@ const ThueTNCNPage = () => {
                   <a onClick={() => navigate("/thue-tncn")}>Tính thuế TNCN</a>
                 </li>
                 <li className="navbar-menu__item">
-                  <a onClick={() => navigate("/tinh-bao-hiem-that-nghiep")}>
-                    Tính bảo hiểm thất nghiệp
-                  </a>
+                  <a onClick={() => navigate("/tinh-baohiem")}>Tính bảo hiểm thất nghiệp</a>
                 </li>
                 <li className="navbar-menu__item">
                   <a onClick={() => navigate("/tinh-luong")}>Tính lương</a>
@@ -174,7 +170,6 @@ const ThueTNCNPage = () => {
             </div>
           </li>
         </ul>
-
         <ul className="nav navbar-nav navbar-right">
           {!currentUser ? (
             <>
@@ -219,10 +214,15 @@ const ThueTNCNPage = () => {
           </li>
         </ul>
       </div>
-      <div className="thue-body-page">
-        <div className="tinhtnc-page">
+      {showModal && (
+        <RecruiterSelectionModal onClose={() => setShowModal(false)} />
+      )}
+
+      {/* Main content */}
+      <div className="bhtn-container">
+        <div className="bhtn-container-page">
           <div className="center-wrapper">
-            <h2>Công cụ tính thuế thu nhập cá nhân (TNCN)</h2>
+            <h2>Công cụ tính bảo hiểm thất nghiệp (BHTN)</h2>
             <div className="chon-rule">
               <label> Áp dụng quy định: </label>
               <div className="list-option">
@@ -279,7 +279,6 @@ const ThueTNCNPage = () => {
                     từ ngày 01/07/2022 (Theo điều 3, Nghị định 38/2022/NĐ-CP)
                     đến ngày 30/06/2024
                   </li>
-
                   <li>
                     <span className="info-icon">ⓘ</span>
                     Áp dụng mức giảm trừ gia cảnh mới nhất 11 triệu đồng/tháng
@@ -312,72 +311,67 @@ const ThueTNCNPage = () => {
                 </ul>
               </div>
             )}
-            <div className="box_noi-dung-thue">
-              <div className="box_noi-dung-thue_item">
-                <p className="title-block">Giảm trừ gia cảnh bản thân</p>
-                <span className="number-yellow"> 11,000,000đ</span>
-              </div>
-              <div className="box_noi-dung-thue_item">
-                <p className="title-block">Người phụ thuộc</p>
-                <span className="number-yellow"> 4,000,000đ</span>
-              </div>
-            </div>
-            <div className="form-luong">
-              <label>Lương/tháng (VNĐ):</label>
+            <div className="form-bhtn">
+              <label>Chọn vùng</label>
+              <select value={vung} onChange={(e) => setVung(e.target.value)}>
+                {vung_Options.map((v) => (
+                  <option value={v.value} key={v.value}>
+                    {v.label}
+                  </option>
+                ))}
+              </select>
+              <label>Lương đóng BHTN (VNĐ):</label>
               <input
-                type="number"
-                value={salary}
-                onChange={(e) => setSalary(e.target.value)}
-                placeholder="Nhập lương gross/tháng"
+                type="text"
+                value={luong}
+                onChange={handleLuongChange}
+                placeholder="Nhập lương hàng tháng"
+                inputMode="numeric"
               />
             </div>
-            <div className="form-luong">
-              <label>Số người phụ thuộc:</label>
-              <input
-                type="number"
-                value={soNguoiPhuThuoc}
-                onChange={(e) => setSoNguoiPhuThuoc(e.target.value)}
-                min="0"
-              />
-            </div>
-            <button className="btn-tinh-thue" onClick={handleTinhThue}>
-              Tính thuế
+            <button className="btn-tinh-bhtn" onClick={handleTinh}>
+              Tính BHTN
             </button>
             {ketQua && (
-              <div className="result-thue">
+              <div className="result-bhtn">
                 <p>
-                  <b>Thu nhập chịu thuế:</b>{" "}
-                  {ketQua.thuNhapChiuThue.toLocaleString()} VND
+                  <b>Lương tính BHTN (không vượt quá mức tối đa):</b>{" "}
+                  {ketQua.luongTinh.toLocaleString()} VNĐ
                 </p>
                 <p>
-                  <b>Thuế TNCN phải đóng:</b> {ketQua.thueTNCN.toLocaleString()}{" "}
-                  VND
+                  <b>BHTN người lao động đóng (1%):</b>{" "}
+                  {ketQua.bhNguoiLaoDong.toLocaleString()} VNĐ
                 </p>
                 <p>
-                  <b>Thu nhập sau thuế:</b>{" "}
-                  {ketQua.thuNhapSauThue.toLocaleString()} VND
+                  <b>BHTN người sử dụng lao động đóng (1%):</b>{" "}
+                  {ketQua.bhNguoiSuDungLaoDong.toLocaleString()} VNĐ
+                </p>
+                <p>
+                  <b>Tổng cộng hàng tháng:</b> {ketQua.tong.toLocaleString()}{" "}
+                  VNĐ
                 </p>
               </div>
             )}
-            <p className="note-luu-y-thue">
-              <b>Lưu ý:</b> Tính toán dựa trên lương gross, chưa bao gồm các
-              khoản bảo hiểm bắt buộc.
-            </p>
+            <div className="note-bhtn">
+              <b>Lưu ý:</b> Lương tối đa để đóng BHTN = 20 x lương tối thiểu
+              vùng.
+            </div>
           </div>
         </div>
-        <div id="sidebar-qc" className="qc-body-page">
-          <div className="box-qc-page">
+        <div id="sidebar-qc" className="qc-bhtn-page">
+          <div className="box-qc-bhtn">
             <a href="#" target="_blank" id="link-img">
               <img
                 src="https://jobsgo.vn/blog/wp-content/uploads/2022/12/tang-03-tin-tuyen-dung.png"
-                alt
-                title
+                alt=""
+                title=""
                 className="img-responsive"
-              ></img>
+              />
             </a>
           </div>
         </div>
       </div>
+
       <footer id="footer-desktop">
         <div className="footer-common-search-keywords">
           <div className="footer-common-search-keywords">
@@ -405,4 +399,4 @@ const ThueTNCNPage = () => {
   );
 };
 
-export default ThueTNCNPage;
+export default BaoHiemThatNghiepPage;

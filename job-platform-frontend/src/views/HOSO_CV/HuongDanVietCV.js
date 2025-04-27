@@ -1,15 +1,15 @@
 import React from "react";
+import "../../styles/huongdanvietcv.css"; // Thêm CSS cho trang này
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useEffect } from "react";
 import RecruiterSelectionModal from "../RecruiterSelectionModal";
-import "../../styles/companylistpage.css";
-const CompanyListPage = () => {
+
+const HuongDanVietCVPage = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [showModal, setShowModal] = React.useState(false);
-  const [searchTitle, setSearchTitle] = React.useState("");
   const [searchLocation, setSearchLocation] = React.useState("");
-  const [allJobs, setAllJobs] = React.useState([]);
 
   const handleLogout = async () => {
     try {
@@ -27,12 +27,6 @@ const CompanyListPage = () => {
       navigate("/viec-lam-phu-hop"); // Điều hướng đến trang việc làm phù hợp nếu đã đăng nhập
     }
   };
-
-  const filteredJobs = allJobs.filter(
-    (job) =>
-      job.position?.toLowerCase().includes(searchTitle.toLowerCase()) &&
-      job.address?.toLowerCase().includes(searchLocation.toLowerCase())
-  );
 
   return (
     <>
@@ -187,49 +181,178 @@ const CompanyListPage = () => {
       {showModal && (
         <RecruiterSelectionModal onClose={() => setShowModal(false)} />
       )}
-      <div className="company-list-page">
-        <div className="container_d-flex">
-          <div className="box-search">
-            <ul className="navbar-header-left">
-              <li className="navbar-header-left__item group">
-                <a onClick={() => navigate("/company-list")}>
-                  Danh sách công ty
-                </a>
-              </li>
-              <li className="navbar-header-left__item group">
-                <a onClick={() => navigate("/top-company")}>Top công ty</a>
-              </li>
-            </ul>
-            <div className="captions">
-              <h1 class="tille">Khám Phá 1.000+ Công Ty Nổi Bật</h1>
-              <p class="descriptions">
-                Tra cứu thông tin công ty, tìm hiểu về văn hóa doanh nghiệp và
-                cơ hội nghề nghiệp tại đây.
-              </p>
-            </div>
-            <form action="" className="search-navbar">
-              <input
-                type="text"
-                placeholder="Nhập tên công ty..."
-                className="search-input"
-              />
-              <button className="search-button">Tìm kiếm</button>
-            </form>
+      <div className="huongdanvietcv-page">
+        <section className="container-huongdanvietcv-header">
+          <div className="container-huongdanvietcv-header-left">
+            <h1 className="huongdanvietcv-header-title">
+              Hướng dẫn viết CV theo ngành, công việc
+            </h1>
+            <p className="huongdanvietcv-header-description">
+              Hướng dẫn viết CV giúp bạn tạo ra một bản CV chuyên nghiệp và ấn
+              tượng theo từng nganh nghề, lĩnh vực và công việc mà bạn ứng
+              tuyển.
+            </p>
           </div>
-          <div className="box-image">
+          <div className="container-huongdanvietcv-header-right">
             <img
-              src="https://static.topcv.vn/v4/image/brand-identity/company-billBoard.png?v=1.0.0"
-              alt="Company List"
+              src="https://static.topcv.vn/cms/mau-cv-modern_1.png6152e78bd5128.png"
+              alt="Hướng dẫn viết CV"
+              className="huongdanvietcv-header-image"
             />
           </div>
-        </div>
-        <div className="company-list-cty">
-          <div className="container-list-cty">
-            <div>
-              <h2 className="list-cty__title">DANH SÁCH CÁC CÔNG TY NỔI BẬT</h2>
+        </section>
+        <section className="container-huongdanvietcv-list">
+          <div className="row">
+            <div className="bang">
+              <div className="danh-muc-bang">
+                <h2 id="menu-cate" className="danh-muc-title">
+                  Danh mục
+                </h2>
+                <ul className="danh-muc-list">
+                  <li onClick={() => navigate("/huong-dan-viet-cv#menu-cate")}>
+                    <h3 className="chi-tiet-danh-muc-label">
+                      Hướng dẫn viết CV theo ngành nghề, công việc
+                    </h3>
+                  </li>
+                  <li onClick={() => navigate("/huong-dan-viet-cv#menu-cate")}>
+                    <h3 className="chi-tiet-danh-muc-label">
+                      Trái ngành - ít kinh nghiệm{" "}
+                    </h3>
+                  </li>
+                  <li onClick={() => navigate("/huong-dan-viet-cv#menu-cate")}>
+                    <h3 className="chi-tiet-danh-muc-label">Hướng dẫn khác</h3>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className="chi-tiet-bang">
+              <div id="box-0" className="box-cate">
+                <div className="box-title">
+                  <h2 className="box-title-label">
+                    Hướng dẫn viết CV theo ngành nghề, công việc
+                  </h2>
+                </div>
+                <p className="box-description"></p>
+                <p>
+                  Tổng hợp các hướng dẫn chung viết từng phần trong CV, phù hợp
+                  cho bạn ở bất kỳ ngành nghề nào.
+                </p>
+                <p></p>
+                <div className="box-reference">
+                  <ul className="row">
+                    <li className="noi-dung-box">
+                      <a
+                        title="10 kỹ năng trong CV nên có để thu hút nhà tuyển dụng"
+                        className="single-line"
+                        href="#"
+                      >
+                        10 kỹ năng trong CV nên có để thu hút nhà tuyển dụng
+                      </a>
+                    </li>
+                    <li className="noi-dung-box">
+                      <a
+                        title="Cách viết email xin việc chuẩn để ngay lập tức ghi điểm với nhà tuyển dụng"
+                        className="single-line"
+                        href="#"
+                      >
+                        Cách viết email xin việc chuẩn để ngay lập tức ghi điểm
+                        với nhà tuyển dụng
+                      </a>
+                    </li>
+                    <li className="noi-dung-box">
+                      <a
+                        title="Cách viết thông tin cá nhân trong CV"
+                        className="single-line"
+                        href="#"
+                      >
+                        Cách viết thông tin cá nhân trong CV
+                      </a>
+                    </li>
+                    <li className="noi-dung-box">
+                      <a
+                        title="Hoàn thiện CV xin việc với bảng kiểm tra lỗi CV chuẩn chỉnh nhất"
+                        className="single-line"
+                        href="#"
+                      >
+                        Hoàn thiện CV xin việc với bảng kiểm tra lỗi CV chuẩn
+                        chỉnh nhất
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div id="box-1" className="box-cate">
+                <div className="box-title">
+                  <h2 className="box-title-label">
+                    Hướng dẫn viết CV trái ngành - ít kinh nghiệm
+                  </h2>
+                </div>
+                <p className="box-description"></p>
+                <p></p>
+                <div className="box-reference">
+                  <ul className="row">
+                    <li className="noi-dung-box">
+                      <a
+                        title="Cách viết CV cho sinh viên mới ra trường"
+                        className="single-line"
+                        href="#"
+                      >
+                        Cách viết CV cho sinh viên mới ra trường
+                      </a>
+                    </li>
+                    <li className="noi-dung-box">
+                      <a
+                        title="Cách viết CV cho người chưa có kinh nghiệm"
+                        className="single-line"
+                        href="#"
+                      >
+                        Cách viết CV cho người chưa có kinh nghiệm
+                      </a>
+                    </li>
+                    <li className="noi-dung-box">
+                      <a
+                        title="Cách viết CV cho người chuyển việc"
+                        className="single-line"
+                        href="#"
+                      >
+                        Cách viết CV cho người chuyển việc
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div id="box-2" className="box-cate">
+                <div className="box-title">
+                  <h2 className="box-title-label">Hướng dẫn khác</h2>
+                </div>
+                <p className="box-description"></p>
+                <p></p>
+                <div className="box-reference">
+                  <ul className="row">
+                    <li className="noi-dung-box">
+                      <a
+                        title="Cách viết CV cho người có kinh nghiệm"
+                        className="single-line"
+                        href="#"
+                      >
+                        Cách viết CV cho người có kinh nghiệm
+                      </a>
+                    </li>
+                    <li className="noi-dung-box">
+                      <a
+                        title="Cách viết CV cho người đi làm lâu năm"
+                        className="single-line"
+                        href="#"
+                      >
+                        Cách viết CV cho người đi làm lâu năm
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
 
       <footer id="footer-desktop">
@@ -259,4 +382,4 @@ const CompanyListPage = () => {
   );
 };
 
-export default CompanyListPage;
+export default HuongDanVietCVPage;

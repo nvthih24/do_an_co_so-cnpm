@@ -1,0 +1,240 @@
+.thue-body-page {
+    display: flex;
+    gap: 32px; /* Giảm lại cho sát */
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;    /* Giới hạn chiều rộng tổng cho đẹp */
+    margin: 0 auto;       /* Căn giữa toàn trang */
+    width: 100%;
+}
+
+.tinhtnc-page {
+    max-width: 900px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.09);
+    padding: 32px 28px;
+    margin-top: 90px;
+    flex: 1;
+}
+
+.tinhtnc-page h2 {
+    color: black;
+    margin-bottom: 18px;
+}
+
+.chon-rule {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.list-option {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+}
+
+.chon-rule label {
+    color: #263a4d;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: .175px;
+    line-height: 22px;
+    margin: 0;
+}
+
+.custom-radio_input-radio {
+    align-items: center;
+    border: 1px solid #e6e7e8;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    padding: 4px 8px;
+    margin-right: 12px;
+}
+
+.input-radio_label {
+    color: #7f878f;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: .175px;
+    line-height: 22px;
+    text-align: center;
+}
+
+.box_noi-dung {
+    background: #d7e2e8;
+    border-radius: 10px;
+    padding: 18px 24px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.box_noi-dung ul li{
+    display: flex;
+    align-items: flex-start; /* hoặc align-items: center nếu muốn icon chính giữa hàng */
+    gap: 8px;
+    color: #263a4d;
+    font-size: 17px;
+    padding: 8px 0;
+}
+
+.info-icon {
+    font-size: 20px;
+    color: #00b14f;
+    margin-top: 3px; /* căn chỉnh icon nếu cần */
+    flex-shrink: 0;
+}
+
+.box_noi-dung a {
+    display: inline;
+    color: #00b14f;
+    text-decoration: underline;
+}
+
+.box_noi-dung a:hover {
+    color: #00823c;
+}
+
+.box_noi-dung-thue {
+    display: flex;
+    gap: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.box_noi-dung-thue_item {
+    flex: 1;
+    background: #f5f7fa;
+    padding: 18px 24px 14px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-right: 3px solid #fff;
+    border-radius: 10px;
+}
+
+
+.block-thue-item:last-child {
+    border-right: none;
+}
+
+.title-block {
+    color: #555;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 7px;
+}
+
+.number-yellow {
+    color: #00b14f;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.form-luong {
+    margin-bottom: 16px;
+}
+
+.form-luong label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form-luong input {
+    width: 50%;
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid #d7e2e8;
+    font-size: 15px;
+}
+
+.btn-tinh-thue {
+    background: #00b14f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.result-thue {
+    margin-top: 24px;
+    padding: 18px;
+    background: #e8f9f2;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.note-luu-y-thue {
+    color: #666;
+    margin-top: 8px;
+}
+
+.qc-body-page {
+    width: 350px;
+    max-width: 350px;
+    min-width: 200px;
+    margin: 54px auto 0 0;
+    /* Căn trái bên ngoài form tính thuế */
+}
+
+.box-qc-page {
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.img-responsive {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@media (max-width: 1000px) {
+    .thue-body-page {
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      max-width: 98vw;
+    }
+    .tinhtnc-page,
+    .qc-body-page {
+      width: 100%;
+      max-width: 100%;
+      margin: 10px 0;
+    }
+  }
+
+@media (max-width: 700px) {
+    .box_noi-dung-thue {
+        flex-direction: column;
+        border-radius: 12px;
+    }
+
+    .block-thue-item {
+        border-right: none;
+        border-bottom: 2px solid #fff;
+        width: 100%;
+        padding: 14px 8px 8px 8px;
+        align-items: flex-start;
+    }
+
+    .block-thue-item:last-child {
+        border-bottom: none;
+    }
+
+    .number-green {
+        font-size: 22px;
+    }
+}
