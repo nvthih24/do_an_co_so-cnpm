@@ -2,6 +2,7 @@ const express = require("express");
 const Job = require("../models/job"); // model Job
 const router = express.Router();
 
+
 // Thêm công việc mới
 router.post("/", async (req, res) => {
   try {
@@ -15,6 +16,7 @@ router.post("/", async (req, res) => {
       deadline: req.body.deadline,
       description: req.body.description,
       isApproved: false, // Mặc định là chưa duyệt
+      //logo: req.file?.path || "", 
     });
 
     await newJob.save();

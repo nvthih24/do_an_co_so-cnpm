@@ -12,7 +12,7 @@ const AdminJobApproval = () => {
     try {
         const res = await axios.get("http://localhost:5000/api/jobs/pending", {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`, // 👈 lấy token đã lưu khi login
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // lấy token đã lưu khi login
             },
         });      
         setPendingJobs(res.data);
@@ -30,14 +30,14 @@ const AdminJobApproval = () => {
     } catch (err) {
       console.error("Lỗi khi duyệt job:", err);
     }
-  };
+  };   
 
   useEffect(() => {
-    const role = localStorage.getItem("role"); // 👈 lấy quyền từ localStorage
+    const role = localStorage.getItem("role"); // lấy quyền từ localStorage
     if (role !== "admin") {
-      navigate("/"); // không phải admin thì về trang chủ
+      navigate("/"); 
     } else {
-      fetchPendingJobs(); // là admin thì gọi API
+      fetchPendingJobs(); 
     }
   }, []);
 
@@ -46,7 +46,7 @@ const AdminJobApproval = () => {
   return (
     <div className="admin-job-approval">
       <h2>Duyệt bài đăng tuyển dụng</h2>
-      {pendingJobs.length === 0 ? (
+      {pendingJobs.length === 0 ? ( 
         <p>Không có bài đăng nào chờ duyệt.</p>
       ) : (
         pendingJobs.map((job) => (
