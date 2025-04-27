@@ -59,7 +59,7 @@ router.get("/approved", async (req, res) => {
 });
 
 // Lấy chi tiết job theo ID
-router.get("/api/jobs/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const job = await Job.findById(req.params.id);
     if (!job) {
