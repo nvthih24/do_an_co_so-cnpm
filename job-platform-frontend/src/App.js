@@ -25,6 +25,7 @@ import Employer from "./views/Employer";
 import JobPostForm from "./views/JobPostForm";
 import AdminJobApproval from "./views/AdminJobApproval";
 import QuanLyCVPage from "./views/HOSO_CV/QuanLyCVPage";
+import CompanyDetailPage from "./views/VIECLAM/CompanyDetailPage";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
       <Route path="/employer" element={<Employer />} />
       <Route path="/job-post-form" element={<JobPostForm />} />
       <Route path="/admin/job-approval" element={<AdminJobApproval />} />
+      <Route path="/company/:id" element={<CompanyDetailPage />} />
 
 
     </Routes>

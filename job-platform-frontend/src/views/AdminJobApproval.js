@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
-import "../styles/adminjobapproval.css"; // Import your CSS file
+import "../styles/adminjobapproval.css"; 
 
 const AdminJobApproval = () => {
   const [pendingJobs, setPendingJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchPendingJobs = async () => {
+  const fetchPendingJobs = async () => {   
     try {
         const res = await axios.get("http://localhost:5000/api/jobs/pending", {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`, // lấy token đã lưu khi login
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });      
         setPendingJobs(res.data);
@@ -26,7 +26,7 @@ const AdminJobApproval = () => {
   const approveJob = async (id) => {
     try {
       await axios.put(`http://localhost:5000/api/jobs/${id}/approve`);
-      setPendingJobs(pendingJobs.filter((job) => job._id !== id)); // remove job đã duyệt khỏi list
+      setPendingJobs(pendingJobs.filter((job) => job._id !== id));
     } catch (err) {
       console.error("Lỗi khi duyệt job:", err);
     }
@@ -58,6 +58,7 @@ const AdminJobApproval = () => {
             <p><strong>Ngày tuyển:</strong> {job.recruitmentTime?.slice(0, 10)}</p>
             <p><strong>Hạn nộp:</strong> {job.deadline?.slice(0, 10)}</p>
             <p><strong>Mô tả:</strong> {job.description}</p>
+            <p><strong>Mô tả công ty:</strong> {job.companyDescription}</p>
             <button onClick={() => approveJob(job._id)}>✔️ Duyệt bài</button>
           </div>
         ))

@@ -12,6 +12,7 @@ const JobPostForm = () => {
     recruitmentTime: "",
     deadline: "",
     description: "",
+    companyDescription: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -43,6 +44,7 @@ const JobPostForm = () => {
           recruitmentTime: "",
           deadline: "",
           description: "",
+        companyDescription: "",
         });
       }
     } catch (err) {
@@ -115,6 +117,13 @@ const JobPostForm = () => {
         value={formData.description}
         onChange={handleChange}
       />
+      <textarea
+        name="companyDescription"
+        placeholder="Mô tả về công ty"
+        value={formData.companyDescription}
+        onChange={handleChange}
+      />
+
       <button type="submit" disabled={loading}>
         {loading ? "Đang đăng tuyển..." : "Đăng tuyển"}
       </button>

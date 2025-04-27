@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
       recruitmentTime: req.body.recruitmentTime,
       deadline: req.body.deadline,
       description: req.body.description,
+      companyDescription: req.body.companyDescription,
       isApproved: false, // Mặc định là chưa duyệt
       //logo: req.file?.path || "", 
     });
@@ -57,6 +58,19 @@ router.get("/approved", async (req, res) => {
   }
 });
 
+// Lấy chi tiết job theo ID
+router.get("/api/jobs/:id", async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) {
+      return res.status(404).json({ message: "Không tìm thấy công ty." });
+    }
+    res.json(job);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Lỗi khi lấy id công ty" });
+  }
+});
 
 
 module.exports = router;

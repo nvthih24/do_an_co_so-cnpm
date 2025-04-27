@@ -9,6 +9,7 @@ const jobSchema = new mongoose.Schema({
   recruitmentTime: Date,
   deadline: Date,
   description: String, // Description for the job
+  companyDescription: String, // Description for the company
   isApproved: { type: Boolean, default: false },
 });
 
