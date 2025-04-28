@@ -3,6 +3,7 @@
     padding-bottom: 50px;
     background-color: #f5f6fa;
     font-family: 'Segoe UI', sans-serif;
+    padding-top: 60px;
 }
 
 /* Box chứa toàn bộ phần nội dung: tìm kiếm và ảnh */
@@ -34,10 +35,10 @@
     max-width: 1200px;
     padding-bottom: 10px;
     justify-content: flex-start;
-    margin-top: 80px;
+    margin-top: 20px;
 }
 
-.navbar-header-left__item a{
+.navbar-header-left a {
     text-decoration: none;
     color: #00b14f;
     font-weight: bold;
@@ -47,10 +48,10 @@
     transition: all 0.2s ease;
     display: block;
     cursor: pointer;
-    
+
 }
 
-.navbar-header-left__item a:hover {
+.navbar-header-left a:hover {
     background-color: rgba(0, 177, 79, 0.1);
 }
 
@@ -107,19 +108,81 @@
 }
 
 /* Box hình ảnh bên phải */
-.box-image img{
-    padding-top: 100px;
+.box-image {
+    padding-top: 20px;
+    flex: 1;
+    max-width: 300px;
+}
+
+.box-image img {
+    width: 100%;
+    height: auto;
 }
 
 .list-cty__title {
-    font-size: 24px; /* Cỡ chữ */
+    font-size: 24px;
+    /* Cỡ chữ */
     font-weight: bold;
     color: #333;
-    text-align: center; /* Căn giữa theo chiều ngang */
-    margin-top: 20px; /* Khoảng cách phía trên */
-    margin-bottom: 20px; /* Khoảng cách phía dưới */
-  }
+    text-align: center;
+    /* Căn giữa theo chiều ngang */
+    margin-top: 20px;
+    /* Khoảng cách phía trên */
+    margin-bottom: 20px;
+    /* Khoảng cách phía dưới */
+}
 
+/* Box list công ty */
+.company-list-cty {
+    margin-top: 40px;
+}
+
+.company-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.company-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.company-logo {
+    max-width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.company-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.company-card p {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.company-card button {
+    padding: 10px 20px;
+    background-color: #00b14f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.company-card button:hover {
+    background-color: #008f3c;
+}
 
 
 /* Responsive cho màn hình nhỏ */
@@ -136,6 +199,7 @@
 
     .search-navbar {
         flex-direction: column;
+        align-items: center;
     }
 
     .search-button {
@@ -151,6 +215,16 @@
     }
 
     .box-image {
-        padding-top: 20px; /* Trên mobile thì đỡ trống */
-      }
+        padding-top: 20px;
+        /* Trên mobile thì đỡ trống */
+    }
+
+    .company-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .company-card {
+        margin: 0 auto;
+    }
+
 }

@@ -1,0 +1,129 @@
+/* Chung cho toàn bộ trang công ty */
+.company-detail-page {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', sans-serif;
+    margin-top: 70px;
+    text-align: left;
+}
+
+/* Nút quay lại */
+.back-button {
+    background-color: #00b14f;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #009645;
+}
+
+/* Header thông tin công ty */
+.company-header {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    /* Đặt các phần tử theo chiều dọc */
+    align-items: flex-start;
+    /* Căn trái */
+
+}
+
+.company-detail-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.company-info {
+    flex: 1;
+    padding-left: 20px;
+    text-align: left;
+    margin-left: 100px;
+}
+
+.company-info h2 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+
+}
+
+.company-info p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+    display: block;
+    margin-left: 100px;
+}
+
+.company-info strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Phần mô tả công ty */
+.company-description {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: auto;
+    width: 65%;
+}
+
+.company-lien-he{
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: auto;
+    width: 32%;
+}
+.company-description h3,
+.company-lien-he h3 {
+    background: linear-gradient(to right, #00b14f, #009645);
+    /* Tạo hiệu ứng gradient màu nền */
+    color: white;
+    /* Màu chữ trắng */
+    padding: 10px 20px;
+    /* Khoảng cách trong tiêu đề */
+    border-radius: 8px 8px 0 0;
+    /* Các góc trên của tiêu đề được làm tròn */
+    margin: 0;
+    /* Xóa khoảng cách ngoài */
+    font-size: 15px;
+    /* Cỡ chữ */
+    font-weight: bold;
+    /* Đậm chữ */
+}
+
+.company-lien-he a{
+    font-size: 13px;
+    margin: 10px 20px;
+    color: black;
+    font-weight: bold;
+}
+
+.company-description p,
+.company-lien-he p {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    margin: 10px 20px;
+}
+
+.company-detail-page .content-detail {
+    display: flex;
+    justify-content: space-between;
+}

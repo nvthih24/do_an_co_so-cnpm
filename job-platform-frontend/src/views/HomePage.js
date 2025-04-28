@@ -322,7 +322,7 @@ const HomePage = () => {
                 <option>Mức lương</option>
                 <option>Kinh nghiệm</option>
                 <option>Ngành nghề</option>
-              </select>
+              </select> 
               <div className="badge-filter-row">
                 <button
                   className={`badge ${

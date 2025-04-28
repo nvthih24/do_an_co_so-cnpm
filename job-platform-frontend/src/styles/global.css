@@ -47,6 +47,7 @@
     left: 0;
     width: 100%;
     /* Chiều rộng 100% */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
   .navbar h1 {
@@ -182,7 +183,7 @@
   }
 
   .page-wrapper {
-    padding-top: 80px;
+    padding-top: 60px;
     /* Đẩy toàn bộ phần dưới xuống để không bị navbar che */
   }
 
