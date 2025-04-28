@@ -1,0 +1,92 @@
+.cv-templates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;  /* Tăng khoảng cách giữa các card */
+    justify-content: flex-start;
+    margin-top: 30px;
+  }
+  
+  .cv-template-card {
+    background: #fff;
+    border: 1.5px solid #e4e8ee;
+    border-radius: 18px;
+    width: 375px;         /* To ra rõ ràng, như trong ảnh */
+    min-height: 540px;    /* Đủ cao để không bị cắt badge/title */
+    box-shadow: 0 4px 24px #d3e3ef13;
+    padding: 24px 16px 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: box-shadow 0.18s, transform 0.18s;
+  }
+  .cv-template-card:hover {
+    box-shadow: 0 8px 32px #d1eafc24;
+    transform: translateY(-8px) scale(1.015);
+  }
+  
+  /* Ảnh template to, đúng tỉ lệ A4 (hoặc ảnh gốc), căn giữa card */
+  .cv-template-img {
+    width: 295px;           /* Rộng và cao theo tỉ lệ ảnh gốc A4 */
+    height: 385px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 2px 10px #e1e7ef4a;
+  }
+  
+  .cv-template-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  
+  .cv-badge {
+    font-size: 1em;
+    background: #f1f5fa;
+    border-radius: 7px;
+    padding: 6px 16px;
+    color: #2850a7;
+    font-weight: 500;
+    border: 1px solid #e1e7ef;
+    white-space: nowrap;
+  }
+  
+  .cv-template-title {
+    margin-top: 6px;
+    margin-bottom: 4px;
+    font-size: 1.18em;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  .cv-template-desc {
+    color: #465169;
+    font-size: 1.05em;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  
+  .button {
+    width: 92%;
+    max-width: 210px;
+    margin: 0 auto;
+    display: block;
+    padding: 10px 0;
+    border-radius: 7px;
+    background: #1976d2;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 1.08em;
+  }
+  .button:hover {
+    background: #1256b0;
+  }
+  
