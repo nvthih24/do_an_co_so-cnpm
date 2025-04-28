@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import cvTemplates from "./CvTemplate";
-import "../../styles/editcvpage.css";
 import "../../styles/cvtemplate-preview.css";
 
 const EditCVPage = () => {
@@ -11,236 +10,442 @@ const EditCVPage = () => {
   const template = cvTemplates.find((t) => t.id === id);
   const [fields, setFields] = useState(template ? { ...template.fields } : {});
   const previewRef = useRef();
-
   if (!template) return <p>Không tìm thấy template</p>;
 
-  // Handlers chung
-  const handleChange = (e) => setFields((f) => ({ ...f, [e.target.name]: e.target.value }));
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => setFields((f) => ({ ...f, avatar: ev.target.result }));
-    reader.readAsDataURL(file);
+  // Lưu state khi blur khỏi vùng editable
+  const handleBlur = (e) => {
+    const key = e.target.getAttribute("data-key");
+    if (!key) return;
+    setFields((prev) => ({ ...prev, [key]: e.target.innerText.trim() }));
   };
-  const handleDownloadPDF = async () => {
+
+  // Upload avatar
+  const handleAvatarChange = (e) => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = (ev) =>
+      setFields((prev) => ({ ...prev, avatar: ev.target.result }));
+    reader.readAsDataURL(f);
+  };
+
+  // Xuất PDF full khung (fix nằm 1 góc)
+  const downloadPDF = async () => {
     if (!previewRef.current) return;
-    const canvas = await html2canvas(previewRef.current, { scale: 2 });
+    // scale: 2 cho nét, backgroundColor: null để lấy đúng màu nền (nếu cần)
+    const canvas = await html2canvas(previewRef.current, { scale: 2, backgroundColor: null });
+    const imgData = canvas.toDataURL("image/png");
+
+    // Dùng đúng kích thước canvas cho PDF
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "px",
-      format: [canvas.width, canvas.height],
+      format: [canvas.width, canvas.height]
     });
-    pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0);
+
+    // Thêm ảnh vào đúng size, không bị lệch/trắng viền
+    pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+
     pdf.save(`${fields.fullName || "cv"}.pdf`);
   };
 
-  // helper dựng field
-  const Field = (label, name, opts = {}) => (
-    <label className={opts.full ? "full" : ""}>
-      <span>{label}</span>
-      {opts.textarea ? (
-        <textarea
-          name={name}
-          value={fields[name] || ""}
-          onChange={handleChange}
-        />
-      ) : (
-        <input
-          type={opts.type || "text"}
-          name={name}
-          value={fields[name] || ""}
-          onChange={handleChange}
-        />
-      )}
-    </label>
+  // Component tái sử dụng cho vùng editable
+  const E = ({
+    tag: Tag = "div",
+    className,
+    field,
+    placeholder,
+    ...rest
+  }) => (
+    <Tag
+      {...rest}
+      className={className}
+      contentEditable
+      suppressContentEditableWarning
+      data-key={field}
+      onBlur={handleBlur}
+      data-placeholder={placeholder}
+    >
+      {fields[field] || ""}
+    </Tag>
   );
 
   const isHaveAvatar = id === "pro" || id === "ambition";
 
-  // form bên trái
-  const renderForm = () => (
-    <>
-      {isHaveAvatar && (
-        <label className="full">
-          <span>Ảnh đại diện:</span>
-          <input type="file" accept="image/*" onChange={handleAvatarChange} />
-        </label>
-      )}
-      {Field("Họ tên:", "fullName")}
-      {id === "pro" && Field("Ngày sinh:", "dob")}
-      {id === "pro" && Field("Giới tính:", "gender")}
-      {(id === "ambition" || id === "expert") && Field("Vị trí:", "position")}
-      {Field("Số điện thoại:", "phone")}
-      {Field("Email:", "email")}
-      {Field("Website:", "website")}
-      {Field("Địa chỉ:", "address")}
-      {Field("Kỹ năng:", "skills", { textarea: true, full: true })}
-      {Field("Sở thích:", "hobbies", { textarea: true, full: true })}
-      {Field("Người giới thiệu:", "reference", { textarea: true, full: true })}
-      {Field("Thông tin thêm:", "additional", { textarea: true, full: true })}
-      {Field("Mục tiêu nghề nghiệp:", "objective", { textarea: true, full: true })}
-      {Field("Kinh nghiệm:", "experience", { textarea: true, full: true })}
-      {Field("Học vấn:", "education", { textarea: true, full: true })}
-      {Field("Giải thưởng:", "award", { textarea: true, full: true })}
-      {Field("Chứng chỉ:", "certificate", { textarea: true, full: true })}
-      {Field("Hoạt động:", "activity", { textarea: true, full: true })}
-    </>
-  );
-
-  // helper Avatar
-  const Avatar = ({ cls }) =>
-    isHaveAvatar ? (
-      <div
-        className={cls}
-        style={{
-          backgroundImage: `url(${fields.avatar || "/avatar-default.png"})`,
-        }}
-      />
-    ) : null;
-
-  // 3 preview
-  const Pro = () => (
-    <div ref={previewRef} className="cv-preview-pro editcv-preview">
-      <div className="cvpro-left">
-        <Avatar cls="avatar" />
-        <div className="info-block">
-          <div><b>Ngày sinh:</b> {fields.dob}</div>
-          <div><b>Giới tính:</b> {fields.gender}</div>
-          <div><b>SĐT:</b> {fields.phone}</div>
-          <div><b>Email:</b> {fields.email}</div>
-          <div><b>Địa chỉ:</b> {fields.address}</div>
-          <div><b>Website:</b> {fields.website}</div>
-        </div>
-        <div className="objective-block"><b>Mục tiêu nghề nghiệp</b><br />{fields.objective}</div>
-        <div className="skills-block"><b>Kỹ năng</b><br />{fields.skills}</div>
-        <div className="hobbies-block"><b>Sở thích</b><br />{fields.hobbies}</div>
-      </div>
-      <div className="cvpro-right">
-        <h2>{fields.fullName}</h2>
-        <div className="section"><b>Kinh nghiệm làm việc</b><br />{fields.experience}</div>
-        <div className="section"><b>Học vấn</b><br />{fields.education}</div>
-        <div className="section"><b>Hoạt động</b><br />{fields.activity}</div>
-        <div className="section"><b>Danh hiệu &amp; Giải thưởng</b><br />{fields.award}</div>
-        <div className="section"><b>Chứng chỉ</b><br />{fields.certificate}</div>
-        <div className="section"><b>Thông tin thêm</b><br />{fields.additional}</div>
-        <div className="section"><b>Người giới thiệu</b><br />{fields.reference}</div>
-      </div>
-    </div>
-  );
-
-  const Ambition = () => (
-    <div ref={previewRef} className="cv-preview-ambition editcv-preview">
-      <div className="ambition-left">
-        <Avatar cls="avatar" />
-        <div className="ambition-name">{fields.fullName || "Tên"}</div>
-        <div className="ambition-position">{fields.position || "Vị trí ứng tuyển"}</div>
-        <div className="ambition-contact-block">
-          <div className="contact-item"><span className="icon">📱</span>{fields.phone}</div>
-          <div className="contact-item"><span className="icon">✉️</span>{fields.email}</div>
-          <div className="contact-item"><span className="icon">🌐</span>{fields.website}</div>
-          <div className="contact-item"><span className="icon">📍</span>{fields.address}</div>
-        </div>
-        <div className="ambition-section"><b>CÁC KỸ NĂNG</b><div>{fields.skills}</div></div>
-        <div className="ambition-section"><b>SỞ THÍCH</b><div>{fields.hobbies}</div></div>
-        <div className="ambition-section"><b>NGƯỜI GIỚI THIỆU</b><div>{fields.reference}</div></div>
-        <div className="ambition-section"><b>THÔNG TIN THÊM</b><div>{fields.additional}</div></div>
-      </div>
-      <div className="ambition-right">
-        <div className="ambition-objective">
-          <div className="ambition-title">MỤC TIÊU NGHỀ NGHIỆP</div>
-          <div>{fields.objective}</div>
-        </div>
-        <div className="ambition-section"><div className="ambition-title">KINH NGHIỆM LÀM VIỆC</div><div>{fields.experience}</div></div>
-        <div className="ambition-section"><div className="ambition-title">HỌC VẤN</div><div>{fields.education}</div></div>
-        <div className="ambition-section"><div className="ambition-title">DANH HIỆU &amp; GIẢI THƯỞNG</div><div>{fields.award}</div></div>
-        <div className="ambition-section"><div className="ambition-title">CHỨNG CHỈ</div><div>{fields.certificate}</div></div>
-        <div className="ambition-section"><div className="ambition-title">HOẠT ĐỘNG</div><div>{fields.activity}</div></div>
-      </div>
-    </div>
-  );
-
-  const Expert = () => (
-    <div ref={previewRef} className="cv-preview-expert editcv-preview">
-      <div className="expert-header">
-        <div>
-          <div className="expert-fullname">{fields.fullName || "Tên"}</div>
-          <div className="expert-position">{fields.position || "Vị trí ứng tuyển"}</div>
-        </div>
-        <div className="expert-contact">
-          <div>📞 {fields.phone}</div>
-          <div>✉️ {fields.email}</div>
-          <div>📍 {fields.address}</div>
-        </div>
-      </div>
-      <div className="expert-section">
-        <div className="expert-section-title">MỤC TIÊU NGHỀ NGHIỆP</div>
-        <div className="expert-section-desc">{fields.objective}</div>
-      </div>
-      <div className="expert-section">
-        <div className="expert-section-title">KINH NGHIỆM LÀM VIỆC</div>
-        <div className="expert-section-desc">{fields.experience}</div>
-      </div>
-      <div className="expert-row">
-        <div className="expert-col">
-          <div className="expert-section-title">HỌC VẤN</div>
-          <div className="expert-section-desc">{fields.education}</div>
-        </div>
-        <div className="expert-col">
-          <div className="expert-section-title">CÁC KỸ NĂNG</div>
-          <div className="expert-section-desc">{fields.skills}</div>
-        </div>
-      </div>
-      <div className="expert-row">
-        <div className="expert-col">
-          <div className="expert-section-title">DANH HIỆU &amp; GIẢI THƯỞNG</div>
-          <div className="expert-section-desc">{fields.award}</div>
-        </div>
-        <div className="expert-col">
-          <div className="expert-section-title">CHỨNG CHỈ</div>
-          <div className="expert-section-desc">{fields.certificate}</div>
-        </div>
-        <div className="expert-col">
-          <div className="expert-section-title">NGƯỜI GIỚI THIỆU</div>
-          <div className="expert-section-desc">{fields.reference}</div>
-        </div>
-      </div>
-      <div className="expert-row">
-        <div className="expert-col">
-          <div className="expert-section-title">HOẠT ĐỘNG</div>
-          <div className="expert-section-desc">{fields.activity}</div>
-        </div>
-        <div className="expert-col">
-          <div className="expert-section-title">SỞ THÍCH</div>
-          <div className="expert-section-desc">{fields.hobbies}</div>
-        </div>
-        <div className="expert-col">
-          <div className="expert-section-title">THÔNG TIN THÊM</div>
-          <div className="expert-section-desc">{fields.additional}</div>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
-    <div className="editcv-container">
-      <div className="editcv-form-side">
-        <h2>Chỉnh sửa CV</h2>
-        <form className="editcv-form">{renderForm()}</form>
-        <button
-          type="button"
-          className="editcv-download-btn"
-          onClick={handleDownloadPDF}
-        >
+    <>
+      {id === "pro" && (
+        <div ref={previewRef} className="cv-preview-pro editcv-preview">
+          <div className="cvpro-left">
+            {isHaveAvatar && (
+              <label className="avatar-upload">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                />
+                <div
+                  className="avatar"
+                  style={{
+                    backgroundImage: `url(${fields.avatar ||
+                      "/avatar-default.png"})`,
+                  }}
+                />
+              </label>
+            )}
+            <p>
+              <b>Ngày sinh:</b> <E field="dob" placeholder="DD/MM/YYYY" />
+            </p>
+            <p>
+              <b>Giới tính:</b> <E field="gender" placeholder="Nam/Nữ" />
+            </p>
+            <p>
+              <b>SĐT:</b> <E field="phone" placeholder="0123456789" />
+            </p>
+            <p>
+              <b>Email:</b> <E field="email" placeholder="you@ex.com" />
+            </p>
+            <p>
+              <b>Địa chỉ:</b> <E field="address" placeholder="Quận, TP" />
+            </p>
+            <p>
+              <b>Website:</b> <E field="website" placeholder="your.site" />
+            </p>
+            <h4>Mục tiêu nghề nghiệp</h4>
+            <E
+              tag="div"
+              field="objective"
+              placeholder="Viết mục tiêu…"
+              className="full-block"
+            />
+            <h4>Kỹ năng</h4>
+            <E
+              tag="div"
+              field="skills"
+              placeholder="Liệt kê kỹ năng…"
+              className="full-block"
+            />
+            <h4>Sở thích</h4>
+            <E
+              tag="div"
+              field="hobbies"
+              placeholder="Sở thích…"
+              className="full-block"
+            />
+          </div>
+          <div className="cvpro-right">
+            <h2>
+              <E
+                tag="div"
+                field="fullName"
+                placeholder="Họ và tên"
+                className="name-block"
+              />
+            </h2>
+            <div className="section">
+              <h4>Kinh nghiệm làm việc</h4>
+              <E
+                tag="div"
+                field="experience"
+                placeholder="Mô tả kinh nghiệm…"
+                className="full-block"
+              />
+            </div>
+            <div className="section">
+              <h4>Học vấn</h4>
+              <E
+                tag="div"
+                field="education"
+                placeholder="Trường, ngành…"
+                className="full-block"
+              />
+            </div>
+            <div className="section">
+              <h4>Hoạt động</h4>
+              <E
+                tag="div"
+                field="activity"
+                placeholder="Mô tả hoạt động…"
+                className="full-block"
+              />
+            </div>
+            <div className="section">
+              <h4>Danh hiệu & Giải thưởng</h4>
+              <E
+                tag="div"
+                field="award"
+                placeholder="Giải thưởng…"
+                className="full-block"
+              />
+            </div>
+            <div className="section">
+              <h4>Chứng chỉ</h4>
+              <E
+                tag="div"
+                field="certificate"
+                placeholder="Chứng chỉ…"
+                className="full-block"
+              />
+            </div>
+            <div className="section">
+              <h4>Thông tin thêm</h4>
+              <E
+                tag="div"
+                field="additional"
+                placeholder="Ghi chú…"
+                className="full-block"
+              />
+            </div>
+            <div className="section">
+              <h4>Người giới thiệu</h4>
+              <E
+                tag="div"
+                field="reference"
+                placeholder="Tên, chức vụ…"
+                className="full-block"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {id === "ambition" && (
+        <div ref={previewRef} className="cv-preview-ambition editcv-preview">
+          <div className="ambition-left">
+            {isHaveAvatar && (
+              <label className="avatar-upload">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                />
+                <div
+                  className="avatar"
+                  style={{
+                    backgroundImage: `url(${fields.avatar ||
+                      "/avatar-default.png"})`,
+                  }}
+                />
+              </label>
+            )}
+            <E
+              tag="h2"
+              className="ambition-name"
+              field="fullName"
+              placeholder="Họ và tên"
+            />
+            <E
+              tag="div"
+              className="ambition-position"
+              field="position"
+              placeholder="Vị trí ứng tuyển"
+            />
+            <div className="ambition-contact-block">
+              {[
+                ["📱", "phone"],
+                ["✉️", "email"],
+                ["🌐", "website"],
+                ["📍", "address"],
+              ].map(([icon, key]) => (
+                <div className="contact-item" key={key}>
+                  <span className="icon">{icon}</span>
+                  <E field={key} placeholder={icon} />
+                </div>
+              ))}
+            </div>
+            <h4>CÁC KỸ NĂNG</h4>
+            <E
+              tag="div"
+              field="skills"
+              placeholder="Liệt kê…"
+              className="full-block"
+            />
+            <h4>SỞ THÍCH</h4>
+            <E
+              tag="div"
+              field="hobbies"
+              placeholder="Sở thích…"
+              className="full-block"
+            />
+            <h4>NGƯỜI GIỚI THIỆU</h4>
+            <E
+              tag="div"
+              field="reference"
+              placeholder="Tên, chức vụ…"
+              className="full-block"
+            />
+            <h4>THÔNG TIN THÊM</h4>
+            <E
+              tag="div"
+              field="additional"
+              placeholder="Ghi chú…"
+              className="full-block"
+            />
+          </div>
+          <div className="ambition-right">
+            <h4 className="ambition-title">MỤC TIÊU NGHỀ NGHIỆP</h4>
+            <E
+              tag="div"
+              field="objective"
+              placeholder="Viết mục tiêu…"
+              className="full-block"
+            />
+            {[
+              ["KINH NGHIỆM LÀM VIỆC", "experience"],
+              ["HỌC VẤN", "education"],
+              ["DANH HIỆU & Giải thưởng", "award"],
+              ["CHỨNG CHỈ", "certificate"],
+              ["HOẠT ĐỘNG", "activity"],
+            ].map(([label, key]) => (
+              <div className="ambition-section" key={key}>
+                <h4>{label}</h4>
+                <E
+                  tag="div"
+                  field={key}
+                  placeholder={label}
+                  className="full-block"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {id === "expert" && (
+        <div ref={previewRef} className="cv-preview-expert editcv-preview">
+          <div className="expert-header">
+            <div>
+              <E
+                tag="div"
+                className="expert-fullname"
+                field="fullName"
+                placeholder="Họ và tên"
+              />
+              <E
+                tag="div"
+                className="expert-position"
+                field="position"
+                placeholder="Vị trí ứng tuyển"
+              />
+            </div>
+            <div className="expert-contact">
+              {[
+                ["📞", "phone"],
+                ["✉️", "email"],
+                ["📍", "address"],
+              ].map(([icon, key]) => (
+                <div key={key}>
+                  <span>{icon}</span>
+                  <E field={key} placeholder={icon} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="expert-section">
+            <h4>MỤC TIÊU NGHỀ NGHIỆP</h4>
+            <E
+              tag="div"
+              field="objective"
+              placeholder="Viết mục tiêu…"
+              className="full-block"
+            />
+          </div>
+          <div className="expert-section">
+            <h4>KINH NGHIỆM LÀM VIỆC</h4>
+            <E
+              tag="div"
+              field="experience"
+              placeholder="Mô tả…"
+              className="full-block"
+            />
+          </div>
+          <div className="expert-row">
+            <div className="expert-col">
+              <h4>HỌC VẤN</h4>
+              <E
+                tag="div"
+                field="education"
+                placeholder="Trường…"
+                className="full-block"
+              />
+            </div>
+            <div className="expert-col">
+              <h4>CÁC KỸ NĂNG</h4>
+              <E
+                tag="div"
+                field="skills"
+                placeholder="Kỹ năng…"
+                className="full-block"
+              />
+            </div>
+          </div>
+          <div className="expert-row">
+            <div className="expert-col">
+              <h4>DANH HIỆU & Giải thưởng</h4>
+              <E
+                tag="div"
+                field="award"
+                placeholder="Giải thưởng…"
+                className="full-block"
+              />
+            </div>
+            <div className="expert-col">
+              <h4>CHỨNG CHỈ</h4>
+              <E
+                tag="div"
+                field="certificate"
+                placeholder="Chứng chỉ…"
+                className="full-block"
+              />
+            </div>
+            <div className="expert-col">
+              <h4>NGƯỜI GIỚI THIỆU</h4>
+              <E
+                tag="div"
+                field="reference"
+                placeholder="Giới thiệu…"
+                className="full-block"
+              />
+            </div>
+          </div>
+          <div className="expert-row">
+            <div className="expert-col">
+              <h4>HOẠT ĐỘNG</h4>
+              <E
+                tag="div"
+                field="activity"
+                placeholder="Hoạt động…"
+                className="full-block"
+              />
+            </div>
+            <div className="expert-col">
+              <h4>SỞ THÍCH</h4>
+              <E
+                tag="div"
+                field="hobbies"
+                placeholder="Sở thích…"
+                className="full-block"
+              />
+            </div>
+            <div className="expert-col">
+              <h4>THÔNG TIN THÊM</h4>
+              <E
+                tag="div"
+                field="additional"
+                placeholder="Thông tin…"
+                className="full-block"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ textAlign: "center", margin: 24 }}>
+        <button className="download-btn" onClick={downloadPDF}>
           Tải về PDF
         </button>
       </div>
-      <div className="editcv-preview-side">
-        {id === "pro" && <Pro />}
-        {id === "ambition" && <Ambition />}
-        {id === "expert" && <Expert />}
-      </div>
-    </div>
+    </>
   );
 };
 

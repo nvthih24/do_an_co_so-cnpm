@@ -1,26 +1,123 @@
-/* chung */
-.editcv-preview {
-  margin: 0 auto;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 0 16px #0001;
-  overflow: hidden;
+/* ===========================================
+  CHUNG: contentEditable mặc định (right, v.v)
+============================================== */
+.editcv-preview [contentEditable] {
+  color: #000 !important;
+  display: inline-block;
+  min-width: 30px;
+  min-height: 1.2em;
+  padding: 2px 6px;
+  margin: 2px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fafafa;
+  white-space: pre-wrap;
+  transition: border .2s, background .2s;
 }
-.avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 14px;
-  background: #ececec center/cover no-repeat;
-  margin-bottom: 24px;
+.editcv-preview [contentEditable]:empty:before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  font-style: italic;
+}
+.editcv-preview [contentEditable]:focus {
+  outline: none;
+  border-color: #2684ff;
+  background: #e6f0ff;
 }
 
-/* PRO */
-.cv-preview-pro {
-  display: flex;
-  width: 650px;
-  min-height: 920px;
+/* ===========================================
+  CHỈ LEFT PANEL - KHÔNG BORDER, KHÔNG BG
+============================================== */
+
+/* PRO left: text trắng, không viền, không nền */
+.cvpro-left [contentEditable] {
+  color: #fff !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 2px 6px;
 }
+
+/* AMBITION left: text vàng, không viền, không nền */
+.ambition-left [contentEditable] {
+  color: #ffc43a !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 2px 6px;
+}
+
+/* EXPERT left (nếu có panel trái): màu trắng */
+.expert-left [contentEditable] {
+  color: #fff !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 2px 6px;
+}
+
+/* Focus trên left: underline nhẹ, không nền */
+.cvpro-left [contentEditable]:focus,
+.ambition-left [contentEditable]:focus,
+.expert-left [contentEditable]:focus {
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  border-bottom: 1px dashed currentColor !important; /* underline */
+}
+
+/* ===========================================
+    Giữ nguyên các phần còn lại của bạn
+============================================== */
+
+.editcv-preview {
+  margin: 20px auto;
+  max-width: 700px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 0 16px rgba(0,0,0,0.1);
+  overflow: hidden;
+  font-family: 'Segoe UI',Arial,sans-serif;
+  display: flex;
+}
+
+/* avatar upload */
+.avatar-upload {
+  position: relative;
+  cursor: pointer;
+}
+.avatar-upload input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.avatar-upload .avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background-color: #cccccc;
+  background-size: cover;
+  background-position: center;
+}
+.avatar-upload::after {
+  content: "Click để thay ảnh";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #555;
+  background: rgba(255,255,255,0.8);
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* ===== PRO ===== */
+.cv-preview-pro { display: flex; min-height: 920px; }
 .cvpro-left {
   width: 200px;
   background: #5c7f66;
@@ -30,29 +127,27 @@
   flex-direction: column;
   align-items: center;
 }
+.cvpro-left .avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 14px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 24px;
+}
 .cvpro-right {
-  flex: 1;
-  padding: 32px 32px 24px 28px;
+  flex:1;
+  padding: 32px 28px 24px;
   color: #333;
 }
 .cvpro-right h2 {
-  color: #508058;
   font-size: 28px;
-  font-weight: 700;
-  margin: 0 0 12px;
-}
-.cvpro-right .section {
-  margin-bottom: 14px;
-}
-.info-block > div {
-  margin-bottom: 6px;
-  font-size: 14px;
+  margin-bottom: 12px;
 }
 
-/* AMBITION */
+/* ===== AMBITION ===== */
 .cv-preview-ambition {
   display: flex;
-  width: 650px;
   min-height: 920px;
   background: #282828;
   color: #fff;
@@ -69,131 +164,126 @@
   width: 110px;
   height: 110px;
   border-radius: 16px;
+  background-size: cover;
+  background-position: center;
   margin-bottom: 18px;
 }
 .ambition-name {
-  font-size: 22px;
-  font-weight: 700;
-  color: #ffc43a;
-  margin-bottom: 2px;
+  font-size:22px;
+  color:#ffc43a;
+  margin-bottom:6px;
 }
 .ambition-position {
-  font-size: 14px;
-  font-style: italic;
-  color: #e1e1e1;
-  margin-bottom: 18px;
+  font-size:14px;
+  font-style:italic;
+  color:#e1e1e1;
+  margin-bottom:14px;
 }
-.ambition-contact-block {
-  width: 100%;
-  margin-bottom: 14px;
-}
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 13px;
-  color: #ffc43a;
-  margin-bottom: 6px;
-}
-.icon {
-  width: 20px;
-  text-align: center;
-}
-.ambition-section {
-  margin-bottom: 16px;
-  width: 100%;
-  font-size: 14px;
-}
-.ambition-section b {
-  display: block;
-  color: #ffc43a;
-  font-size: 15px;
-  margin-bottom: 4px;
+.ambition-contact-block .contact-item {
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin:6px 0;
 }
 .ambition-right {
-  flex: 1;
-  background: #fff;
-  color: #333;
-  padding: 30px 26px 24px;
-  border-radius: 0 14px 14px 0;
-}
-.ambition-title {
-  color: #ef9300;
-  font-weight: 700;
-  font-size: 15.5px;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.ambition-right .ambition-section {
-  color: #333;
+  flex:1;
+  background:#fff;
+  color:#333;
+  padding:30px 26px 24px;
+  border-radius:0 14px 14px 0;
 }
 
-/* EXPERT */
+/* ===== EXPERT ===== */
 .cv-preview-expert {
-  width: 650px;
-  min-height: 920px;
-  background: #fff;
-  color: #232323;
-  padding: 28px 38px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display:flex;
+  flex-direction:column;
+  min-height:920px;
+  background:#fff;
+  color:#232323;
+  padding:28px 38px;
+  gap:14px;
 }
 .expert-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 2px solid #e4e4e4;
-  padding-bottom: 10px;
-  margin-bottom: 12px;
-}
-.expert-fullname {
-  font-size: 24px;
-  font-weight: 700;
-}
-.expert-position {
-  font-size: 15px;
-  color: #797979;
-  font-style: italic;
+  display:flex;
+  justify-content:space-between;
+  border-bottom:2px solid #e4e4e4;
+  padding-bottom:10px;
+  margin-bottom:12px;
 }
 .expert-contact > div {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  margin-bottom: 3px;
-}
-.expert-section {
-  margin-bottom: 12px;
-}
-.expert-section-title {
-  font-size: 14.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  border-bottom: 1.2px solid #1112;
-  margin-bottom: 3px;
-  color: #2a2a2a;
-}
-.expert-section-desc {
-  font-size: 14px;
-  color: #363636;
-}
-.expert-row {
-  display: flex;
-  gap: 22px;
-  margin-bottom: 6px;
-}
-.expert-col {
-  flex: 1;
-  min-width: 160px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin:6px 0;
 }
 
-/* Responsive preview */
-@media (max-width: 900px) {
-  .cv-preview-pro,
-  .cv-preview-ambition,
-  .cv-preview-expert {
-    width: 100%;
-    padding: 10px;
-  }
+/* nút download */
+.download-btn {
+  background: #1976d2;
+  color: #fff;
+  padding: 10px 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: background .2s;
+}
+.download-btn:hover {
+  background: #1256b0;
+}
+
+/* responsive */
+@media(max-width:720px){
+  .editcv-preview { flex-direction:column; }
+}
+
+
+/* Khung avatar trơn, không viền */
+.avatar-upload {
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  background-color: #e0e0e0;        /* nền xám nhạt */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* nhẹ nhàng nổi lên */
+  position: relative;
+  cursor: pointer;
+}
+
+/* Phần hiển thị ảnh bên trong */
+.avatar-upload .avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  background-color: #cccccc;       /* nền xám đậm hơn khi chưa có ảnh */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Dòng “Click để thay ảnh” */
+.avatar-upload::after {
+  content: "Click để thay ảnh";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #555;
+  background: rgba(255,255,255,0.8);
+  padding: 2px 6px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+
+/* 1. Mặc định: không có viền */
+.editcv-preview [contenteditable] {
+  border: none;
+  outline: none;
+}
+
+/* 2. Khi focus (đang edit): thêm viền nhẹ */
+.editcv-preview [contenteditable]:focus {
+  border: 1px dashed #888;
+  padding: 2px;           /* thêm padding để nội dung không dính sát viền */
+  outline: none;
 }
