@@ -44,7 +44,7 @@ const JobPostForm = () => {
           recruitmentTime: "",
           deadline: "",
           description: "",
-        companyDescription: "",
+          companyDescription: "",
         });
       }
     } catch (err) {

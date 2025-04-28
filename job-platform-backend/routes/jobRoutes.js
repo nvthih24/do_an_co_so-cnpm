@@ -72,5 +72,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Xoá job theo ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) {
+      return res.status(404).json({ message: "Không tìm thấy công việc." });
+    }
+    await job.deleteOne(); // hoặc job.remove() cũng được
+    res.json({ message: "Xoá công việc thành công!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Lỗi khi xoá công việc." });
+  }
+});
+
+
 
 module.exports = router;

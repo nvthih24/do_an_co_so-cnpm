@@ -7,7 +7,7 @@ const RecruiterSelectionModal = ({ onClose }) => {
   const navigate = useNavigate();
 
   const handleRecruiterClick = () => {
-    navigate("/dang-ky-nha-tuyen-dung");
+    navigate("/employer");
   };
 
   const handleCandidateClick = () => {

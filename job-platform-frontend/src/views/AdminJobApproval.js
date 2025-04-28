@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/adminjobapproval.css"; 
 
 const AdminJobApproval = () => {
-  const [pendingJobs, setPendingJobs] = useState([]);
+  const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentTab, setCurrentTab] = useState("pending"); // pending | approved
   const navigate = useNavigate();
 
-  const fetchPendingJobs = async () => {   
+  const fetchPendingJobs = async () => {
+    setLoading(true);
     try {
-        const res = await axios.get("http://localhost:5000/api/jobs/pending", {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });      
-        setPendingJobs(res.data);
+      const res = await axios.get("http://localhost:5000/api/jobs/pending", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setJobs(res.data);
+      setCurrentTab("pending");
     } catch (err) {
       console.error("Lỗi khi lấy job chưa duyệt:", err);
     } finally {
@@ -23,33 +26,84 @@ const AdminJobApproval = () => {
     }
   };
 
+  const fetchApprovedJobs = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get("http://localhost:5000/api/jobs/approved", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setJobs(res.data);
+      setCurrentTab("approved");
+    } catch (err) {
+      console.error("Lỗi khi lấy job đã duyệt:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const approveJob = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/jobs/${id}/approve`);
-      setPendingJobs(pendingJobs.filter((job) => job._id !== id));
+      await axios.put(`http://localhost:5000/api/jobs/${id}/approve`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      alert("Duyệt bài thành công!");
+      setJobs(jobs.filter((job) => job._id !== id));
     } catch (err) {
       console.error("Lỗi khi duyệt job:", err);
+      alert("Duyệt bài thất bại!");
     }
-  };   
+  };
+
+  const deleteJob = async (id) => {
+    const confirmDelete = window.confirm("Bạn có chắc muốn xoá bài đăng này không?");
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/jobs/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      alert("Xoá bài đăng thành công!");
+      setJobs(jobs.filter((job) => job._id !== id));
+    } catch (err) {
+      console.error("Lỗi khi xoá job:", err);
+      alert("Xoá bài đăng thất bại!");
+    }
+  };
 
   useEffect(() => {
-    const role = localStorage.getItem("role"); // lấy quyền từ localStorage
+    const role = localStorage.getItem("role");
     if (role !== "admin") {
-      navigate("/"); 
+      navigate("/");
     } else {
-      fetchPendingJobs(); 
+      fetchPendingJobs();
     }
-  }, []);
+  }, [navigate]);
 
   if (loading) return <p>Đang tải danh sách bài đăng...</p>;
 
   return (
     <div className="admin-job-approval">
-      <h2>Duyệt bài đăng tuyển dụng</h2>
-      {pendingJobs.length === 0 ? ( 
-        <p>Không có bài đăng nào chờ duyệt.</p>
+      <h2>{currentTab === "pending" ? "Duyệt bài đăng tuyển dụng" : "Lịch sử duyệt bài"}</h2>
+
+      <div style={{ marginBottom: "20px" }}>
+        <button onClick={fetchPendingJobs} style={{ marginRight: "10px" }}>
+          Công việc chờ duyệt
+        </button>
+        <button onClick={fetchApprovedJobs}>
+          Lịch sử duyệt bài
+        </button>
+      </div>
+
+      {jobs.length === 0 ? (
+        <p>Không có bài đăng nào.</p>
       ) : (
-        pendingJobs.map((job) => (
+        jobs.map((job) => (
           <div key={job._id} className="job-card">
             <h3>{job.position}</h3>
             <p><strong>Công ty:</strong> {job.companyName}</p>
@@ -59,7 +113,14 @@ const AdminJobApproval = () => {
             <p><strong>Hạn nộp:</strong> {job.deadline?.slice(0, 10)}</p>
             <p><strong>Mô tả:</strong> {job.description}</p>
             <p><strong>Mô tả công ty:</strong> {job.companyDescription}</p>
-            <button onClick={() => approveJob(job._id)}>✔️ Duyệt bài</button>
+
+            {/* Nếu là pending thì có nút duyệt và xoá */}
+            {currentTab === "pending" && (
+              <>
+                <button className="approve-button" onClick={() => approveJob(job._id)}>✔️ Duyệt bài</button>
+                <button className="delete-button" onClick={() => deleteJob(job._id)}>🗑️ Xoá bài</button>
+              </>
+            )}
           </div>
         ))
       )}
