@@ -16,6 +16,10 @@ const JobPostForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [businessLicense, setBusinessLicense] = useState(null);
+  const [logo, setLogo] = useState(null);
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,17 +28,50 @@ const JobPostForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
     setLoading(true);
     setError("");
   
     try {
+      // Gửi dữ liệu công việc trước (chưa có giấy phép và logo)
       const response = await axios.post("http://localhost:5000/api/jobs", formData, {
         headers: { "Content-Type": "application/json" },
       });
   
       if (response.status === 201) {
+        const jobId = response.data._id; // lấy id job vừa tạo
+  
+        // Nếu có file giấy phép thì upload giấy phép
+        if (businessLicense) {
+          const uploadData = new FormData();
+          uploadData.append("businessLicense", businessLicense);
+  
+          await axios.post(
+            `http://localhost:5000/api/jobs/upload-license/${jobId}`,
+            uploadData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+          console.log("Upload business license thành công");
+        }
+  
+        // Nếu có file logo thì upload logo
+        if (logo) {
+          const uploadLogoData = new FormData();
+          uploadLogoData.append("logo", logo);
+  
+          await axios.post(
+            `http://localhost:5000/api/jobs/upload-logo/${jobId}`,
+            uploadLogoData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+          console.log("Upload logo thành công");
+        }
+  
         alert("Đăng tuyển thành công!");
+        // Reset form
         setFormData({
           position: "",
           companyName: "",
@@ -46,14 +83,17 @@ const JobPostForm = () => {
           description: "",
           companyDescription: "",
         });
+        setBusinessLicense(null);
+        setLogo(null);
       }
     } catch (err) {
-      setError("Đăng tuyển thất bại! Vui lòng thử lại.");
       console.error(err);
+      setError("Đăng tuyển thất bại! Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
   };
+  
   
 
   return (
@@ -123,7 +163,20 @@ const JobPostForm = () => {
         value={formData.companyDescription}
         onChange={handleChange}
       />
-
+      <label>Giấy phép kinh doanh:</label>
+      <input 
+        type="file" 
+        name="businessLicense" 
+        accept="image/*,application/pdf" 
+        onChange={(e) => setBusinessLicense(e.target.files[0])}
+      />
+      <label>Logo công ty:</label>
+      <input 
+        type="file" 
+        name="logo" 
+        accept="image/*" 
+        onChange={(e) => setLogo(e.target.files[0])}
+      />
       <button type="submit" disabled={loading}>
         {loading ? "Đang đăng tuyển..." : "Đăng tuyển"}
       </button>

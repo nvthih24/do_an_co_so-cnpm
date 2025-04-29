@@ -113,6 +113,18 @@ const AdminJobApproval = () => {
             <p><strong>Hạn nộp:</strong> {job.deadline?.slice(0, 10)}</p>
             <p><strong>Mô tả:</strong> {job.description}</p>
             <p><strong>Mô tả công ty:</strong> {job.companyDescription}</p>
+            <p><strong>Giấy phép kinh doanh:</strong></p>
+            <img
+              src={job.businessLicense}
+              alt="Giấy phép kinh doanh"
+              style={{ maxWidth: "300px", maxHeight: "300px", objectFit: "contain", marginTop: "10px" }}
+            />
+            <p><strong>Logo công ty:</strong></p>
+            <img
+              src={job.logo}
+              alt="Logo công ty"
+              style={{ maxWidth: "300px", maxHeight: "300px", objectFit: "contain", marginTop: "10px" }}
+            />
 
             {/* Nếu là pending thì có nút duyệt và xoá */}
             {currentTab === "pending" && (

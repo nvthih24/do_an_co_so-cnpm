@@ -11,6 +11,11 @@ const jobSchema = new mongoose.Schema({
   description: String, // Description for the job
   companyDescription: String, // Description for the company
   isApproved: { type: Boolean, default: false },
+  // Logo công ty
+  logo: String,
+
+  // Giấy phép kinh doanh (URL từ Cloudinary)
+  businessLicense: String,
 });
 
 module.exports = mongoose.model("Job", jobSchema);

@@ -1,6 +1,8 @@
 const express = require("express");
 const Job = require("../models/job"); // model Job
 const router = express.Router();
+const upload = require("./uploader"); 
+const cloudinary = require("../utils/cloudinary");
 
 
 // Thêm công việc mới
@@ -86,6 +88,51 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: "Lỗi khi xoá công việc." });
   }
 });
+
+// Route upload giấy phép kinh doanh
+router.post("/upload-license/:jobId", upload.single("businessLicense"), async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    
+    // File đã tự động upload lên Cloudinary rồi
+    // Link ảnh trong req.file.path
+    const imageUrl = req.file.path || req.file.url;
+
+    await Job.findByIdAndUpdate(jobId, { businessLicense: imageUrl }, { new: true });
+
+    res.json({ message: "Upload thành công!", url: imageUrl });
+    console.log("Đã upload giấy phép kinh doanh:", imageUrl);
+  } catch (error) {
+    console.error("Lỗi upload:", error);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+// Route upload logo công ty
+router.post("/upload-logo/:id", upload.single("logo"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "Logo không được bỏ trống" });
+    }
+
+    // URL của logo được lưu trữ trong req.file.path (được lưu trữ tự động khi sử dụng multer-storage-cloudinary)
+    const logoUrl = req.file.path || req.file.url;
+
+    // Cập nhật logo vào job trong DB
+    const job = await Job.findById(req.params.id);
+    if (!job) {
+      return res.status(404).json({ message: "Không tìm thấy công việc" });
+    }
+    job.logo = logoUrl;
+    await job.save();
+
+    res.status(200).json({ message: "Logo uploaded successfully", logoUrl });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Upload logo thất bại", error: err.message });
+  }
+});
+
 
 
 
