@@ -4,7 +4,6 @@ import "../../styles/createcv.css";
 import { useAuth } from "../../contexts/AuthContext";
 import RecruiterSelectionModal from "../RecruiterSelectionModal";
 import cvTemplates from "./CvTemplate";
-import "../../styles/taocvpage.css";
 
 const TaoCVPage = () => {
   const navigate = useNavigate();
