@@ -92,10 +92,10 @@ const AdminJobApproval = () => {
       <h2>{currentTab === "pending" ? "Duyệt bài đăng tuyển dụng" : "Lịch sử duyệt bài"}</h2>
 
       <div style={{ marginBottom: "20px" }}>
-        <button onClick={fetchPendingJobs} style={{ marginRight: "10px" }}>
+        <button className="btn-approval" onClick={fetchPendingJobs} style={{ marginRight: "10px" }}>
           Công việc chờ duyệt
         </button>
-        <button onClick={fetchApprovedJobs}>
+        <button className="btn-approval" onClick={fetchApprovedJobs}>
           Lịch sử duyệt bài
         </button>
       </div>

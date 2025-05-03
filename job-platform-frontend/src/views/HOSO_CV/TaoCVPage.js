@@ -39,15 +39,120 @@ const TaoCVPage = () => {
     }
   };
 
+  const handleJobClick = () => {
+    if (!currentUser) {
+      navigate("/login?redirect=/viec-lam-phu-hop"); // Điều hướng đến trang đăng nhập nếu chưa đăng nhập
+    } else {
+      navigate("/viec-lam-phu-hop"); // Điều hướng đến trang việc làm phù hợp nếu đã đăng nhập
+    }
+  };
+
   return (
     <>
       <div className="navbar">
         <div className="logo" onClick={() => navigate("/viec-lam")}>
-          <img src="/Job247.jpg" alt="Logo" />
+          {" "}
+          <img src="/Job247.jpg" alt="Logo" />{" "}
         </div>
         <ul className="nav navbar-nav navbar-left">
-          {/* ...bạn giữ nguyên phần navbar của mình ở đây... */}
+          <div className="navbar-left__item group">
+            <a onClick={() => navigate("/viec-lam")}>Việc làm</a>
+            <div className="navbar__item__dropdown-menu">
+              <ul className="navbar-menu">
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/viec-lam")}>Tìm việc làm</a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => handleJobClick("/viec-lam-phu-hop")}>
+                    Việc làm phù hợp
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/company-list")}>
+                    Danh sách công ty
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/top-company")}>Top công ty</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <li className="navbar-left__item group">
+            <a onClick={() => navigate("/mau-cv")}>Tạo CV</a>
+            <div className="navbar__item__dropdown-menu">
+              <ul className="navbar-menu">
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/quan-ly-cv")}>Quản lý CV</a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/huong-dan-viet-cv")}>
+                    Hướng dẫn viết CV
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/your-cv")}>Hồ sơ của tôi</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li className="navbar-left__item group">
+            <a onClick={() => navigate("#")}>Công cụ</a>
+            <div className="navbar__item__dropdown-menu">
+              <ul className="navbar-menu">
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/thue-tncn")}>Tính thuế TNCN</a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/tinh-bao-hiem-that-nghiep")}>
+                    Tính bảo hiểm thất nghiệp
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/tinh-luong")}>Tính lương</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li className="navbar-left__item group">
+            <a onClick={() => navigate("/cam-nang")}>Cẩm nang nghề nghiệp</a>
+            <div className="navbar__item__dropdown-menu">
+              <ul className="navbar-menu">
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/tu-van-nghe-nghiep")}>
+                    Tư vấn nghề nghiệp
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/thi-truong-va-xu-huong")}>
+                    Thị trường & xu hướng
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/che-do-luong")}>
+                    Chế độ lương thưởng
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/bi-quyet-tim-viec")}>
+                    Bí quyết tìm việc
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/kien-thuc-chuyen-nganh")}>
+                    Kiến thức chuyên ngành
+                  </a>
+                </li>
+                <li className="navbar-menu__item">
+                  <a onClick={() => navigate("/hanh-trang-nghe-nghiep")}>
+                    Hành trang nghề nghiệp
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
         </ul>
+
         <ul className="nav navbar-nav navbar-right">
           {!currentUser ? (
             <>
@@ -105,44 +210,46 @@ const TaoCVPage = () => {
         </p>
         <div className="dropdown-container">
           <div className="dropdown">
-            <button className="dropdown-btn" onClick={toggleLanguage}>
-              {language}{" "}
-              <span className={`arrow ${languageOpen ? "open" : ""}`}>▼</span>{" "}
-            </button>
-            {languageOpen && (
-              <div className="dropdown-menu">
-                <button onClick={() => setLanguage("Tiếng Việt")}>
-                  Tiếng Việt
-                </button>
-                <button onClick={() => setLanguage("English")}>
-                  English
-                </button>
-              </div>
-            )}
-          </div>
-          <div className="dropdown">
             <button className="dropdown-btn" onClick={toggleDesign}>
               {design}{" "}
               <span className={`arrow ${designOpen ? "open" : ""}`}>▼</span>
             </button>
             {designOpen && (
               <div className="dropdown-menu">
-                <button onClick={() => setDesign("Tất cả thiết kế")}>
+                <button
+                  className="dropdown-menu-btn"
+                  onClick={() => setDesign("Tất cả thiết kế")}
+                >
                   Tất cả thiết kế
                 </button>
-                <button onClick={() => setDesign("Đơn giản")}>
+                <button
+                  className="dropdown-menu-btn"
+                  onClick={() => setDesign("Đơn giản")}
+                >
                   Đơn giản
                 </button>
-                <button onClick={() => setDesign("Sáng tạo")}>
+                <button
+                  className="dropdown-menu-btn"
+                  onClick={() => setDesign("Sáng tạo")}
+                >
                   Sáng tạo
                 </button>
-                <button onClick={() => setDesign("Thanh lịch")}>
+                <button
+                  className="dropdown-menu-btn"
+                  onClick={() => setDesign("Thanh lịch")}
+                >
                   Thanh lịch
                 </button>
-                <button onClick={() => setDesign("Kinh nghiệm")}>
+                <button
+                  className="dropdown-menu-btn"
+                  onClick={() => setDesign("Kinh nghiệm")}
+                >
                   Kinh nghiệm
                 </button>
-                <button onClick={() => setDesign("Màu sắc")}>
+                <button
+                  className="dropdown-menu-btn"
+                  onClick={() => setDesign("Màu sắc")}
+                >
                   Màu sắc
                 </button>
               </div>
@@ -192,11 +299,13 @@ const TaoCVPage = () => {
                   <h3 className="cv-template-title">{template.name}</h3>
                   <div className="cv-template-badges">
                     {template.badges?.map((badge, i) => (
-                      <span key={i} className="cv-badge">{badge}</span>
+                      <span key={i} className="cv-badge">
+                        {badge}
+                      </span>
                     ))}
                   </div>
                   <p className="cv-template-desc">{template.description}</p>
-                  <button className="button">Chọn mẫu</button>
+                  <button className="button-mau-cv">Chọn mẫu</button>
                 </div>
               ))
             )}
@@ -208,19 +317,16 @@ const TaoCVPage = () => {
         <div className="footer-common-search-keywords">
           <div className="footer-common-search-keywords">
             <div className="container-keyword-seo">
-              <a title="cv là gì?" target="_blank" href="#">
+              <a title="cv là gì?" target="_blank" href="/cv-la-gi">
                 CV là gì?
               </a>
-              <a title="cách viết cv" target="_blank" href="#">
+              <a title="cách viết cv" target="_blank" href="/cach-viet-cv">
                 Cách viết CV
               </a>
-              <a title="cv xin việc" target="_blank" href="#">
-                CV xin việc
-              </a>
-              <a title="cv xin việc là gì?" target="_blank" href="#">
+              <a title="cv xin việc là gì?" target="_blank" href="/cv-xin-viec">
                 CV xin việc là gì?
               </a>
-              <a title="cv xin việc mẫu" target="_blank" href="#">
+              <a title="cv xin việc mẫu" target="_blank" href="/mau-cv">
                 CV xin việc mẫu
               </a>
             </div>

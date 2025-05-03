@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/RecruiterModal.css";
 
-
 const RecruiterSelectionModal = ({ onClose }) => {
   const navigate = useNavigate();
 
@@ -12,7 +11,7 @@ const RecruiterSelectionModal = ({ onClose }) => {
 
   const handleCandidateClick = () => {
     navigate("/");
-    onClose(); 
+    onClose();
   };
 
   return (
@@ -25,12 +24,19 @@ const RecruiterSelectionModal = ({ onClose }) => {
             <img src="/download.jpg" alt="Nhà tuyển dụng" />
             <button className="button primary">Tôi là nhà tuyển dụng</button>
           </div>
-          <div className="option-card" onClick={handleCandidateClick}>
-            <img src="/z6508152856718_352b817abc8b8b5f96adbeb07c9ba355.jpg" alt="Ứng viên" />
-            <button className="button secondary">Tôi là ứng viên tìm việc</button>
+          <div className="option-card" onClick={() => navigate("/login")}>
+            <img
+              src="/z6508152856718_352b817abc8b8b5f96adbeb07c9ba355.jpg"
+              alt="Ứng viên"
+            />
+            <button className="button secondary">
+              Tôi là ứng viên tìm việc
+            </button>
           </div>
         </div>
-        <button className="modal-close" onClick={onClose}>×</button>
+        <button className="modal-close" onClick={onClose}>
+          ×
+        </button>
       </div>
     </div>
   );

@@ -27,7 +27,9 @@ import AdminJobApproval from "./views/AdminJobApproval";
 import QuanLyCVPage from "./views/HOSO_CV/QuanLyCVPage";
 import CompanyDetailPage from "./views/VIECLAM/CompanyDetailPage";
 import EditCVPage from "./views/HOSO_CV/EditCVPage";
-
+import CvLaGi from "./views/Footer/CvLaGi";
+import CachVietCV from "./views/Footer/CachVietCV";
+import CVXinViecLaGi from './views/Footer/CVXinViecLaGi';
 
 function App() {
   return (
@@ -61,8 +63,9 @@ function App() {
       <Route path="/admin/job-approval" element={<AdminJobApproval />} />
       <Route path="/company/:id" element={<CompanyDetailPage />} />
       <Route path="/quan-ly-cv/:id" element={<EditCVPage />} />
-
-
+      <Route path="/cv-la-gi" element={<CvLaGi />} />
+      <Route path="/cach-viet-cv" element={<CachVietCV />} />
+      <Route path="/cv-xin-viec" element={<CVXinViecLaGi />} />
 
     </Routes>
     </AuthProvider>

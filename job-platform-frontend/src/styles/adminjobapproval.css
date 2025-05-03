@@ -1,5 +1,5 @@
 /* CSS cho các button */
-button {
+.btn-approval {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -8,7 +8,28 @@ button {
   transition: all 0.3s ease;
 }
 
+/* Nút "Công việc chờ duyệt" và "Lịch sử duyệt bài" */
+.btn-approval:hover {
+  background-color: #2196F3;
+  color: rgb(208, 244, 205);
+  margin-left: 10px;
+  opacity: 0.8;
+}
+
+.btn-approval:focus {
+  outline: none;
+}
+
 /* Nút "Duyệt bài" */
+.approve-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 .approve-button:hover {
   background-color: #4CAF50;
   color: rgb(208, 244, 205);
@@ -23,6 +44,15 @@ button {
 }
 
 /* Nút "Xoá bài" */
+.delete-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
 .delete-button:hov {
   background-color: #f44336;
   color: rgb(239, 184, 184);
@@ -35,16 +65,4 @@ button {
 
 .delete-button:active {
   transform: scale(0.98);
-}
-
-/* Nút "Công việc chờ duyệt" và "Lịch sử duyệt bài" */
-button:hover {
-  background-color: #2196F3;
-  color: rgb(208, 244, 205);
-  margin-left: 10px;
-  opacity: 0.8;
-}
-
-button:focus {
-  outline: none;
 }

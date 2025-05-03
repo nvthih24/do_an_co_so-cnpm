@@ -1,99 +1,13 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
-import "../styles/global.css";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import RecruiterSelectionModal from "../views/RecruiterSelectionModal";
+import { Link, useNavigate } from "react-router-dom";
+import "../../styles/CvLaGi.css";
+import { useAuth } from "../../contexts/AuthContext";
+import RecruiterSelectionModal from "../../views/RecruiterSelectionModal";
 
-const HomePage = () => {
+const CvLaGi = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
   const [showModal, setShowModal] = useState(false);
-  const [searchTitle, setSearchTitle] = useState("");
-  const [searchLocation, setSearchLocation] = useState("");
-  const [allJobs, setAllJobs] = useState([]);
-  const [filterType, setFilterType] = useState("Địa điểm"); // Lọc theo gì
-  const [selectedBadge, setSelectedBadge] = useState("Tất cả"); // Badge được chọn
-
-  // Badge từng loại filter
-  const locationBadges = [
-    "Hà Nội",
-    "Ba Đình",
-    "Hoàn Kiếm",
-    "Hai Bà Trưng",
-    "Đống Đa",
-    "Tây Hồ",
-    "Cầu Giấy",
-    "HCM",
-  ];
-  const salaryBadges = ["< 10tr", "10tr - 20tr", "20tr - 30tr", "> 30tr"];
-  const expBadges = [
-    "Chưa có kinh nghiệm",
-    "Dưới 1 năm",
-    "1-2 năm",
-    "Trên 2 năm",
-  ];
-  const positionBadges = ["IT", "Marketing", "Kế toán", "Kinh doanh", "Design"];
-
-  // Gọi API để lấy dữ liệu việc làm đã được admin duyệt
-  useEffect(() => {
-    setSelectedBadge("Tất cả");
-    const fetchApprovedJobs = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/jobs/approved"); // API lấy danh sách việc làm đã được duyệt
-        const data = await res.json();
-        setAllJobs(data);
-      } catch (error) {
-        console.error("Lỗi khi lấy danh sách việc làm:", error);
-      }
-    };
-
-    fetchApprovedJobs();
-  }, [filterType]);
-
-  const filteredJobs = allJobs.filter((job) => {
-    // Tìm kiếm chung theo title/location
-    const matchTitle = job.position
-      ?.toLowerCase()
-      .includes(searchTitle.toLowerCase());
-    const matchLocation = job.address
-      ?.toLowerCase()
-      .includes(searchLocation.toLowerCase());
-
-    // Nếu đang tìm kiếm theo input (giống filter của bạn cũ)
-    if (searchTitle || searchLocation) {
-      return matchTitle && matchLocation;
-    }
-    // Nếu không tìm kiếm gì thì trả về tất cả việc làm
-    if (selectedBadge === "Tất cả") return true;
-
-    // Nếu lọc badge filter
-    if (selectedBadge) {
-      if (filterType === "Địa điểm") {
-        if (selectedBadge === "Tất cả") return true;
-        // Đảm bảo trường này trùng với field trong dữ liệu
-        return job.address?.toLowerCase().includes(selectedBadge.toLowerCase());
-      }
-      if (filterType === "Mức lương") {
-        if (selectedBadge === "Tất cả") return true;
-        return job.salary?.toLowerCase().includes(selectedBadge.toLowerCase());
-      }
-      if (filterType === "Kinh nghiệm") {
-        if (selectedBadge === "Tất cả") return true;
-        // Đảm bảo trường này trùng với field trong dữ liệu
-        return job.exp?.toLowerCase().includes(selectedBadge.toLowerCase());
-      }
-      if (filterType === "Ngành nghề") {
-        if (selectedBadge === "Tất cả") return true;
-        // Đảm bảo trường này trùng với field trong dữ liệu
-        return job.position
-          ?.toLowerCase()
-          .includes(selectedBadge.toLowerCase());
-      }
-    }
-    // Nếu không filter gì
-    return true;
-  });
 
   const handleLogout = async () => {
     try {
@@ -110,21 +24,6 @@ const HomePage = () => {
     } else {
       navigate("/viec-lam-phu-hop"); // Điều hướng đến trang việc làm phù hợp nếu đã đăng nhập
     }
-  };
-
-  // Badge hiện tại dựa theo filterType
-  const getBadgeList = () => {
-    if (filterType === "Địa điểm") return locationBadges;
-    if (filterType === "Mức lương") return salaryBadges;
-    if (filterType === "Kinh nghiệm") return expBadges;
-    if (filterType === "Ngành nghề") return positionBadges;
-    return [];
-  };
-  const badgeList = {
-    "Địa điểm": locationBadges,
-    "Kinh nghiệm": expBadges,
-    "Mức lương": salaryBadges,
-    "Ngành nghề": positionBadges,
   };
 
   return (
@@ -280,93 +179,98 @@ const HomePage = () => {
       {showModal && (
         <RecruiterSelectionModal onClose={() => setShowModal(false)} />
       )}
-      <div className="page-wrapper">
-        <div className="body-qc">
-          <div className="text-name">
-            <h1>Tìm việc làm nhanh 24h, việc làm mới nhất trên toàn quốc</h1>
-            <p>
-              Tiếp cận 40,000+ tin tuyển dụng việc làm mỗi ngày từ hàng nghìn
-              doanh nghiệp uy tín tại Việt Nam
-            </p>
-          </div>
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Vị trí tuyển dụng, tên công ty"
-              value={searchTitle}
-              onChange={(e) => setSearchTitle(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Địa điểm"
-              value={searchLocation}
-              onChange={(e) => setSearchLocation(e.target.value)}
-            />
-            <button className="button primary">Tìm kiếm</button>
-          </div>
-        </div>
+      <div className="cv-la-gi-page">
+        <header>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Trang chủ</Link>
+              </li>
+              <li>
+                <Link to="/cv-la-gi">CV là gì?</Link>
+              </li>
+              <li>
+                <Link to="/cach-viet-cv">Cách viết CV</Link>
+              </li>
+              <li>
+                <Link to="/cv-xin-viec">CV xin việc</Link>
+              </li>
+              <li>
+                <Link to="/mau-cv">Mẫu CV</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
 
-        <div className="content">
-          <div className="job-list">
-            <h2 className="job-filter-title">Việc làm tốt nhất</h2>
-            <div className="job-filter-bar">
-              <select
-                className="dropdown-loc-btn"
-                value={filterType}
-                onChange={(e) => {
-                  setFilterType(e.target.value);
-                  setSelectedBadge("");
-                }}
-              >
-                <option>Địa điểm</option>
-                <option>Mức lương</option>
-                <option>Kinh nghiệm</option>
-                <option>Ngành nghề</option>
-              </select>
-              <div className="badge-filter-row">
-                <button
-                  className={`badge ${
-                    selectedBadge === "Tất cả" ? "active" : ""
-                  }`}
-                  onClick={() => setSelectedBadge("Tất cả")}
-                >
-                  Tất cả
-                </button>
-                {badgeList[filterType]?.map((item) => (
-                  <button
-                    className={`badge ${
-                      selectedBadge === item ? "active" : ""
-                    }`}
-                    onClick={() => setSelectedBadge(item)}
-                    key={item}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
-              {/* --- End filter --- */}
-            </div>
-            <div className="job-grid">
-              {filteredJobs.map((job, index) => (
-                <div key={index} className="job-card">
-                  <h3>{job.position}</h3>
-                  <p className="company">
-                    {job.companyName} - {job.address}
-                  </p>
-                  <div className="job-footer">
-                    <p className="salary">{job.salary}</p>
-                    <button className="button outline">Ứng tuyển</button>
-                  </div>
-                </div>
-              ))}
-              {filteredJobs.length === 0 && (
-                <p>Không tìm thấy việc làm phù hợp.</p>
-              )}
-            </div>
-          </div>
-        </div>
+        <main>
+          <section className="intro">
+            <h1>CV là gì?</h1>
+            <p>
+              CV (Curriculum Vitae) là một tài liệu chứa thông tin về quá trình
+              học tập, công việc và các kỹ năng của bạn. Đây là công cụ quan
+              trọng giúp bạn giới thiệu bản thân một cách chi tiết và chuyên
+              nghiệp khi ứng tuyển vào các công việc.
+            </p>
+          </section>
+
+          <section className="why-is-cv-important">
+            <h2>Tại sao CV lại quan trọng?</h2>
+            <p>
+              Một CV tốt không chỉ giúp bạn gây ấn tượng với nhà tuyển dụng mà
+              còn là công cụ để bạn thể hiện năng lực, kỹ năng và sự phù hợp với
+              công việc bạn đang ứng tuyển. CV là tài liệu đầu tiên mà nhà tuyển
+              dụng sẽ xem, do đó, một CV rõ ràng, chuyên nghiệp và hấp dẫn sẽ
+              giúp bạn nổi bật hơn các ứng viên khác.
+            </p>
+          </section>
+
+          <section className="what-to-include">
+            <h2>Những phần cơ bản trong một CV</h2>
+            <ul>
+              <li>
+                <strong>Thông tin cá nhân:</strong> Tên, địa chỉ, số điện thoại
+                và email của bạn.
+              </li>
+              <li>
+                <strong>Mục tiêu nghề nghiệp:</strong> Một đoạn ngắn mô tả mục
+                tiêu nghề nghiệp của bạn.
+              </li>
+              <li>
+                <strong>Kinh nghiệm làm việc:</strong> Liệt kê công việc bạn đã
+                làm trước đây, bao gồm cả chức danh và nhiệm vụ.
+              </li>
+              <li>
+                <strong>Học vấn:</strong> Trình độ học vấn và các bằng cấp liên
+                quan.
+              </li>
+              <li>
+                <strong>Kỹ năng:</strong> Những kỹ năng bạn có, bao gồm kỹ năng
+                mềm và kỹ năng chuyên môn.
+              </li>
+              <li>
+                <strong>Hoạt động và chứng chỉ:</strong> Các hoạt động ngoại
+                khóa, chứng chỉ, khóa học bổ sung nếu có.
+              </li>
+            </ul>
+          </section>
+
+          <section className="tips">
+            <h2>Lời khuyên khi viết CV</h2>
+            <ul>
+              <li>Giữ CV ngắn gọn và dễ đọc (tốt nhất là 1-2 trang).</li>
+              <li>
+                Trình bày thông tin rõ ràng, có các mục riêng biệt như kinh
+                nghiệm, học vấn, kỹ năng.
+              </li>
+              <li>Chú ý đến ngữ pháp và chính tả để tạo ấn tượng tốt.</li>
+              <li>
+                Đảm bảo rằng CV của bạn phù hợp với công việc bạn đang ứng
+                tuyển.
+              </li>
+            </ul>
+          </section>
+        </main>
       </div>
-      {/* ← đóng page-wrapper */}
       <footer id="footer-desktop">
         <div className="footer-common-search-keywords">
           <div className="footer-common-search-keywords">
@@ -391,4 +295,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default CvLaGi;

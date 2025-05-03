@@ -215,19 +215,16 @@ const Employer = () => {
         <div className="footer-common-search-keywords">
           <div className="footer-common-search-keywords">
             <div className="container-keyword-seo">
-              <a title="cv là gì?" target="_blank" href="#">
+              <a title="cv là gì?" target="_blank" href="/cv-la-gi">
                 CV là gì?
               </a>
-              <a title="cách viết cv" target="_blank" href="#">
+              <a title="cách viết cv" target="_blank" href="/cach-viet-cv">
                 Cách viết CV
               </a>
-              <a title="cv xin việc" target="_blank" href="#">
-                CV xin việc
-              </a>
-              <a title="cv xin việc là gì?" target="_blank" href="#">
+              <a title="cv xin việc là gì?" target="_blank" href="/cv-xin-viec">
                 CV xin việc là gì?
               </a>
-              <a title="cv xin việc mẫu" target="_blank" href="#">
+              <a title="cv xin việc mẫu" target="_blank" href="/mau-cv">
                 CV xin việc mẫu
               </a>
             </div>
