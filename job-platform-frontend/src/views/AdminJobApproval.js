@@ -130,8 +130,13 @@ const AdminJobApproval = () => {
             {currentTab === "pending" && (
               <>
                 <button className="approve-button" onClick={() => approveJob(job._id)}>✔️ Duyệt bài</button>
-                <button className="delete-button" onClick={() => deleteJob(job._id)}>🗑️ Xoá bài</button>
+                <button className="delete-button" onClick={() => deleteJob(job._id)}>❌ Xoá bài</button>
               </>
+
+            )}
+            {/* Nếu là approved thì chỉ có nút xoá */}
+            {currentTab === "approved" && (
+              <button className="delete-button" onClick={() => deleteJob(job._id)}>❌ Xoá bài</button>
             )}
           </div>
         ))

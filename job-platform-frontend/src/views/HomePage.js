@@ -353,10 +353,26 @@ const HomePage = () => {
                   <p className="company">
                     {job.companyName} - {job.address}
                   </p>
+                  <img
+                    src={job.logo}
+                    alt="Logo công ty"
+                    style={{ width: "150px", height: "auto", margin: "10px 0" }}// t để này cho nó đỡ to, có gì m đem qua kia chỉnh lại kích thước với vị trí rồi xoá này đi 
+                  ></img>   
                   <div className="job-footer">
                     <p className="salary">{job.salary}</p>
-                    <button className="button outline">Ứng tuyển</button>
-                  </div>
+                    <button
+                      className="button outline"
+                      onClick={() => {
+                        if (!currentUser) {
+                          navigate("/login?redirect=/apply/" + job._id);
+                        } else {
+                          navigate("/apply/" + job._id);
+                        }
+                      }}
+                    >   
+                      Ứng tuyển 
+                    </button>
+                  </div>                  
                 </div>
               ))}
               {filteredJobs.length === 0 && (

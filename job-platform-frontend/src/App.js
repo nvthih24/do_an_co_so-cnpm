@@ -30,7 +30,7 @@ import EditCVPage from "./views/HOSO_CV/EditCVPage";
 import CvLaGi from "./views/Footer/CvLaGi";
 import CachVietCV from "./views/Footer/CachVietCV";
 import CVXinViecLaGi from './views/Footer/CVXinViecLaGi';
-
+import ApplyPage from "./views/VIECLAM/ApplyPage";
 function App() {
   return (
     <AuthProvider>
@@ -66,6 +66,7 @@ function App() {
       <Route path="/cv-la-gi" element={<CvLaGi />} />
       <Route path="/cach-viet-cv" element={<CachVietCV />} />
       <Route path="/cv-xin-viec" element={<CVXinViecLaGi />} />
+      <Route path="/apply/:id" element={<ApplyPage />} />
 
     </Routes>
     </AuthProvider>
