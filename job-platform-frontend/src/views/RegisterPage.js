@@ -21,7 +21,7 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${process.env.REACT_APP_API_URL}/api/auth/register`,
         formData
       );
       alert(response.data.message);
@@ -38,7 +38,7 @@ const RegisterPage = () => {
       const user = result.user;
 
       // Gửi thông tin user lên Backend để lưu vào MongoDB
-      await axios.post("http://localhost:5000/api/auth/google", {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/google`, {
         name: user.displayName,
         email: user.email,
         googleId: user.uid,

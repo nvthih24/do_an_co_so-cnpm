@@ -33,7 +33,7 @@ const JobPostForm = () => {
   
     try {
       // Gửi dữ liệu công việc trước (chưa có giấy phép và logo)
-      const response = await axios.post("http://localhost:5000/api/jobs", formData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/jobs`, formData, {
         headers: { "Content-Type": "application/json" },
       });
   
@@ -46,7 +46,7 @@ const JobPostForm = () => {
           uploadData.append("businessLicense", businessLicense);
   
           await axios.post(
-            `http://localhost:5000/api/jobs/upload-license/${jobId}`,
+            `${process.env.REACT_APP_API_URL}/api/jobs/upload-license/${jobId}`,
             uploadData,
             {
               headers: { "Content-Type": "multipart/form-data" },
@@ -61,7 +61,7 @@ const JobPostForm = () => {
           uploadLogoData.append("logo", logo);
   
           await axios.post(
-            `http://localhost:5000/api/jobs/upload-logo/${jobId}`,
+            `${process.env.REACT_APP_API_URL}/api/jobs/upload-logo/${jobId}`,
             uploadLogoData,
             {
               headers: { "Content-Type": "multipart/form-data" },

@@ -16,7 +16,7 @@ const CompanyDetailPage = () => {
   useEffect(() => {
     const fetchCompanyDetail = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/jobs/${id}`);
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/jobs/${id}`);
         if (!res.ok) {
           throw new Error("Không tìm thấy công ty.");
         }

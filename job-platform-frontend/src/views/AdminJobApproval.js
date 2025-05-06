@@ -12,7 +12,7 @@ const AdminJobApproval = () => {
   const fetchPendingJobs = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/jobs/pending", {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/jobs/pending`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -29,7 +29,7 @@ const AdminJobApproval = () => {
   const fetchApprovedJobs = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/jobs/approved", {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/jobs/approved`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -45,7 +45,7 @@ const AdminJobApproval = () => {
 
   const approveJob = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/jobs/${id}/approve`, {}, {
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/jobs/${id}/approve`, {}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -63,7 +63,7 @@ const AdminJobApproval = () => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/jobs/${id}`, {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/jobs/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

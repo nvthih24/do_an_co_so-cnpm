@@ -16,7 +16,7 @@ const JobSuggestions = () => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/jobs/approved"
+          `${process.env.REACT_APP_API_URL}/api/jobs/approved`
         );
         setJobs(response.data);
         setLoading(false);

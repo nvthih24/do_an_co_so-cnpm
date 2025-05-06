@@ -40,7 +40,7 @@ const HomePage = () => {
     setSelectedBadge("Tất cả");
     const fetchApprovedJobs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/jobs/approved"); // API lấy danh sách việc làm đã được duyệt
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/jobs/approved`); // API lấy danh sách việc làm đã được duyệt
         const data = await res.json();
         setAllJobs(data);
       } catch (error) {

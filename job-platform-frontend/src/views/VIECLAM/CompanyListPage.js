@@ -15,7 +15,7 @@ const CompanyListPage = () => {
   useEffect(() => {
     const fetchApprovedJobs = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/jobs/approved");
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/jobs/approved`);
         const data = await res.json();
         setAllCompanies(data);
       } catch (error) {
