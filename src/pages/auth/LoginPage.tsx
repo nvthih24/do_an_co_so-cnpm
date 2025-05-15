@@ -35,7 +35,15 @@ const LoginPage: React.FC = () => {
     
     try {
       await login(email, password);
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        const token = await currentUser.getIdToken();
+        localStorage.setItem('token', token);
+        localStorage.setItem('userId', currentUser.uid);
+        console.log('User ID:', currentUser.uid);
+      }
       showToast('Successfully logged in!', 'success');
+      console.log('User ID:', localStorage.getItem('userId'));
       navigate(from);
     } catch (error) {
       setFormError('Invalid email or password. Please try again.');
@@ -64,6 +72,10 @@ const LoginPage: React.FC = () => {
       };
 
       setUserFromOAuth(customUser, token); // kiểu custom hợp lệ
+      localStorage.setItem('token', token); // lưu token
+      localStorage.setItem('userId', response.data.id);
+console.log('User ID:', response.data.id);
+
       showToast('Successfully logged in with Google!', 'success');
       navigate(from);
     }

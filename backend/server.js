@@ -7,7 +7,9 @@ const jwt = require("jsonwebtoken");
 const User = require("./models/User");
 const authRoutes = require("./routes/authRoutes");
 const forgotPasswordRoutes = require('./routes/forgotPassword');
-//const jobRoutes = require("./routes/jobRoutes"); 
+const profileRoutes = require('./routes/profile');  
+const jobRoutes = require("./routes/jobs");  
+const companyRoutes = require("./routes/companyRoutes"); // Đường dẫn đến file companyRoutes.js
 
 
 const app = express();
@@ -15,7 +17,10 @@ app.use(express.json());
 app.use(cors());
 app.use("/api", authRoutes);
 app.use('/api/forgot-password', forgotPasswordRoutes);
-//app.use("/api/jobs", jobRoutes); 
+app.use('/api/profile', profileRoutes);
+app.use('/uploads', express.static('uploads')); // Để phục vụ file CV từ thư mục uploads
+app.use("/api/jobs", jobRoutes); 
+app.use("/api/company", companyRoutes); // Sử dụng router cho các route liên quan đến công ty
 
 
 
@@ -49,6 +54,7 @@ app.post("/api/register", async (req, res) => {
     res.status(500).json({ message: "Lỗi server!" });
   }
 });
+
 
 app.post("/api/auth/google", async (req, res) => {
   try {
