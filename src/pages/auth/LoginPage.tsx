@@ -3,6 +3,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { Briefcase as BriefcaseBusiness, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { auth, googleProvider, signInWithPopup } from "../../firebase";
+import axios from 'axios';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +13,8 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState('');
   
-  const { login } = useAuth();
+ const { login, setUserFromOAuth } = useAuth();
+
   const { showToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,6 +44,38 @@ const LoginPage: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const token = await user.getIdToken();
+      
+      // Assuming you have a backend endpoint to handle Google sign-in
+      const response = await axios.post('/api/auth/google', { token });
+
+    if (response.data) {
+      const customUser = {
+        id: response.data.id,
+        name: user.displayName || '',
+        email: user.email || '',
+        role: response.data.role, // hoặc mặc định 'user'
+      };
+
+      setUserFromOAuth(customUser, token); // kiểu custom hợp lệ
+      showToast('Successfully logged in with Google!', 'success');
+      navigate(from);
+    }
+
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      showToast('Google sign-in failed', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -176,12 +211,14 @@ const LoginPage: React.FC = () => {
           </div>
           
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <button 
-              type="button"
-              className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
-            >
-              Google
-            </button>
+<button 
+  type="button"
+  onClick={handleGoogleSignIn}
+  className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+>
+  Google
+</button>
+
             <button 
               type="button"
               className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"

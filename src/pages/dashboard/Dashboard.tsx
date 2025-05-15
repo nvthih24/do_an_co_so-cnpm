@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import {
-  Briefcase, Building, User, File, Bell, MessageSquare, CheckCircle,
-  Clock, Users, BarChart2, Calendar, BookmarkPlus, MapPin, DollarSign, Search, Eye
+import { 
+  Briefcase, Building, User, File, Bell, MessageSquare, CheckCircle, 
+   Users, BarChart2, Calendar, BookmarkPlus, MapPin, DollarSign, Search, Eye 
 } from 'lucide-react';
 
 const Dashboard: React.FC = () => {

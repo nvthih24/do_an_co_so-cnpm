@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 import { Briefcase as BriefcaseBusiness, Mail, Lock, User, Eye, EyeOff, Building } from 'lucide-react';
+import { auth, googleProvider, signInWithPopup } from "../../firebase";
+import axios from 'axios';
 
 const RegisterPage: React.FC = () => {
   const [name, setName] = useState('');
@@ -18,6 +20,25 @@ const RegisterPage: React.FC = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
   
+    const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      // Gửi thông tin user lên Backend để lưu vào MongoDB
+      await axios.post("http://localhost:5000/api/auth/google", {
+        name: user.displayName,
+        email: user.email,
+        googleId: user.uid,
+      });
+
+      alert("Đăng ký thành công!");
+      navigate("/"); // Chuyển hướng về trang chủ
+    } catch (error) {
+      setFormError("Lỗi đăng ký với Google!");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError('');
@@ -281,6 +302,7 @@ const RegisterPage: React.FC = () => {
           <div className="mt-6 grid grid-cols-2 gap-3">
             <button 
               type="button"
+              onClick={handleGoogleSignIn}
               className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
             >
               Google
