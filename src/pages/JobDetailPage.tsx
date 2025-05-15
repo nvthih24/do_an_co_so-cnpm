@@ -93,7 +93,7 @@ const JobDetailPage: React.FC = () => {
                 
                 <button 
                   onClick={() => setShowApplyForm(!showApplyForm)}
-                  className="btn btn-primary"
+                  className="btn btn-primary text-gray-400 flex items-center "
                 >
                   Apply Now
                 </button>
@@ -153,7 +153,7 @@ const JobDetailPage: React.FC = () => {
                             placeholder="Why are you a good fit for this position?"
                           ></textarea>
                         </div>
-                        <button className="btn btn-primary w-full">
+                        <button className="btn btn-primary text-black w-full">
                           Submit Application
                         </button>
                       </div>
@@ -165,7 +165,7 @@ const JobDetailPage: React.FC = () => {
                         You need to be logged in to apply for this position.
                       </p>
                       <div className="flex gap-4 justify-center">
-                        <Link to="/login" className="btn btn-primary">
+                        <Link to="/login" className="btn btn-primary text-gray-400">
                           Sign In
                         </Link>
                         <Link to="/register" className="btn btn-outline">

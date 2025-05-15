@@ -148,7 +148,7 @@ const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn btn-primary py-3 flex justify-center relative"
+              className="w-full btn btn-primary py-3 flex justify-center relative text-black border-t border-gray-300 hover:bg-gray-50"
             >
               {loading ? (
                 <span className="inline-flex items-center">

@@ -68,25 +68,25 @@ const EmployersPage: React.FC = () => {
   return (
     <div className="bg-white">
       {/* Hero section */}
-      <section className="relative bg-primary-700 text-white py-24">
+      <section className="relative bg-primary-700 text-black py-24">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-900 opacity-90"></div>
           <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-20"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Find Your Next Great Hire
             </h1>
-            <p className="text-xl text-gray-200 mb-8">
+            <p className="text-xl text-gray-400 mb-8">
               Post jobs, find qualified candidates, and grow your team with our powerful recruitment platform.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link to="/register" className="btn btn-accent">
+              <Link to="/register" className="btn btn-accent text-gray-500 hover:bg-gray-100">
                 Get Started
               </Link>
-              <Link to="/contact" className="btn bg-white text-primary-600 hover:bg-gray-100">
+              <Link to="/contact" className="btn bg-white text-gray-500 hover:bg-gray-100">
                 Contact Sales
               </Link>
             </div>
@@ -98,7 +98,7 @@ const EmployersPage: React.FC = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose TalentHub?</h2>
+            <h2 className="text-3xl font-bold mb-4">Why Choose Job247?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Our platform provides everything you need to streamline your recruitment process and find the best talent.
             </p>
@@ -130,14 +130,13 @@ const EmployersPage: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {plans.map((plan, index) => (
-              <div 
+              <div
                 key={index}
-                className={`bg-white rounded-lg shadow-sm p-6 relative ${
-                  plan.popular ? 'border-2 border-primary-500' : ''
-                }`}
+                className={`bg-white rounded-lg shadow-sm p-6 relative ${plan.popular ? 'border-2 border-primary-500' : ''
+                  }`}
               >
                 {plan.popular && (
-                  <span className="absolute top-0 right-0 bg-primary-500 text-white px-3 py-1 text-sm font-medium rounded-bl-lg rounded-tr-lg">
+                  <span className="absolute top-0 right-0 bg-primary-500 text-black px-3 py-1 text-sm font-medium rounded-bl-lg rounded-tr-lg">
                     Popular
                   </span>
                 )}
@@ -162,9 +161,8 @@ const EmployersPage: React.FC = () => {
                   ))}
                 </ul>
 
-                <button className={`w-full btn ${
-                  plan.popular ? 'btn-primary' : 'btn-outline'
-                }`}>
+                <button className={`w-full btn ${plan.popular ? 'btn-primary text-gray-700 border-t border-gray-300' : 'btn-outline'
+                  }`}>
                   Get Started
                 </button>
               </div>
@@ -174,17 +172,17 @@ const EmployersPage: React.FC = () => {
       </section>
 
       {/* CTA section */}
-      <section className="py-16 bg-primary-700 text-white">
+      <section className="py-16 bg-primary-700 text-black">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Find Your Next Great Hire?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join thousands of companies who have found exceptional talent through TalentHub
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-500">
+            Join thousands of companies who have found exceptional talent through Job247
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/register" className="btn bg-white text-primary-600 hover:bg-gray-100">
+            <Link to="/register" className="btn bg-gray-100 text-primary-600 hover:bg-gray-200">
               Get Started Now
             </Link>
-            <Link to="/contact" className="btn border-white text-white hover:bg-primary-600">
+            <Link to="/contact" className="btn border-gray-200 text-gray-500 hover:bg-primary-600">
               Schedule a Demo
             </Link>
           </div>

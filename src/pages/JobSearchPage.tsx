@@ -21,7 +21,7 @@ const JobSearchPage: React.FC = () => {
     <div className="bg-gray-50 min-h-screen">
       <div className="bg-primary-700 pt-8 pb-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-white text-3xl font-bold mb-6">Find Your Perfect Job</h1>
+          <h1 className="text-gray-500 text-3xl font-bold mb-6">Find Your Perfect Job</h1>
           <JobSearchBox />
         </div>
       </div>

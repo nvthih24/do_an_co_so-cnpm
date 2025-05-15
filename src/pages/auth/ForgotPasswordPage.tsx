@@ -79,7 +79,7 @@ const ForgotPasswordPage: React.FC = () => {
               type="button"
               disabled={loading}
               onClick={sendOtp}
-              className="w-full btn btn-primary"
+              className="w-full btn btn-primary text-black border-t border-gray-300 hover:bg-gray-100"
             >
               {loading ? "Sending..." : "Send Reset Code"}
             </button>
@@ -103,7 +103,7 @@ const ForgotPasswordPage: React.FC = () => {
               type="button"
               disabled={loading}
               onClick={verifyOtp}
-              className="w-full btn btn-primary"
+              className="w-full btn btn-primary text-black border-t border-gray-300 hover:bg-gray-100"
             >
               {loading ? "Verifying..." : "Verify OTP"}
             </button>
@@ -134,7 +134,7 @@ const ForgotPasswordPage: React.FC = () => {
               type="button"
               disabled={loading}
               onClick={resetPassword}
-              className="w-full btn btn-primary"
+              className="w-full btn btn-primary text-black border-t border-gray-300 hover:bg-gray-100"
             >
               {loading ? "Resetting..." : "Reset Password"}
             </button>

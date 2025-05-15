@@ -26,25 +26,25 @@ const HomePage: React.FC = () => {
   return (
     <div>
       {/* Hero section */}
-      <section className="relative bg-gradient-to-r from-primary-700 to-primary-900 text-white py-24 lg:py-32">
+      <section className="relative bg-gradient-to-r from-primary-700 to-primary-900 text-gray-500 py-24 lg:py-32">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-900 opacity-90"></div>
           <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-20"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
               Find Your Dream Job, Build Your Career
             </h1>
-            <p className="text-xl md:text-2xl mb-10 text-gray-200">
+            <p className="text-xl md:text-2xl mb-10 text-gray-500">
               Connect with top employers and discover opportunities that match your skills and aspirations.
             </p>
-            
+
             <JobSearchBox />
-            
+
             <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <Link to="/jobs" className="btn btn-accent">
+              <Link to="/jobs" className="btn btn-accent text-gray-400">
                 Browse All Jobs
               </Link>
               <Link to="/register" className="btn bg-white text-primary-600 hover:bg-gray-100">
@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Stats section */}
       <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
@@ -71,7 +71,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Featured jobs section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -81,17 +81,17 @@ const HomePage: React.FC = () => {
               Explore the latest opportunities from top employers across various industries
             </p>
           </div>
-          
+
           <FeaturedJobs />
-          
+
           <div className="text-center mt-10">
-            <Link to="/jobs" className="btn btn-primary">
+            <Link to="/jobs" className="btn btn-primary text-gray-400">
               View All Jobs
             </Link>
           </div>
         </div>
       </section>
-      
+
       {/* Job categories */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -101,17 +101,17 @@ const HomePage: React.FC = () => {
               Explore jobs by industry categories and find the perfect match for your expertise
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category, index) => (
-              <Link 
-                key={index} 
+              <Link
+                key={index}
                 to={`/jobs?category=${encodeURIComponent(category.name)}`}
                 className="group relative rounded-lg overflow-hidden h-48 transition-all"
               >
-                <img 
-                  src={category.icon} 
-                  alt={category.name} 
+                <img
+                  src={category.icon}
+                  alt={category.name}
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
@@ -124,7 +124,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Testimonials section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
@@ -134,7 +134,7 @@ const HomePage: React.FC = () => {
               Hear from professionals who found their perfect match through our platform
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((_, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md">
@@ -144,12 +144,12 @@ const HomePage: React.FC = () => {
                   ))}
                 </div>
                 <p className="text-gray-700 mb-6">
-                  "TalentHub completely transformed my job search experience. Within weeks, I found a position that perfectly matched my skills and career goals."
+                  "Job247 completely transformed my job search experience. Within weeks, I found a position that perfectly matched my skills and career goals."
                 </p>
                 <div className="flex items-center">
-                  <img 
-                    src={`https://randomuser.me/api/portraits/${index % 2 === 0 ? 'women' : 'men'}/${index + 1}.jpg`} 
-                    alt="Testimonial" 
+                  <img
+                    src={`https://randomuser.me/api/portraits/${index % 2 === 0 ? 'women' : 'men'}/${index + 1}.jpg`}
+                    alt="Testimonial"
                     className="w-12 h-12 rounded-full object-cover mr-4"
                   />
                   <div>
@@ -166,19 +166,19 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       {/* CTA section */}
-      <section className="py-16 bg-secondary-600 text-white">
+      <section className="py-16 bg-secondary-600 text-gray-400">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Take the Next Step in Your Career?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join thousands of professionals who found their dream jobs through TalentHub
+            Join thousands of professionals who found their dream jobs through Job247
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/register" className="btn bg-white text-secondary-600 hover:bg-gray-100">
+            <Link to="/register" className="btn bg-white text-gray-400 hover:bg-gray-100">
               Create an Account
             </Link>
-            <Link to="/jobs" className="btn border-white text-white hover:bg-secondary-700">
+            <Link to="/jobs" className="btn border-white text-gray-400 hover:bg-gray-100 ">
               Browse Open Positions
             </Link>
           </div>

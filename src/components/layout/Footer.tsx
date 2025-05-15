@@ -11,7 +11,7 @@ const Footer: React.FC = () => {
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center mb-4">
               <BriefcaseBusiness className="h-8 w-8 text-primary-500" />
-              <span className="ml-2 text-xl font-bold">TalentHub</span>
+              <span className="ml-2 text-xl font-bold">Job247</span>
             </div>
             <p className="text-gray-400 mb-4">
               Connecting top talent with exceptional opportunities. 
@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
           
           {/* For Job Seekers */}
           <div>
-            <h3 className="text-lg font-medium mb-4">For Job Seekers</h3>
+            <h3 className="text-lg font-medium mb-4 text-slate-300">For Job Seekers</h3>
             <ul className="space-y-3">
               <li>
                 <Link to="/jobs" className="text-gray-400 hover:text-white transition-colors">
@@ -62,7 +62,7 @@ const Footer: React.FC = () => {
           
           {/* For Employers */}
           <div>
-            <h3 className="text-lg font-medium mb-4">For Employers</h3>
+            <h3 className="text-lg font-medium mb-4 text-slate-300">For Employers</h3>
             <ul className="space-y-3">
               <li>
                 <Link to="/post-job" className="text-gray-400 hover:text-white transition-colors">
@@ -89,7 +89,7 @@ const Footer: React.FC = () => {
           
           {/* Company */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Company</h3>
+            <h3 className="text-lg font-medium mb-4 text-slate-300">Company</h3>
             <ul className="space-y-3">
               <li>
                 <Link to="/about" className="text-gray-400 hover:text-white transition-colors">
@@ -117,7 +117,7 @@ const Footer: React.FC = () => {
         
         <div className="border-t border-gray-800 mt-12 pt-6 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            &copy; {new Date().getFullYear()} TalentHub. All rights reserved.
+            &copy; {new Date().getFullYear()} Job247. All rights reserved.
           </p>
           <div className="mt-4 sm:mt-0">
             <ul className="flex space-x-6">

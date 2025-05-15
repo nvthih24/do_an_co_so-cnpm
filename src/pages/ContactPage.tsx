@@ -54,14 +54,13 @@ const ContactPage: React.FC = () => {
             <div className="md:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-xl font-semibold mb-6">Get in Touch</h2>
-                
                 <div className="space-y-6">
                   <div className="flex items-start">
                     <Mail className="w-6 h-6 text-primary-500 mt-1 mr-4" />
                     <div>
                       <h3 className="font-medium">Email</h3>
-                      <p className="text-gray-600">support@talenthub.com</p>
-                      <p className="text-gray-600">careers@talenthub.com</p>
+                      <p className="text-gray-600">support@job247.com</p>
+                      <p className="text-gray-600">careers@job247.com</p>
                     </div>
                   </div>
 
@@ -104,7 +103,7 @@ const ContactPage: React.FC = () => {
             <div className="md:col-span-2">
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-xl font-semibold mb-6">Send us a Message</h2>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>

@@ -33,7 +33,7 @@ const JobSearchBox: React.FC = () => {
         />
       </div>
       
-      <div className="flex-1 flex items-center md:px-3">
+      <div className="flex-1 flex items-center border-b md:border-b-0 md:border-r border-gray-200 md:px-3">
         <MapPin className="h-5 w-5 text-gray-400 mr-2" />
         <input
           type="text"
@@ -46,7 +46,7 @@ const JobSearchBox: React.FC = () => {
       
       <button 
         type="submit"
-        className="mt-4 md:mt-0 md:ml-4 bg-primary-600 hover:bg-primary-700 text-white py-2 px-6 rounded-md transition-colors font-medium"
+        className="mt-4 md:mt-0 md:ml-4 bg-primary-600 hover:bg-primary-700 text-gray-400 py-2 px-6 rounded-md transition-colors font-medium"
       >
         Search
       </button>
