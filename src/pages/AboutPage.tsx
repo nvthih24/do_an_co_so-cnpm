@@ -41,14 +41,14 @@ const AboutPage: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-900 opacity-90"></div>
           <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-20"></div>
         </div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Transforming the Way People Find Their Dream Careers
             </h1>
             <p className="text-xl text-gray-200 mb-8">
-              TalentHub is revolutionizing the recruitment industry by connecting talented individuals with outstanding opportunities through innovative technology and personalized experiences.
+              Job247 is revolutionizing the recruitment industry by connecting talented individuals with outstanding opportunities through innovative technology and personalized experiences.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link to="/jobs" className="btn btn-accent">
@@ -114,7 +114,7 @@ const AboutPage: React.FC = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Start Your Journey?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join millions of professionals who have found their dream careers through TalentHub
+            Join millions of professionals who have found their dream careers through Job247
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/register" className="btn bg-white text-primary-600 hover:bg-gray-100">

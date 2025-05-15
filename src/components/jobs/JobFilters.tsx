@@ -128,7 +128,7 @@ const JobFilters: React.FC<FiltersProps> = ({ jobs, setJobs }) => {
       </div>
       
       {/* Apply Filters Button */}
-      <button className="w-full btn btn-primary mt-4">
+      <button className="w-full btn btn-primary mt-4 text-gray-500 border-t border-gray-300 hover:bg-gray-100">
         Apply Filters
       </button>
     </div>

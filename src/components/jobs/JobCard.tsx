@@ -96,7 +96,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
                   <BookmarkPlus className="h-4 w-4 mr-2" />
                   Save
                 </button>
-                <Link to={`/jobs/${job.id}`} className="btn btn-primary py-1 px-4">
+                <Link to={`/jobs/${job.id}`} className="btn btn-primary text-gray-400 py-1 px-4">
                   Apply Now
                 </Link>
               </div>

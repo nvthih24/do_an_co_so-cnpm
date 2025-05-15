@@ -9,7 +9,7 @@ import {
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const isEmployer = user?.role === 'employer';
-  
+
   return (
     <div className="bg-gray-50 min-h-screen py-8">
       <div className="container mx-auto px-4">
@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
         <p className="text-gray-600 mb-8">
           Welcome back, {user?.name}!
         </p>
-        
+
         {/* Stats overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {isEmployer ? (
@@ -38,7 +38,7 @@ const Dashboard: React.FC = () => {
                   <span>from last month</span>
                 </div>
               </div>
-              
+
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
                   <span>from last month</span>
                 </div>
               </div>
-              
+
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
@@ -70,7 +70,7 @@ const Dashboard: React.FC = () => {
                   <span>from last month</span>
                 </div>
               </div>
-              
+
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
@@ -105,11 +105,11 @@ const Dashboard: React.FC = () => {
                   <span>from last month</span>
                 </div>
               </div>
-              
+
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-gray-500 text-sm">Interviews</p>
+                    <p className="text-gray-500 text-sm ">Interviews</p>
                     <p className="text-3xl font-bold mt-1">3</p>
                   </div>
                   <span className="p-3 bg-purple-100 rounded-full">
@@ -121,7 +121,7 @@ const Dashboard: React.FC = () => {
                   <span>from last month</span>
                 </div>
               </div>
-              
+
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
@@ -137,7 +137,7 @@ const Dashboard: React.FC = () => {
                   <span>from last month</span>
                 </div>
               </div>
-              
+
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
@@ -156,7 +156,7 @@ const Dashboard: React.FC = () => {
             </>
           )}
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content column */}
           <div className="lg:col-span-2 space-y-8">
@@ -173,14 +173,14 @@ const Dashboard: React.FC = () => {
                       </Link>
                     </div>
                   </div>
-                  
+
                   <div className="divide-y divide-gray-100">
                     {[1, 2, 3, 4].map((_, index) => (
                       <div key={index} className="p-6 flex items-start">
                         <div className="mr-4">
-                          <img 
+                          <img
                             src={`https://randomuser.me/api/portraits/${index % 2 === 0 ? 'women' : 'men'}/${index + 1}.jpg`}
-                            alt="Applicant" 
+                            alt="Applicant"
                             className="h-10 w-10 rounded-full object-cover"
                           />
                         </div>
@@ -210,7 +210,7 @@ const Dashboard: React.FC = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 {/* Job posts performance */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                   <div className="p-6 border-b border-gray-100">
@@ -221,7 +221,7 @@ const Dashboard: React.FC = () => {
                       </Link>
                     </div>
                   </div>
-                  
+
                   <div className="p-6">
                     <div className="space-y-6">
                       {['Senior Frontend Developer', 'Product Manager', 'UX/UI Designer'].map((title, index) => (
@@ -257,7 +257,7 @@ const Dashboard: React.FC = () => {
                       </Link>
                     </div>
                   </div>
-                  
+
                   <div className="divide-y divide-gray-100">
                     {[
                       { company: 'TechCorp', position: 'Senior Frontend Developer', status: 'Interview', statusColor: 'bg-green-100 text-green-800' },
@@ -274,7 +274,7 @@ const Dashboard: React.FC = () => {
                         <div className="flex-grow">
                           <div className="flex justify-between">
                             <h3 className="font-medium">{app.position}</h3>
-                            <span className={`text-xs px-2 py-1 rounded-full ${app.statusColor}`}>
+                            <span className={`text-xs ${app.statusColor} rounded-full flex items-center justify-center`} style={{ width: '60px', height: '24px' }}>
                               {app.status}
                             </span>
                           </div>
@@ -285,7 +285,7 @@ const Dashboard: React.FC = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 {/* Recommended jobs */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                   <div className="p-6 border-b border-gray-100">
@@ -299,7 +299,7 @@ const Dashboard: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="divide-y divide-gray-100">
                     {[
                       { title: 'Frontend Developer', company: 'WebInovations', match: '95%', location: 'Remote', salary: '$90K - $110K' },
@@ -323,7 +323,7 @@ const Dashboard: React.FC = () => {
                           </span>
                         </div>
                         <div className="mt-3 flex space-x-2">
-                          <Link to={`/jobs/${index + 1}`} className="btn btn-primary py-1 px-3 text-sm">
+                          <Link to={`/jobs/${index + 1}`} className="btn btn-primary text-gray-400 py-1 px-3 text-sm">
                             Apply Now
                           </Link>
                           <button className="btn btn-outline py-1 px-3 text-sm">
@@ -337,7 +337,7 @@ const Dashboard: React.FC = () => {
               </>
             )}
           </div>
-          
+
           {/* Sidebar */}
           <div className="space-y-8">
             {/* Quick actions */}
@@ -345,7 +345,7 @@ const Dashboard: React.FC = () => {
               <div className="p-6 border-b border-gray-100">
                 <h2 className="text-lg font-semibold">Quick Actions</h2>
               </div>
-              
+
               <div className="p-4">
                 <div className="grid grid-cols-2 gap-4">
                   {isEmployer ? (
@@ -355,17 +355,17 @@ const Dashboard: React.FC = () => {
                         <Briefcase className="h-6 w-6 text-primary-600 mb-2" />
                         <span className="text-sm text-center">Post a Job</span>
                       </Link>
-                      
+
                       <Link to="/candidates" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <Search className="h-6 w-6 text-primary-600 mb-2" />
                         <span className="text-sm text-center">Search Candidates</span>
                       </Link>
-                      
+
                       <Link to="/company-profile" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <Building className="h-6 w-6 text-primary-600 mb-2" />
                         <span className="text-sm text-center">Edit Company</span>
                       </Link>
-                      
+
                       <Link to="/analytics" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <BarChart2 className="h-6 w-6 text-primary-600 mb-2" />
                         <span className="text-sm text-center">View Analytics</span>
@@ -378,17 +378,17 @@ const Dashboard: React.FC = () => {
                         <Search className="h-6 w-6 text-primary-600 mb-2" />
                         <span className="text-sm text-center">Find Jobs</span>
                       </Link>
-                      
+
                       <Link to="/profile" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <User className="h-6 w-6 text-primary-600 mb-2" />
                         <span className="text-sm text-center">Edit Profile</span>
                       </Link>
-                      
+
                       <Link to="/resume" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <File className="h-6 w-6 text-primary-600 mb-2" />
                         <span className="text-sm text-center">Update Resume</span>
                       </Link>
-                      
+
                       <Link to="/saved-jobs" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <BookmarkPlus className="h-6 w-6 text-primary-600 mb-2" />
                         <span className="text-sm text-center">Saved Jobs</span>
@@ -398,7 +398,7 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+
             {/* Notifications */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
               <div className="p-6 border-b border-gray-100">
@@ -409,7 +409,7 @@ const Dashboard: React.FC = () => {
                   </Link>
                 </div>
               </div>
-              
+
               <div className="divide-y divide-gray-100">
                 {[
                   { icon: <Bell className="h-5 w-5 text-blue-500" />, text: 'New job matches available based on your profile', time: '2 hours ago' },
@@ -426,7 +426,7 @@ const Dashboard: React.FC = () => {
                 ))}
               </div>
             </div>
-            
+
             {/* Upcoming */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
               <div className="p-6 border-b border-gray-100">
@@ -434,7 +434,7 @@ const Dashboard: React.FC = () => {
                   {isEmployer ? 'Upcoming Interviews' : 'Upcoming Events'}
                 </h2>
               </div>
-              
+
               <div className="p-4 divide-y divide-gray-100">
                 {isEmployer ? (
                   // Employer upcoming interviews

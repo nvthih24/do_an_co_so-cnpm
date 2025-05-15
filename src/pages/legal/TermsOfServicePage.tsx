@@ -16,7 +16,7 @@ const TermsOfServicePage: React.FC = () => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">1. Acceptance of Terms</h2>
               <p className="text-gray-700 mb-4">
-                By accessing or using TalentHub's services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
+                By accessing or using Job247's services, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
               </p>
             </section>
 
@@ -50,14 +50,14 @@ const TermsOfServicePage: React.FC = () => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">4. Intellectual Property</h2>
               <p className="text-gray-700 mb-4">
-                All content and materials available on TalentHub are protected by intellectual property rights. You may not use, reproduce, or distribute our content without authorization.
+                All content and materials available on Job247 are protected by intellectual property rights. You may not use, reproduce, or distribute our content without authorization.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">5. Limitation of Liability</h2>
               <p className="text-gray-700 mb-4">
-                TalentHub is not liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our services.
+                Job247 is not liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our services.
               </p>
             </section>
 
@@ -81,7 +81,7 @@ const TermsOfServicePage: React.FC = () => {
                 For questions about these Terms of Service, please contact us at:
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-700">Email: legal@talenthub.com</p>
+                <p className="text-gray-700">Email: legal@job247.com</p>
                 <p className="text-gray-700">Phone: (555) 123-4567</p>
                 <p className="text-gray-700">
                   Address: 123 Legal Street, Suite 200<br />

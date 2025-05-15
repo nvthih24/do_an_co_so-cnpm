@@ -16,7 +16,7 @@ const PrivacyPolicyPage: React.FC = () => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
               <p className="text-gray-700 mb-4">
-                TalentHub ("we", "our", or "us") respects your privacy and is committed to protecting your personal data. This privacy policy explains how we collect, use, and safeguard your information when you use our platform.
+                Job247 ("we", "our", or "us") respects your privacy and is committed to protecting your personal data. This privacy policy explains how we collect, use, and safeguard your information when you use our platform.
               </p>
             </section>
 
@@ -75,7 +75,7 @@ const PrivacyPolicyPage: React.FC = () => {
                 If you have any questions about this Privacy Policy, please contact us at:
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-700">Email: privacy@talenthub.com</p>
+                <p className="text-gray-700">Email: privacy@job247.com</p>
                 <p className="text-gray-700">Phone: (555) 123-4567</p>
                 <p className="text-gray-700">
                   Address: 123 Privacy Street, Suite 100<br />
