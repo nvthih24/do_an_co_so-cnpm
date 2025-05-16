@@ -84,7 +84,7 @@ const EmployerResourcesPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl font-bold mb-4">Employer Resources</h1>
-            <p className="text-xl text-gray-200">
+            <p className="text-xl text-gray-500">
               Tools, guides, and insights to help you build and manage great teams
             </p>
           </div>
@@ -252,7 +252,7 @@ const EmployerResourcesPage: React.FC = () => {
       </section>
 
       {/* CTA section */}
-      <section className="py-16 bg-primary-700 text-white">
+      <section className="py-16 bg-primary-700 text-black">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Need More Help?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -262,7 +262,7 @@ const EmployerResourcesPage: React.FC = () => {
             <Link to="/contact" className="btn bg-white text-primary-600 hover:bg-gray-100">
               Contact Us
             </Link>
-            <Link to="/pricing" className="btn border-white text-white hover:bg-primary-600">
+            <Link to="/pricing" className="btn border-white text-gray-500 hover:bg-primary-600">
               View Plans
             </Link>
           </div>

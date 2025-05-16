@@ -40,7 +40,7 @@ const ContactPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
-            <p className="text-xl text-gray-200">
+            <p className="text-xl text-gray-400">
               Have questions? We're here to help and provide you with the support you need.
             </p>
           </div>
@@ -175,7 +175,7 @@ const ContactPage: React.FC = () => {
                     <button
                       type="submit"
                       disabled={loading}
-                      className="btn btn-primary w-full flex items-center justify-center"
+                      className="btn btn-primary w-full flex items-center justify-center text-gray-500 border-t border-gray-100 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                     >
                       {loading ? (
                         <>
@@ -187,7 +187,7 @@ const ContactPage: React.FC = () => {
                         </>
                       ) : (
                         <>
-                          <Send className="h-4 w-4 mr-2" />
+                          <Send className="h-4 w-4 mr-2 text-gray-500" />
                           Send Message
                         </>
                       )}

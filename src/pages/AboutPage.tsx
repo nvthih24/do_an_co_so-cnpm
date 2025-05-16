@@ -36,7 +36,7 @@ const AboutPage: React.FC = () => {
   return (
     <div className="bg-white">
       {/* Hero section */}
-      <section className="relative bg-primary-700 text-white py-24">
+      <section className="relative bg-primary-700 text-black py-24">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-900 opacity-90"></div>
           <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-20"></div>
@@ -47,14 +47,14 @@ const AboutPage: React.FC = () => {
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Transforming the Way People Find Their Dream Careers
             </h1>
-            <p className="text-xl text-gray-200 mb-8">
+            <p className="text-xl text-gray-400 mb-8">
               Job247 is revolutionizing the recruitment industry by connecting talented individuals with outstanding opportunities through innovative technology and personalized experiences.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link to="/jobs" className="btn btn-accent">
+              <Link to="/jobs" className="btn btn-accent text-gray-500 hover:bg-gray-100">
                 Find Jobs
               </Link>
-              <Link to="/contact" className="btn bg-white text-primary-600 hover:bg-gray-100">
+              <Link to="/contact" className="btn bg-white text-gray-500 hover:bg-gray-100">
                 Contact Us
               </Link>
             </div>
@@ -110,7 +110,7 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* CTA section */}
-      <section className="py-16 bg-primary-700 text-white">
+      <section className="py-16 bg-primary-700 text-black">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Start Your Journey?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -120,7 +120,7 @@ const AboutPage: React.FC = () => {
             <Link to="/register" className="btn bg-white text-primary-600 hover:bg-gray-100">
               Create an Account
             </Link>
-            <Link to="/contact" className="btn border-white text-white hover:bg-primary-600">
+            <Link to="/contact" className="btn border-white text-gray-500 hover:bg-primary-600">
               Contact Us
             </Link>
           </div>
