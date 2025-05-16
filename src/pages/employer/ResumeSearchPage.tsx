@@ -63,7 +63,7 @@ const ResumeSearchPage: React.FC = () => {
                 </div>
               </div>
               
-              <button className="btn btn-primary">
+              <button className="btn btn-primary text-gray-500 border-t border-gray-300">
                 Search
               </button>
               
@@ -152,7 +152,7 @@ const ResumeSearchPage: React.FC = () => {
                           <BookmarkPlus className="h-4 w-4 mr-2" />
                           Save
                         </button>
-                        <button className="btn btn-primary py-1 px-3">
+                        <button className="btn btn-primary text-gray-500 py-1 px-3">
                           View Profile
                         </button>
                       </div>

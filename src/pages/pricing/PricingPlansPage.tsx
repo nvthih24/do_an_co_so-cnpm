@@ -61,7 +61,7 @@ const PricingPlansPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl font-bold mb-4">Simple, Transparent Pricing</h1>
-            <p className="text-xl text-gray-200">
+            <p className="text-xl text-gray-500">
               Choose the plan that best fits your recruitment needs
             </p>
           </div>
@@ -80,7 +80,7 @@ const PricingPlansPage: React.FC = () => {
                 }`}
               >
                 {plan.popular && (
-                  <div className="bg-primary-500 text-white text-center py-2 text-sm font-medium">
+                  <div className="bg-primary-500 text-black text-center py-2 text-sm font-medium">
                     Most Popular
                   </div>
                 )}
@@ -100,7 +100,7 @@ const PricingPlansPage: React.FC = () => {
                     to="/register"
                     className={`block w-full text-center py-2 px-4 rounded-md transition-colors ${
                       plan.popular
-                        ? 'bg-primary-600 text-white hover:bg-primary-700'
+                        ? 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                         : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                     }`}
                   >
@@ -174,17 +174,17 @@ const PricingPlansPage: React.FC = () => {
       </section>
 
       {/* CTA section */}
-      <section className="py-16 bg-primary-700 text-white">
+      <section className="py-16 bg-primary-700 text-black">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Get Started?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Join thousands of companies who have found exceptional talent through Job247
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to="/register" className="btn bg-white text-primary-600 hover:bg-gray-100">
+            <Link to="/register" className="btn bg-white text-gray-500 hover:bg-gray-100">
               Create Account
             </Link>
-            <Link to="/contact" className="btn border-white text-white hover:bg-primary-600">
+            <Link to="/contact" className="btn border-white text-gray-500 hover:bg-gray-100">
               Contact Sales
             </Link>
           </div>
