@@ -31,9 +31,9 @@ const JobAlertsPage: React.FC = () => {
             <h1 className="text-3xl font-bold">Job Alerts</h1>
             <button 
               onClick={() => setShowNewAlertForm(!showNewAlertForm)}
-              className="btn btn-primary flex items-center"
+              className="btn btn-primary flex items-center text-gray-600 bg-white hover:bg-gray-100"
             >
-              <Plus className="h-5 w-5 mr-2" />
+              <Plus className="h-5 w-5 mr-2 text-gray-600" />
               Create Alert
             </button>
           </div>
@@ -103,7 +103,7 @@ const JobAlertsPage: React.FC = () => {
                   >
                     Cancel
                   </button>
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary text-gray-600 border-t border-gray-300 shadow-gray-200 hover:bg-gray-50">
                     Create Alert
                   </button>
                 </div>
