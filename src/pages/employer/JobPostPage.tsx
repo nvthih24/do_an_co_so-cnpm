@@ -14,27 +14,37 @@ const JobPostPage: React.FC = () => {
     type: 'Full-time',
     salary: '',
     experience: '',
-    description: '',
+    description: '', 
     requirements: '',
     benefits: '',
     featured: false
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      showToast('Job posted successfully!', 'success');
-      navigate('/dashboard');
-    } catch (error) {
-      showToast('Failed to post job. Please try again.', 'error');
-    } finally {
-      setLoading(false);
-    }
-  };
+  try {
+    const response = await fetch('http://localhost:5000/api/jobs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) throw new Error('Failed to post job');
+
+    showToast('Job posted successfully!', 'success');
+    navigate('/dashboard');
+  } catch (error) {
+    console.error(error);
+    showToast('Failed to post job. Please try again.', 'error');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

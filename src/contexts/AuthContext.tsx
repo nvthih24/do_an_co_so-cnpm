@@ -54,9 +54,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       const data = await res.json();
+      console.log("FULL login response:", data);
+
 
       const loggedInUser: User = {
-        id: data.user._id || 'N/A',
+        id: data.user.userId,
         name: data.user.name,
         email: data.user.email,
         role: data.user.role,
@@ -66,6 +68,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(loggedInUser);
       localStorage.setItem('user', JSON.stringify(loggedInUser));
       localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.user.userId);
+      console.log('User ID:', data.user.userId);
+
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
