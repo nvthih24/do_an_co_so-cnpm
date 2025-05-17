@@ -1,0 +1,28 @@
+import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import Header_Admin from './Header_Admin';
+import Sidebar from './Sidebar';
+import { useTheme } from '../../contexts/ThemeContext';
+
+const AdminLayout: React.FC = () => {
+  const { theme } = useTheme();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed);
+  };
+
+  return (
+    <div className={`flex h-screen bg-gray-50 ${theme === 'dark' ? 'dark' : ''}`}>
+      <Sidebar collapsed={sidebarCollapsed} onToggle={toggleSidebar} />
+      <div className="flex-1 flex flex-col overflow-hidden transition-all duration-300 dark:bg-gray-900">
+        <Header_Admin sidebarCollapsed={sidebarCollapsed} />
+        <main className="flex-1 overflow-y-auto p-4 md:p-6">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default AdminLayout;

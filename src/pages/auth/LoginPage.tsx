@@ -12,39 +12,46 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState('');
-  
- const { login, setUserFromOAuth } = useAuth();
+
+  const { login, setUserFromOAuth } = useAuth();
 
   const { showToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Get the redirect path from location state or default to dashboard
   const from = (location.state as any)?.from || '/dashboard';
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError('');
-    
+
     if (!email || !password) {
       setFormError('Please provide both email and password');
       return;
     }
-    
+
     setLoading(true);
-    
+
     try {
       await login(email, password);
+
       const currentUser = auth.currentUser;
       if (currentUser) {
         const token = await currentUser.getIdToken();
         localStorage.setItem('token', token);
         localStorage.setItem('userId', currentUser.uid);
-        console.log('User ID:', currentUser.uid);
       }
+
+      const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+
+      if (storedUser.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate(from);
+      }
+
       showToast('Successfully logged in!', 'success');
-      console.log('User ID:', localStorage.getItem('userId'));
-      navigate(from);
     } catch (error) {
       setFormError('Invalid email or password. Please try again.');
       showToast('Login failed', 'error');
@@ -59,26 +66,26 @@ const LoginPage: React.FC = () => {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       const token = await user.getIdToken();
-      
+
       // Assuming you have a backend endpoint to handle Google sign-in
       const response = await axios.post('/api/auth/google', { token });
 
-    if (response.data) {
-      const customUser = {
-        id: response.data.id,
-        name: user.displayName || '',
-        email: user.email || '',
-        role: response.data.role, // hoặc mặc định 'user'
-      };
+      if (response.data) {
+        const customUser = {
+          id: response.data.id,
+          name: user.displayName || '',
+          email: user.email || '',
+          role: response.data.role, // hoặc mặc định 'user'
+        };
 
-      setUserFromOAuth(customUser, token); // kiểu custom hợp lệ
-      localStorage.setItem('token', token); // lưu token
-      localStorage.setItem('userId', response.data.id);
-console.log('User ID:', response.data.id);
+        setUserFromOAuth(customUser, token); // kiểu custom hợp lệ
+        localStorage.setItem('token', token); // lưu token
+        localStorage.setItem('userId', response.data.id);
+        console.log('User ID:', response.data.id);
 
-      showToast('Successfully logged in with Google!', 'success');
-      navigate(from);
-    }
+        showToast('Successfully logged in with Google!', 'success');
+        navigate(from);
+      }
 
     } catch (error) {
       console.error('Google sign-in error:', error);
@@ -88,7 +95,7 @@ console.log('User ID:', response.data.id);
     }
   };
 
-  
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
@@ -104,13 +111,13 @@ console.log('User ID:', response.data.id);
             </Link>
           </p>
         </div>
-        
+
         {formError && (
           <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md text-sm">
             {formError}
           </div>
         )}
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
@@ -134,7 +141,7 @@ console.log('User ID:', response.data.id);
                 />
               </div>
             </div>
-            
+
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
@@ -170,7 +177,7 @@ console.log('User ID:', response.data.id);
               </div>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input
@@ -183,14 +190,14 @@ console.log('User ID:', response.data.id);
                 Remember me
               </label>
             </div>
-            
+
             <div className="text-sm">
               <Link to="/forgot-password" className="font-medium text-primary-600 hover:text-primary-500">
                 Forgot your password?
               </Link>
             </div>
           </div>
-          
+
           <div>
             <button
               type="submit"
@@ -211,7 +218,7 @@ console.log('User ID:', response.data.id);
             </button>
           </div>
         </form>
-        
+
         <div className="mt-6">
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -221,17 +228,17 @@ console.log('User ID:', response.data.id);
               <span className="px-2 bg-white text-gray-500">Or continue with</span>
             </div>
           </div>
-          
-          <div className="mt-6 grid grid-cols-2 gap-3">
-<button 
-  type="button"
-  onClick={handleGoogleSignIn}
-  className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
->
-  Google
-</button>
 
-            <button 
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+            >
+              Google
+            </button>
+
+            <button
               type="button"
               className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
             >

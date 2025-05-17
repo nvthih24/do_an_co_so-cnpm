@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { ThemeProvider } from '../contexts/ThemeContext';
 
 // Public pages
 import HomePage from '../pages/HomePage';
@@ -28,15 +29,18 @@ import ApplicationsPage from '../pages/dashboard/ApplicationsPage';
 import CompanyProfilePage from '../pages/employer/CompanyProfilePage';
 import ResumeSearchPage from '../pages/employer/ResumeSearchPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import AdminDashboard from "../pages/admin/Dashboard_Admin";
+
+
 
 // Route guard component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return <>{children}</>;
 };
 
@@ -60,9 +64,13 @@ const AppRoutes = () => {
       <Route path="/pricing" element={<PricingPlansPage />} />
       <Route path="/employer-resources" element={<EmployerResourcesPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-      
+      <Route path="/admin" element={<AdminDashboard />} />
+
+
+      {/* Redirects */}
+
       {/* Redirect from old routes */}
-      
+
       {/* Protected routes */}
       <Route path="/dashboard" element={
         <ProtectedRoute>
@@ -94,10 +102,12 @@ const AppRoutes = () => {
           <ResumeSearchPage />
         </ProtectedRoute>
       } />
-      
+
       {/* Catch-all route */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+
+
   );
 };
 
