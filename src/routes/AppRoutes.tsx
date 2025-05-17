@@ -30,7 +30,13 @@ import CompanyProfilePage from '../pages/employer/CompanyProfilePage';
 import ResumeSearchPage from '../pages/employer/ResumeSearchPage';
 import NotFoundPage from '../pages/NotFoundPage';
 import AdminDashboard from "../pages/admin/Dashboard_Admin";
-
+import EmployerList from '../pages/employer/EmployerList_Admin';
+import EmployerDetails from '../pages/employer/EmployerDetails_Admin';
+import CandidateDetails from '../pages/candidates/CandidateDetails';
+import CandidateList from '../pages/candidates/CandidateList';
+import PostList from '../pages/posts/PostList_Admin';
+import PostDetails from '../pages/posts/PostDetails_Admin';
+import PostForm from '../pages/posts/PostForm_Admin';
 
 
 // Route guard component
@@ -65,6 +71,14 @@ const AppRoutes = () => {
       <Route path="/employer-resources" element={<EmployerResourcesPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="/employer" element={<EmployerList />} />
+      <Route path="employer/:id" element={<EmployerDetails />} />
+      <Route path="candidates" element={<CandidateList />} />
+      <Route path="candidates/:id" element={<CandidateDetails />} />
+      <Route path="posts" element={<PostList />} />
+      <Route path="posts/new" element={<PostForm />} />
+      <Route path="posts/:id" element={<PostDetails />} />
+      <Route path="posts/:id/edit" element={<PostForm />} />
 
 
       {/* Redirects */}

@@ -80,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
               </li>
               <li>
                 <NavLink
-                  to="/employers"
+                  to="/employer"
                   className={({ isActive }) =>
                     `flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors ${
                       isActive ? 'bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-blue-400' : 'dark:text-gray-400'

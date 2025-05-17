@@ -19,7 +19,7 @@ import {
     Legend,
     ResponsiveContainer
 } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card'; 
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../../components/ui/Table';
 import { dashboardStats, candidatesChartData, jobPostsChartData, recentActivity } from '../../utils/mockData';
 import { formatTimeAgo } from '../../utils/helpers';
@@ -245,7 +245,7 @@ const Dashboard_Admin: React.FC = () => {
                                         </div>
                                     </TableCell>
                                     <TableCell>{activity.entityName}</TableCell>
-                                    <TableCell>{formatTimeAgo(activity.timestamp)}</TableCell>
+                                    <TableCell>{formatTimeAgo(typeof activity.timestamp === 'number' ? new Date(activity.timestamp) : activity.timestamp)}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

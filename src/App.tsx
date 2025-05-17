@@ -7,9 +7,8 @@ import Footer from './components/layout/Footer';
 import { ToastProvider } from './contexts/ToastContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 
-// Admin layout và các trang con
 import AdminLayout from './components/layout/AdminLayout';
-import Dashboard from './pages/admin/Dashboard_Admin';
+import AdminDashboard from "./pages/admin/Dashboard_Admin";
 import CandidateList from './pages/candidates/CandidateList';
 import CandidateDetails from './pages/candidates/CandidateDetails';
 import EmployerList from './pages/employer/EmployerList_Admin';
@@ -25,13 +24,13 @@ function App() {
         <AuthProvider>
           <ToastProvider>
             <Routes>
-              {/* Admin layout riêng */}
+              {/* Admin Layout */}
               <Route path="/admin" element={<AdminLayout />}>
-                <Route index element={<Dashboard />} />
+                <Route index element={<AdminDashboard />} />
                 <Route path="candidates" element={<CandidateList />} />
                 <Route path="candidates/:id" element={<CandidateDetails />} />
-                <Route path="employers" element={<EmployerList />} />
-                <Route path="employers/:id" element={<EmployerDetails />} />
+                <Route path="employer" element={<EmployerList />} />
+                <Route path="employer/:id" element={<EmployerDetails />} />
                 <Route path="posts" element={<PostList />} />
                 <Route path="posts/new" element={<PostForm />} />
                 <Route path="posts/:id" element={<PostDetails />} />

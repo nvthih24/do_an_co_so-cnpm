@@ -7,7 +7,7 @@ interface HeaderProps {
   sidebarCollapsed: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ sidebarCollapsed }) => {
+const Header_Admin: React.FC<HeaderProps> = ({ sidebarCollapsed }) => {
   const { user, isAuthenticated, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [showNotifications, setShowNotifications] = useState(false);
@@ -106,4 +106,4 @@ const Header: React.FC<HeaderProps> = ({ sidebarCollapsed }) => {
   );
 };
 
-export default Header;
+export default Header_Admin;

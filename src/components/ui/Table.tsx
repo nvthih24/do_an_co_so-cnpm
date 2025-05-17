@@ -62,10 +62,6 @@ export const TableRow: React.FC<TableRowProps> = ({ children, className, onClick
   );
 };
 
-interface TableCellProps {
-  children: React.ReactNode;
-  className?: string;
-}
 
 export const TableCell: React.FC<TableCellProps> = ({ children, className }) => {
   return (
@@ -93,3 +89,8 @@ export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({ children, clas
     </th>
   );
 };
+
+export interface TableCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
+  // Add any custom props here
+  colSpan?: number;
+}

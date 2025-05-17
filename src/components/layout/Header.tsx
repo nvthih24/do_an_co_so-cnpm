@@ -9,6 +9,22 @@ const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
+    // Kiểm tra trang admin để ẩn header
+  const isAdminEmpl = location.pathname.startsWith('/employer') || location.pathname.startsWith('/admin');
+  if (isAdminEmpl) {
+    return null;
+  }
+
+    const isAdminCandi = location.pathname.startsWith('/candidates') || location.pathname.startsWith('/admin');
+  if (isAdminCandi) {
+    return null;
+  }
+
+      const isAdminPorts = location.pathname.startsWith('/posts') || location.pathname.startsWith('/admin');
+  if (isAdminPorts) {
+    return null;
+  }
+
   // Handle scroll events to change header appearance
   useEffect(() => {
     const handleScroll = () => {
