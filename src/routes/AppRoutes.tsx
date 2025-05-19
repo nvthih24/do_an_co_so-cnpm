@@ -20,6 +20,7 @@ import CreateProfilePage from '../pages/profile/CreateProfilePage';
 import PricingPlansPage from '../pages/pricing/PricingPlansPage';
 import EmployerResourcesPage from '../pages/employer/EmployerResourcesPage';
 import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
+import SavedJobsPage from '../pages/SavedJobsPage';
 
 // Protected pages
 import Dashboard from '../pages/dashboard/Dashboard';
@@ -71,6 +72,7 @@ const AppRoutes = () => {
       <Route path="/pricing" element={<PricingPlansPage />} />
       <Route path="/employer-resources" element={<EmployerResourcesPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/saved-jobs" element={<SavedJobsPage />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/employer" element={<EmployerList />} />
       <Route path="employer/:id" element={<EmployerDetails />} />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
+import { useSavedJobs } from '../../contexts/SavedJobsContext';
 import { 
   Briefcase, Building, User, File, Bell, MessageSquare, CheckCircle, 
   Users, BarChart2, Calendar, BookmarkPlus, MapPin, DollarSign, Search, Eye 
@@ -20,8 +21,8 @@ interface Job {
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
+  const { savedJobs } = useSavedJobs();
   const isEmployer = user?.role === 'employer';
-  const [savedJobs, setSavedJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -34,11 +35,10 @@ const Dashboard: React.FC = () => {
             throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
           }
           const data: Job[] = await response.json();
-          setSavedJobs(data);
+          setLoading(false);
         } catch (err: any) {
           console.error('Fetch saved jobs error:', err);
           showToast('Failed to load saved jobs', 'error');
-        } finally {
           setLoading(false);
         }
       };

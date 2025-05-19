@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Building, MapPin, Clock, DollarSign, Briefcase, Award, BookmarkPlus } from 'lucide-react';
+import { useSavedJobs } from '../../contexts/SavedJobsContext';
 
 interface Job {
   _id: string; // Thay id bằng _id
@@ -30,6 +31,9 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
   // Chuyển requirements từ chuỗi sang mảng
   const tags = job.requirements ? job.requirements.split(',').map((item) => item.trim()) : [];
 
+  const { savedJobs, saveJob } = useSavedJobs();
+  const isSaved = savedJobs.some(j => j._id === job._id);
+
   console.log('Rendering JobCard:', job); // Debug dữ liệu
 
   return (
@@ -54,7 +58,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
               <div className="flex mt-2 sm:mt-0">
                 {job.featured && (
                   <span className="badge badge-success mr-2">Featured</span>
-                )}
+                )}  
                 <span className="badge bg-blue-100 text-blue-800">{job.type}</span>
               </div>
             </div>
@@ -108,9 +112,13 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
               </div>
 
               <div className="flex mt-3 sm:mt-0 gap-2">
-                <button className="btn btn-outline py-1 px-3 flex items-center">
+                <button
+                  className={`btn btn-outline py-1 px-3 flex items-center ${isSaved ? 'bg-green-100 text-green-700' : ''}`}
+                  onClick={() => saveJob(job)}
+                  disabled={isSaved}
+                >
                   <BookmarkPlus className="h-4 w-4 mr-2" />
-                  Save
+                  {isSaved ? 'Saved' : 'Save'}
                 </button>
                 <Link to={`/jobs/${job._id}`} className="btn btn-primary text-gray-400 py-1 px-4">
                   Apply Now
