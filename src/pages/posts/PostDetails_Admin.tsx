@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Outlet } from 'react-router-dom';
 import {
   ArrowLeft, Edit, Trash2, MapPin, Calendar, Building2,
@@ -8,11 +8,41 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '../../comp
 import Button from '../../components/ui/Button';
 import StatusBadge from '../../components/ui/StatusBadge';
 import Modal from '../../components/ui/Model';
-import { posts, employers } from '../../utils/mockData';
 import { formatDate, formatCurrency } from '../../utils/helpers';
 import Header from '../../components/layout/Header_Admin';
 import Sidebar from '../../components/layout/Sidebar';
 import { useTheme } from '../../contexts/ThemeContext';
+
+// Định nghĩa interface Job và Employer
+interface Job {
+
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  salary: string;
+  experience: string;
+  description: string;
+  requirements: string[];
+  featured: boolean;
+  isApproved: boolean;
+  createdAt: string | Date;
+  applicationCount: number;
+  userId: string;
+  rejectionReason?: string;
+  rejectionComments?: string;
+}
+
+interface Employer {
+  id: string;
+  name: string;
+  email: string;
+  companyName: string;
+  industry: string;
+  location: string;
+  description: string;
+  logoUrl?: string;
+}
 
 const PostDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,55 +51,133 @@ const PostDetails: React.FC = () => {
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [isFeaturedModalOpen, setIsFeaturedModalOpen] = useState(false);
-
-  const post = posts.find(p => p.id === id);
-  const employer = employers.find(e => e.id === post?.employerId);
-
+  const [rejectionReason, setRejectionReason] = useState('');
+  const [rejectionComments, setRejectionComments] = useState('');
+  const [post, setPost] = useState<Job | null>(null);
+  const [employer, setEmployer] = useState<Employer | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { theme } = useTheme();
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
   };
-  if (!post || !employer) {
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Lấy thông tin job
+      const jobResponse = await fetch(`/api/jobs/${id}`);
+      if (!jobResponse.ok) {
+        throw new Error('Job not found');
+      }
+      const jobData = await jobResponse.json();
+      setPost(jobData);
+      setEmployer(jobData.userId); // Sử dụng userId từ jobData
+      console.log(jobData);
+    } catch (err: any) {
+      setError(err.message || 'Error fetching data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, [id]);
+
+  const handleApprove = async () => {
+    try {
+      const response = await fetch(`/api/jobs/${id}/approve`, {
+        method: 'PUT',
+      });
+      if (!response.ok) {
+        throw new Error('Error approving job');
+      }
+      const updatedJob = await response.json();
+      setPost(updatedJob.job);
+      setIsApproveModalOpen(false);
+    } catch (error) {
+      console.error('Error approving job:', error);
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      const response = await fetch(`/api/jobs/${id}/reject`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ reason: rejectionReason, comments: rejectionComments }),
+      });
+      if (!response.ok) {
+        throw new Error('Error rejecting job');
+      }
+      const updatedJob = await response.json();
+      setPost(updatedJob.job);
+      setIsRejectModalOpen(false);
+    } catch (error) {
+      console.error('Error rejecting job:', error);
+    }
+  };
+
+  const handleToggleFeatured = async () => {
+    try {
+      const response = await fetch(`/api/jobs/${id}/toggle-featured`, {
+        method: 'PUT',
+      });
+      if (!response.ok) {
+        throw new Error('Error toggling featured status');
+      }
+      const updatedJob = await response.json();
+      setPost(updatedJob.job);
+      setIsFeaturedModalOpen(false);
+    } catch (error) {
+      console.error('Error toggling featured status:', error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/jobs/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Error deleting job');
+      }
+      setIsDeleteModalOpen(false);
+      navigate('/posts');
+    } catch (error) {
+      console.error('Error deleting job:', error);
+    }
+  };
+
+  const handleEdit = () => {
+    navigate(`/posts/${id}/edit`);
+  };
+
+  if (loading) {
     return (
       <div className="flex flex-col items-center justify-center p-8">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Job Post Not Found</h2>
-        <p className="text-gray-500 dark:text-gray-400 mb-6">The job post you're looking for doesn't exist.</p>
-        <Button onClick={() => navigate('/posts')}>Back to Posts</Button>
+        <p className="text-gray-500 dark:text-gray-400">Loading...</p>
       </div>
     );
   }
 
-  const handleApprove = () => {
-    // Approve the post
-    console.log('Approve post:', post.id);
-    setIsApproveModalOpen(false);
-  };
-
-  const handleReject = () => {
-    // Reject the post
-    console.log('Reject post:', post.id);
-    setIsRejectModalOpen(false);
-  };
-
-  const handleToggleFeatured = () => {
-    // Toggle featured status
-    console.log('Toggle featured status:', post.id);
-    setIsFeaturedModalOpen(false);
-  };
-
-  const handleEdit = () => {
-    // Navigate to edit page
-    navigate(`/posts/${post.id}/edit`);
-  };
-
-  const handleDelete = () => {
-    // Delete the post
-    console.log('Delete post:', post.id);
-    setIsDeleteModalOpen(false);
-    navigate('/posts');
-  };
+  if (error || !post || !employer) {
+    return (
+      <div className="flex flex-col items-center justify-center p-8">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Job Post Not Found</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-6">{error || "The job post you're looking for doesn't exist."}</p>
+        <Button onClick={() => navigate('/posts')}>Back to Posts</Button>
+      </div>
+    );
+  }
 
   return (
     <div className={`flex h-screen bg-gray-50 ${theme === 'dark' ? 'dark' : ''}`}>
@@ -93,7 +201,7 @@ const PostDetails: React.FC = () => {
                 <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Job Post Details</h1>
               </div>
               <div className="flex gap-3">
-                {post.status === 'pending' && (
+                {post.isApproved === false && (
                   <>
                     <Button
                       variant="primary"
@@ -140,7 +248,7 @@ const PostDetails: React.FC = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <CardTitle>{post.title}</CardTitle>
-                      <StatusBadge status={post.status} />
+                      <StatusBadge status={post.isApproved ? 'approved' : 'pending'} />
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2">
                       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
@@ -157,7 +265,7 @@ const PostDetails: React.FC = () => {
                       </div>
                       <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                         <DollarSign size={16} className="mr-1" />
-                        {formatCurrency(post.salary.min, post.salary.currency)} - {formatCurrency(post.salary.max, post.salary.currency)}
+                        {post.salary} 
                       </div>
                     </div>
                   </CardHeader>
@@ -170,14 +278,10 @@ const PostDetails: React.FC = () => {
                         </p>
                       </div>
 
-                      <div>
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Requirements</h3>
-                        <ul className="list-disc pl-5 space-y-1 text-gray-700 dark:text-gray-300">
-                          {post.requirements.map((req, index) => (
-                            <li key={index}>{req}</li>
-                          ))}
-                        </ul>
-                      </div>
+<div>
+  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Requirements</h3>
+  <p className="text-gray-700 dark:text-gray-300">{post.requirements}</p> {/* Hiển thị chuỗi requirements */}
+</div>
 
                       {post.featured && (
                         <div className="bg-amber-50 border-l-4 border-amber-500 p-4 dark:bg-amber-900/20 dark:border-amber-600">
@@ -214,7 +318,7 @@ const PostDetails: React.FC = () => {
                   >
                     {post.featured ? 'Remove Featured Status' : 'Mark as Featured'}
                   </Button>
-                  {post.status === 'pending' ? (
+                  {post.isApproved === false ? (
                     <div className="space-x-3">
                       <Button
                         variant="danger"
@@ -261,12 +365,8 @@ const PostDetails: React.FC = () => {
                         <p className="text-sm font-medium text-gray-900 dark:text-white">{employer.location}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Company Size</p>
-                        <p className="text-sm font-medium text-gray-900 dark:text-white">{employer.size} employees</p>
-                      </div>
-                      <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Contact</p>
-                        <p className="text-sm font-medium text-gray-900 dark:text-white">{employer.contactName}</p>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">{employer.name}</p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">{employer.email}</p>
                       </div>
                     </div>
@@ -291,7 +391,7 @@ const PostDetails: React.FC = () => {
                     <div className="space-y-4">
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Views</p>
-                        <p className="text-2xl font-semibold text-gray-900 dark:text-white">145</p>
+                        <p className="text-2xl font-semibold text-gray-900 dark:text-white">145</p> {/* Giá trị này cần API hỗ trợ */}
                       </div>
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Applications</p>
@@ -299,7 +399,7 @@ const PostDetails: React.FC = () => {
                       </div>
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Posting Status</p>
-                        <StatusBadge status={post.status} />
+                        <StatusBadge status={post.isApproved ? 'approved' : 'pending'} />
                       </div>
                     </div>
                   </CardContent>
@@ -359,7 +459,12 @@ const PostDetails: React.FC = () => {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Reason for Rejection
                   </label>
-                  <select className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                  <select
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    value={rejectionReason}
+                    onChange={(e) => setRejectionReason(e.target.value)}
+                  >
+                    <option value="">Select a reason</option>
                     <option>Inappropriate content</option>
                     <option>Misleading information</option>
                     <option>Duplicate posting</option>
@@ -375,6 +480,8 @@ const PostDetails: React.FC = () => {
                     rows={3}
                     className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                     placeholder="Provide details about the rejection reason..."
+                    value={rejectionComments}
+                    onChange={(e) => setRejectionComments(e.target.value)}
                   ></textarea>
                 </div>
               </div>
@@ -448,7 +555,6 @@ const PostDetails: React.FC = () => {
         </main>
       </div>
     </div>
-
   );
 };
 
