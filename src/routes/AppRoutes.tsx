@@ -38,6 +38,7 @@ import CandidateList from '../pages/candidates/CandidateList';
 import PostList from '../pages/posts/PostList_Admin';
 import PostDetails from '../pages/posts/PostDetails_Admin';
 import PostForm from '../pages/posts/PostForm_Admin';
+import CVTemplates from "../pages/CVTemplates";
 
 
 
@@ -82,6 +83,7 @@ const AppRoutes = () => {
       <Route path="posts/new" element={<PostForm />} />
       <Route path="posts/:id" element={<PostDetails />} />
       <Route path="posts/:id/edit" element={<PostForm />} />
+      <Route path="/create-cv" element={<CVTemplates />} />
 
 
       {/* Redirects */}

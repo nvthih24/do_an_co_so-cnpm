@@ -17,6 +17,7 @@ import EmployerDetails from './pages/employer/EmployerDetails_Admin';
 import PostList from './pages/posts/PostList_Admin';
 import PostDetails from './pages/posts/PostDetails_Admin';
 import PostForm from './pages/posts/PostForm_Admin';
+import CVTemplates from "./pages/CVTemplates";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
                     </div>
                   }
                 />
+                <Route path="/create-cv" element={<CVTemplates />} />
               </Routes>
             </ToastProvider>
           </AuthProvider>
