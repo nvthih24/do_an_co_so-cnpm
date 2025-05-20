@@ -121,6 +121,7 @@ const AppRoutes = () => {
           <ResumeSearchPage />
         </ProtectedRoute>
       } />
+    
 
       {/* Catch-all route */}
       <Route path="*" element={<NotFoundPage />} />
