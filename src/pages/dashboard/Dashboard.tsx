@@ -438,9 +438,9 @@ const Dashboard: React.FC = () => {
                         <span className="text-sm text-center">Post a Job</span>
                       </Link>
 
-                      <Link to="/candidates" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <Link to="/jobs-posted" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <Search className="h-6 w-6 text-primary-600 mb-2" />
-                        <span className="text-sm text-center">Search Candidates</span>
+                        <span className="text-sm text-center">Jobs Posted</span>
                       </Link>
 
                       <Link to="/company-profile" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">

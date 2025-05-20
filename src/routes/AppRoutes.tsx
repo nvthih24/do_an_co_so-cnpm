@@ -40,7 +40,7 @@ import CandidateList from '../pages/candidates/CandidateList';
 import PostList from '../pages/posts/PostList_Admin';
 import PostDetails from '../pages/posts/PostDetails_Admin';
 import PostForm from '../pages/posts/PostForm_Admin';
-
+import JobsPosted from '../pages/dashboard/JobsPosted';
 
 // Route guard component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -85,6 +85,7 @@ const AppRoutes = () => {
       <Route path="posts/:id/edit" element={<PostForm />} />
       <Route path="/create-cv" element={<CVTemplates />} />
       <Route path="/edit-cv/:id" element={<EditCVPage />} />
+      <Route path="/jobs-posted" element={<JobsPosted />} />
 
       {/* Redirects */}
 
@@ -121,7 +122,7 @@ const AppRoutes = () => {
           <ResumeSearchPage />
         </ProtectedRoute>
       } />
-    
+      
 
       {/* Catch-all route */}
       <Route path="*" element={<NotFoundPage />} />
