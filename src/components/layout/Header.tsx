@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Menu, X, Briefcase as BriefcaseBusiness, User, Search } from 'lucide-react';
 
@@ -8,19 +8,28 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
-    // Kiểm tra trang admin để ẩn header
+  const handleCreateCV = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } else {
+      navigate("/create-cv");
+    }
+  };
+
+  // Kiểm tra trang admin để ẩn header
   const isAdminEmpl = location.pathname.startsWith('/employer') || location.pathname.startsWith('/admin');
   if (isAdminEmpl) {
     return null;
   }
 
-    const isAdminCandi = location.pathname.startsWith('/candidates') || location.pathname.startsWith('/admin');
+  const isAdminCandi = location.pathname.startsWith('/candidates') || location.pathname.startsWith('/admin');
   if (isAdminCandi) {
     return null;
   }
 
-      const isAdminPorts = location.pathname.startsWith('/posts') || location.pathname.startsWith('/admin');
+  const isAdminPorts = location.pathname.startsWith('/posts') || location.pathname.startsWith('/admin');
   if (isAdminPorts) {
     return null;
   }
@@ -55,12 +64,13 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/create-cv"
-              className="text-gray-700 hover:text-primary-600 font-medium"
+            <button
+              onClick={handleCreateCV}
+              className="text-gray-700 hover:text-primary-600 font-medium bg-transparent border-none outline-none cursor-pointer"
+              type="button"
             >
               Create CV
-            </Link>
+            </button>
             <Link
               to="/jobs"
               className="text-gray-700 hover:text-primary-600 font-medium"
@@ -161,12 +171,16 @@ const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white px-4 py-5 shadow-lg">
           <nav className="flex flex-col space-y-4">
-            <Link
-              to="/create-cv"
-              className="text-gray-700 hover:text-primary-600 font-medium py-2"
+            <button
+              onClick={() => {
+                handleCreateCV();
+                setIsMobileMenuOpen(false);
+              }}
+              className="text-gray-700 hover:text-primary-600 font-medium py-2 bg-transparent border-none outline-none text-left w-full"
+              type="button"
             >
               Create CV
-            </Link>
+            </button>
             <Link
               to="/jobs"
               className="text-gray-700 hover:text-primary-600 font-medium py-2"

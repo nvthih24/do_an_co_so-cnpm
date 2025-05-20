@@ -21,6 +21,8 @@ import PricingPlansPage from '../pages/pricing/PricingPlansPage';
 import EmployerResourcesPage from '../pages/employer/EmployerResourcesPage';
 import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
 import SavedJobsPage from '../pages/SavedJobsPage';
+import CVTemplates from "../pages/CVTemplates";
+import EditCVPage from "../pages/EditCVPage";
 
 // Protected pages
 import Dashboard from '../pages/dashboard/Dashboard';
@@ -38,8 +40,6 @@ import CandidateList from '../pages/candidates/CandidateList';
 import PostList from '../pages/posts/PostList_Admin';
 import PostDetails from '../pages/posts/PostDetails_Admin';
 import PostForm from '../pages/posts/PostForm_Admin';
-import CVTemplates from "../pages/CVTemplates";
-
 
 
 // Route guard component
@@ -84,7 +84,7 @@ const AppRoutes = () => {
       <Route path="posts/:id" element={<PostDetails />} />
       <Route path="posts/:id/edit" element={<PostForm />} />
       <Route path="/create-cv" element={<CVTemplates />} />
-
+      <Route path="/edit-cv/:id" element={<EditCVPage />} />
 
       {/* Redirects */}
 

@@ -38,7 +38,6 @@ const Dashboard: React.FC = () => {
           setLoading(false);
         } catch (err: any) {
           console.error('Fetch saved jobs error:', err);
-          showToast('Failed to load saved jobs', 'error');
           setLoading(false);
         }
       };

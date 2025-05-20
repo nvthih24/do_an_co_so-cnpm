@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import axios from "axios";
 import cvTemplates from "../data/cvTemplates";
-import "../../styles/cvtemplate-preview.css";
+import "../styles/cvtemplate-preview.css"
 
 type Fields = { [key: string]: string };
 
@@ -18,14 +19,45 @@ const EditCVPage: React.FC = () => {
       : {}
   );
   const previewRef = useRef<HTMLDivElement>(null);
+  const saveTimeout = useRef<NodeJS.Timeout>();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token || !id) return;
+    axios.get(`/api/cv/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then(res => {
+      if (res.data && res.data.fields) {
+        setFields(res.data.fields);
+      }
+    }).catch(() => {});
+  }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    if (saveTimeout.current) clearTimeout(saveTimeout.current);
+    saveTimeout.current = setTimeout(() => {
+      axios.post(`/api/cv/${id}`, { fields }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    }, 1000);
+  }, [fields, id]);
 
   if (!template) return <p>Không tìm thấy template</p>;
 
   // Lưu state khi blur khỏi vùng editable
-  const handleBlur = <T extends Element>(e: React.FocusEvent<T>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
     const key = e.currentTarget.getAttribute("data-key");
     if (!key) return;
-    setFields((prev) => ({ ...prev, [key]: ((e.currentTarget as unknown) as HTMLElement).innerText.trim() }));
+    // Luôn lấy innerText an toàn, nếu null thì set ""
+    const value = e.currentTarget.innerText ?? "";
+    setFields((prev) => ({
+      ...prev,
+      [key]: value.trim(),
+    }));
   };
 
   // Upload avatar
@@ -74,7 +106,7 @@ const EditCVPage: React.FC = () => {
       contentEditable
       suppressContentEditableWarning
       data-key={field}
-      onBlur={handleBlur}
+      onBlur={handleBlur as React.FocusEventHandler<any>}
       data-placeholder={placeholder}
     >
       {fields[field] || ""}
@@ -89,7 +121,7 @@ const EditCVPage: React.FC = () => {
         <div ref={previewRef} className="cv-preview-pro editcv-preview">
           <div className="cvpro-left">
             {isHaveAvatar && (
-              <label className="avatar-upload">
+              <label className={`avatar-upload${fields.avatar ? " has-avatar" : ""}`}>
                 <input
                   type="file"
                   accept="image/*"
@@ -104,24 +136,24 @@ const EditCVPage: React.FC = () => {
                 />
               </label>
             )}
-            <p>
-              <b>Ngày sinh:</b> <E field="dob" placeholder="DD/MM/YYYY" />
-            </p>
-            <p>
-              <b>Giới tính:</b> <E field="gender" placeholder="Nam/Nữ" />
-            </p>
-            <p>
-              <b>SĐT:</b> <E field="phone" placeholder="0123456789" />
-            </p>
-            <p>
-              <b>Email:</b> <E field="email" placeholder="you@ex.com" />
-            </p>
-            <p>
-              <b>Địa chỉ:</b> <E field="address" placeholder="Quận, TP" />
-            </p>
-            <p>
-              <b>Website:</b> <E field="website" placeholder="your.site" />
-            </p>
+            <div>
+              <b>Ngày sinh:</b> <E tag="span" field="dob" placeholder="DD/MM/YYYY" />
+            </div>
+            <div>
+              <b>Giới tính:</b> <E tag="span" field="gender" placeholder="Nam/Nữ" />
+            </div>
+            <div>
+              <b>SĐT:</b> <E tag="span" field="phone" placeholder="0123456789" />
+            </div>
+            <div>
+              <b>Email:</b> <E tag="span" field="email" placeholder="you@ex.com" />
+            </div>
+            <div>
+              <b>Địa chỉ:</b> <E tag="span" field="address" placeholder="Quận, TP" />
+            </div>
+            <div>
+              <b>Website:</b> <E tag="span" field="website" placeholder="your.site" />
+            </div>
             <h4>Mục tiêu nghề nghiệp</h4>
             <E
               tag="div"
@@ -224,7 +256,7 @@ const EditCVPage: React.FC = () => {
         <div ref={previewRef} className="cv-preview-ambition editcv-preview">
           <div className="ambition-left">
             {isHaveAvatar && (
-              <label className="avatar-upload">
+              <label className={`avatar-upload${fields.avatar ? " has-avatar" : ""}`}>
                 <input
                   type="file"
                   accept="image/*"
@@ -260,7 +292,7 @@ const EditCVPage: React.FC = () => {
               ].map(([icon, key]) => (
                 <div className="contact-item" key={key}>
                   <span className="icon">{icon}</span>
-                  <E field={key} placeholder={icon} />
+                  <E tag="span" field={key} placeholder={icon} />
                 </div>
               ))}
             </div>
@@ -347,7 +379,7 @@ const EditCVPage: React.FC = () => {
               ].map(([icon, key]) => (
                 <div key={key}>
                   <span>{icon}</span>
-                  <E field={key} placeholder={icon} />
+                  <E tag="span" field={key} placeholder={icon} />
                 </div>
               ))}
             </div>

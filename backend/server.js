@@ -23,6 +23,7 @@ app.use('/uploads', express.static('uploads')); // Để phục vụ file CV t�
 app.use("/api/jobs", jobRoutes); 
 app.use("/api/company", companyRoutes); // Sử dụng router cho các route liên quan đến công ty
 app.use("/api/employers", employerRoutes); // Sử dụng router cho các route liên quan đến nhà tuyển dụng
+app.use('/api/cv', require('./routes/cv'));
 
 
 
