@@ -56,6 +56,12 @@ const Header: React.FC = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link
+              to="/create-cv"
+              className="text-gray-700 hover:text-primary-600 font-medium"
+            >
+              Create CV
+            </Link>
+            <Link
               to="/jobs"
               className="text-gray-700 hover:text-primary-600 font-medium"
             >
@@ -155,6 +161,12 @@ const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white px-4 py-5 shadow-lg">
           <nav className="flex flex-col space-y-4">
+            <Link
+              to="/create-cv"
+              className="text-gray-700 hover:text-primary-600 font-medium py-2"
+            >
+              Create CV
+            </Link>
             <Link
               to="/jobs"
               className="text-gray-700 hover:text-primary-600 font-medium py-2"
