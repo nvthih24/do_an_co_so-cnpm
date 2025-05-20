@@ -10,12 +10,9 @@ const Header: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleCreateCV = () => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    } else {
-      navigate("/create-cv");
-    }
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   // Kiểm tra trang admin để ẩn header
@@ -64,13 +61,12 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={handleCreateCV}
-              className="text-gray-700 hover:text-primary-600 font-medium bg-transparent border-none outline-none cursor-pointer"
-              type="button"
+            <Link
+              to="/create-cv"
+              className="text-gray-700 hover:text-primary-600 font-medium"
             >
               Create CV
-            </button>
+            </Link>
             <Link
               to="/jobs"
               className="text-gray-700 hover:text-primary-600 font-medium"
@@ -137,7 +133,7 @@ const Header: React.FC = () => {
                       </Link>
                     )}
                     <button
-                      onClick={logout}
+                      onClick={handleLogout}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Sign Out
@@ -171,16 +167,12 @@ const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white px-4 py-5 shadow-lg">
           <nav className="flex flex-col space-y-4">
-            <button
-              onClick={() => {
-                handleCreateCV();
-                setIsMobileMenuOpen(false);
-              }}
-              className="text-gray-700 hover:text-primary-600 font-medium py-2 bg-transparent border-none outline-none text-left w-full"
-              type="button"
+            <Link
+              to="/create-cv"
+              className="text-gray-700 hover:text-primary-600 font-medium py-2"
             >
               Create CV
-            </button>
+            </Link>
             <Link
               to="/jobs"
               className="text-gray-700 hover:text-primary-600 font-medium py-2"
@@ -246,7 +238,7 @@ const Header: React.FC = () => {
                     </Link>
                   )}
                   <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     className="text-left text-gray-700 hover:text-primary-600 py-2"
                   >
                     Sign Out
