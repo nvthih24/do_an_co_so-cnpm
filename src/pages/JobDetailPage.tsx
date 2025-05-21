@@ -2,6 +2,7 @@ import React, { useState, useEffect, Component, ErrorInfo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Building, Clock, DollarSign, Briefcase, Share2, BookmarkPlus, Award, User, Calendar } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useSavedJobs } from '../contexts/SavedJobsContext';
 import { useToast } from '../contexts/ToastContext';
 
 interface Job {
@@ -61,6 +62,7 @@ const JobDetailPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSaved, setIsSaved] = useState(false); // Trạng thái nút Save
+  const { savedJobs, saveJob } = useSavedJobs();
 
   useEffect(() => {
     const fetchJob = async () => {
@@ -204,13 +206,13 @@ const JobDetailPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row justify-between mt-6 pt-6 border-t border-gray-100">
                 <div className="flex gap-2 mb-4 sm:mb-0">
                   <button
-                    onClick={handleSaveJob}
-                    className={`btn btn-outline flex items-center ${isSaved ? 'bg-green-100 text-green-700' : ''}`}
-                    disabled={isSaved}
-                  >
-                    <BookmarkPlus className="h-4 w-4 mr-2" />
-                    {isSaved ? 'Saved' : 'Save'}
-                  </button>
+                                    className={`btn btn-outline py-1 px-3 flex items-center ${isSaved ? 'bg-green-100 text-green-700' : ''}`}
+                                    onClick={() => saveJob(job)}
+                                    disabled={isSaved}
+                                  >
+                                    <BookmarkPlus className="h-4 w-4 mr-2" />
+                                    {isSaved ? 'Saved' : 'Save'}
+                                  </button>
                   <button className="btn btn-outline flex items-center">
                     <Share2 className="h-4 w-4 mr-2" />
                     Share
@@ -491,25 +493,7 @@ const JobDetailPage: React.FC = () => {
                 </div>
               </div>
             </ErrorBoundary>
-            <ErrorBoundary>
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h2 className="text-lg font-semibold mb-4">Skills</h2>
-                <div className="flex flex-wrap gap-2">
-                  {tags.length > 0 ? (
-                    tags.map((tag, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))
-                  ) : (
-                    <span className="text-sm text-gray-500">No skills listed</span>
-                  )}
-                </div>
-              </div>
-            </ErrorBoundary>
+
             <ErrorBoundary>
               <div className="bg-white rounded-lg shadow-sm p-6">
                 <h2 className="text-lg font-semibold mb-4">Similar Jobs</h2>
