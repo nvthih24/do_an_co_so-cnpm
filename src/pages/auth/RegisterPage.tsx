@@ -80,13 +80,13 @@ const RegisterPage: React.FC = () => {
   };
   
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-md p-8">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <BriefcaseBusiness className="h-12 w-12 text-primary-500" />
           </div>
-          <h2 className="text-3xl font-extrabold text-gray-900">Create your account</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Create your account</h2>
           <p className="mt-2 text-sm text-gray-600">
             Already have an account?{' '}
             <Link to="/login" className="font-medium text-primary-600 hover:text-primary-500">
@@ -104,7 +104,7 @@ const RegisterPage: React.FC = () => {
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-50">
                 Full Name
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -126,7 +126,7 @@ const RegisterPage: React.FC = () => {
             </div>
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-50">
                 Email address
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -148,7 +148,7 @@ const RegisterPage: React.FC = () => {
             </div>
             
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-50">
                 Password
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -186,7 +186,7 @@ const RegisterPage: React.FC = () => {
             </div>
             
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-50">
                 Confirm Password
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -208,7 +208,7 @@ const RegisterPage: React.FC = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-50 mb-2">
                 I am a:
               </label>
               <div className="grid grid-cols-2 gap-4">
@@ -225,7 +225,7 @@ const RegisterPage: React.FC = () => {
                     onChange={() => setRole('candidate')}
                     className="sr-only"
                   />
-                  <User className="h-5 w-5 mr-2" />
+                  <User className="h-5 w-5 mr-2 " />
                   <span>Job Seeker</span>
                 </label>
                 <label className={`flex items-center justify-center p-4 border rounded-md cursor-pointer transition-colors ${
@@ -256,7 +256,7 @@ const RegisterPage: React.FC = () => {
               required
               className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
             />
-            <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
+            <label htmlFor="terms" className="ml-2 block text-sm text-gray-900 dark:text-gray-50">
               I agree to the{' '}
               <Link to="/terms" className="font-medium text-primary-600 hover:text-primary-500">
                 Terms of Service
@@ -295,7 +295,7 @@ const RegisterPage: React.FC = () => {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+              <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-50">Or sign up with</span>
             </div>
           </div>
           
@@ -303,13 +303,13 @@ const RegisterPage: React.FC = () => {
             <button 
               type="button"
               onClick={handleGoogleSignIn}
-              className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+              className="w-full py-2 px-4 border border-gray-300 dark:border-gray-800 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none"
             >
               Google
             </button>
             <button 
               type="button"
-              className="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+              className="w-full py-2 px-4 border border-gray-300 dark:border-gray-800 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none"
             >
               LinkedIn
             </button>

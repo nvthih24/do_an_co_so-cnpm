@@ -68,7 +68,7 @@ const EmployersPage: React.FC = () => {
   return (
     <div className="bg-white">
       {/* Hero section */}
-      <section className="relative bg-primary-700 text-black py-24">
+      <section className="relative bg-primary-100 text-black py-24">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-900 opacity-90"></div>
           <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-20"></div>

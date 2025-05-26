@@ -87,15 +87,15 @@ const CreateProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen py-8">
+    <div className="bg-gray-50 dark:bg-gray-800 min-h-screen py-8">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold mb-6">Create Your Profile</h1>
-          <div className="bg-white rounded-lg shadow-sm p-6">
+          <h1 className="text-3xl font-bold mb-6 dark:text-gray-100">Create Your Profile</h1>
+          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Personal Information */}
               <div>
-                <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
+                <h2 className="text-xl font-semibold mb-4 dark:text-gray-50">Personal Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="form-label">Full Name</label>
@@ -133,7 +133,7 @@ const CreateProfilePage: React.FC = () => {
 
               {/* Professional Information */}
               <div>
-                <h2 className="text-xl font-semibold mb-4">Professional Information</h2>
+                <h2 className="text-xl font-semibold mb-4 dark:text-gray-50">Professional Information</h2>
                 <div className="space-y-4">
                   <div>
                     <label htmlFor="title" className="form-label">Professional Title</label>
@@ -174,7 +174,7 @@ const CreateProfilePage: React.FC = () => {
 
               {/* Education */}
               <div>
-                <h2 className="text-xl font-semibold mb-4">Education</h2>
+                <h2 className="text-xl font-semibold mb-4 dark:text-gray-50">Education</h2>
                 <div className="space-y-4">
                   <div>
                     <label htmlFor="degree" className="form-label">Degree</label>
@@ -200,7 +200,7 @@ const CreateProfilePage: React.FC = () => {
 
               {/* Resume Upload */}
               <div>
-                <h2 className="text-xl font-semibold mb-4">Resume</h2>
+                <h2 className="text-xl font-semibold mb-4 dark:text-gray-50">Resume</h2>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
                   <div className="text-center">
                     <GraduationCap className="h-12 w-12 text-gray-400 mx-auto mb-4" />
