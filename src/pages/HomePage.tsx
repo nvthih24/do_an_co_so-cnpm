@@ -6,10 +6,10 @@ import FeaturedJobs from '../components/jobs/FeaturedJobs';
 
 const HomePage: React.FC = () => {
   const stats = [
-    { icon: <Briefcase className="h-8 w-8 text-primary-500" />, value: '10,000+', label: 'Jobs Available' },
-    { icon: <Building className="h-8 w-8 text-primary-500" />, value: '5,000+', label: 'Companies' },
-    { icon: <Users className="h-8 w-8 text-primary-500" />, value: '1M+', label: 'Job Seekers' },
-    { icon: <TrendingUp className="h-8 w-8 text-primary-500" />, value: '20K+', label: 'Successful Hires' },
+    { icon: <Briefcase className="h-8 w-8 text-gray-300" />, value: '10,000+', label: 'Jobs Available' },
+    { icon: <Building className="h-8 w-8 text-gray-300" />, value: '5,000+', label: 'Companies' },
+    { icon: <Users className="h-8 w-8 text-gray-300" />, value: '1M+', label: 'Job Seekers' },
+    { icon: <TrendingUp className="h-8 w-8 text-gray-300" />, value: '20K+', label: 'Successful Hires' },
   ];
 
   const categories = [
@@ -30,11 +30,11 @@ const HomePage: React.FC = () => {
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-900 opacity-90"></div>
           <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-20"></div>
-        </div>
+        </div> 
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight dark:text-white">
               Find Your Dream Job, Build Your Career
             </h1>
             <p className="text-xl md:text-2xl mb-10 text-gray-500">
@@ -56,7 +56,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Stats section */}
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-white dark:bg-gray-700">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
             {stats.map((stat, index) => (
@@ -73,11 +73,11 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Featured jobs section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Featured Jobs</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 dark:text-white">Featured Jobs</h2>
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Explore the latest opportunities from top employers across various industries
             </p>
           </div>
@@ -85,7 +85,7 @@ const HomePage: React.FC = () => {
           <FeaturedJobs />
 
           <div className="text-center mt-10">
-            <Link to="/jobs" className="btn btn-primary text-gray-400">
+            <Link to="/jobs" className="btn btn-primary text-gray-400 dark:text-gray-300 dark:hover:text-gray-200">
               View All Jobs
             </Link>
           </div>
@@ -93,11 +93,11 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Job categories */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white dark:bg-gray-700">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Popular Categories</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 dark:text-gray-300">Popular Categories</h2>
+            <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Explore jobs by industry categories and find the perfect match for your expertise
             </p>
           </div>
@@ -126,11 +126,11 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Testimonials section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Success Stories</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold mb-4 dark:text-gray-50">Success Stories</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto dark:text-gray-300">
               Hear from professionals who found their perfect match through our platform
             </p>
           </div>
@@ -170,7 +170,7 @@ const HomePage: React.FC = () => {
       {/* CTA section */}
       <section className="py-16 bg-secondary-600 text-gray-400">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Take the Next Step in Your Career?</h2>
+          <h2 className="text-3xl font-bold mb-6 dark:text-gray-50">Ready to Take the Next Step in Your Career?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
             Join thousands of professionals who found their dream jobs through Job247
           </p>

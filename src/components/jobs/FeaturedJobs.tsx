@@ -91,9 +91,9 @@ const FeaturedJobs: React.FC = () => {
         <Link 
           key={job.id} 
           to={`/jobs/${job.id}`}
-          className="card group hover:border-primary-500 transition-all duration-300"
+          className="card group hover:border-primary-500 dark:border-gray-800 dark:hover:border-gray-900 transition-all duration-300"
         >
-          <div className="p-6">
+          <div className="p-6 dark:bg-gray-900 dark:text-gray-200 ">
             <div className="flex items-start justify-between mb-4">
               <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0">
                 <img 
@@ -107,7 +107,7 @@ const FeaturedJobs: React.FC = () => {
               )}
             </div>
             
-            <h3 className="text-xl font-semibold mb-2 group-hover:text-primary-600 transition-colors">
+            <h3 className="text-xl font-semibold mb-2 group-hover:text-primary-600 transition-colors dark:text-gray-300">
               {job.title}
             </h3>
             
