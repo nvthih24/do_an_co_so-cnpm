@@ -1,4 +1,5 @@
 export interface Candidate {
+  profilePicture: string | undefined;
   id: string;
   name: string;
   email: string;
@@ -81,4 +82,60 @@ export interface Activity {
   entityId: string;
   entityName: string;
   timestamp: string;
+}
+
+export interface Company {
+  id: string;
+  name: string;
+  logo: string;
+  description: string;
+  industry: string;
+  location: string;
+  website: string;
+  size: string;
+  founded: number;
+}
+
+export interface Job {
+  id: string;
+  companyId: string;
+  title: string;
+  description: string;
+  location: string;
+  type: 'Full-time' | 'Part-time' | 'Contract' | 'Internship' | 'Remote';
+  salary: string;
+  requirements: string[];
+  responsibilities: string[];
+  postedDate: string;
+  deadline: string;
+  status: 'Active' | 'Closed' | 'Draft';
+}
+
+export interface Application {
+  id: string;
+  jobId: string;
+  candidateId: string;
+  status: 'Applied' | 'Reviewing' | 'Interview' | 'Offer' | 'Hired' | 'Rejected';
+  appliedDate: string;
+  notes: string[];
+  rating: number;
+}
+
+export interface Interview {
+  id: string;
+  applicationId: string;
+  date: string;
+  time: string;
+  type: 'Phone' | 'Video' | 'In-person';
+  notes: string;
+  feedback: string;
+  status: 'Scheduled' | 'Completed' | 'Cancelled';
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: 'Employer' | 'Admin';
+  companyId?: string;
 }

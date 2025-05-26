@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { User, FileText, Clock, Award, Mail, Phone } from 'lucide-react';
+import axios from "axios";
 
 interface Application {
   _id: string;
@@ -15,7 +16,7 @@ interface Application {
   resume: string;
   coverLetter?: string;
   status: 'pending' | 'reviewed' | 'accepted' | 'rejected';
-  createdAt: string;
+  submittedAt: string;
 }
 
 const ApplicationsPage: React.FC = () => {
@@ -96,7 +97,7 @@ const ApplicationsPage: React.FC = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                     <Clock size={16} className="mr-2 text-gray-500" />
-                    <span>Applied on {new Date(application.createdAt).toLocaleDateString()}</span>
+                    <span>Applied on {new Date(application.submittedAt).toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center text-sm">
                     <Award size={16} className="mr-2 text-orange-500" />

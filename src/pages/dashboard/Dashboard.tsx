@@ -46,10 +46,10 @@ const Dashboard: React.FC = () => {
   }, [user, isEmployer, showToast]);
 
   return (
-    <div className="bg-gray-50 min-h-screen py-8">
+    <div className="bg-gray-50 dark:bg-gray-800 min-h-screen py-8">
       <div className="container mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
-        <p className="text-gray-600 mb-8">
+        <h1 className="text-2xl dark:text-gray-50 font-bold mb-2">Dashboard</h1>
+        <p className="text-gray-600 dark:text-gray-300 mb-8">
           Welcome back, {user?.name}!
         </p>
 

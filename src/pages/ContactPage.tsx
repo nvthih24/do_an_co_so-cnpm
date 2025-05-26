@@ -34,12 +34,12 @@ const ContactPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 dark:bg-gray-800 min-h-screen">
       {/* Hero section */}
       <section className="bg-primary-700 text-white py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+            <h1 className="text-4xl dark:text-gray-50 font-bold mb-4">Contact Us</h1>
             <p className="text-xl text-gray-400">
               Have questions? We're here to help and provide you with the support you need.
             </p>

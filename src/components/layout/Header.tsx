@@ -3,13 +3,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Menu, X, Briefcase as BriefcaseBusiness, User, Search } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
-import { Bell, Sun, Moon } from 'lucide-react';
+import {  Sun, Moon } from 'lucide-react';
 
 const Header: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isEmployer = user?.role === 'employer';
 
   const [showNotifications, setShowNotifications] = useState(false);
   const { theme, toggleTheme } = useTheme();
@@ -18,8 +19,6 @@ const Header: React.FC = () => {
     setShowNotifications(!showNotifications);
   };
 
-
-
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -27,22 +26,9 @@ const Header: React.FC = () => {
     navigate("/");
   };
 
-
   // Kiểm tra trang admin để ẩn header
-  const isAdminEmpl = location.pathname.startsWith('/employer') || location.pathname.startsWith('/admin');
-  if (isAdminEmpl) {
-    return null;
-  }
-
-  const isAdminCandi = location.pathname.startsWith('/candidates') || location.pathname.startsWith('/admin');
-  if (isAdminCandi) {
-    return null;
-  }
-
-  const isAdminPorts = location.pathname.startsWith('/posts') || location.pathname.startsWith('/admin');
-  if (isAdminPorts) {
-    return null;
-  }
+  const isAdminRoute = location.pathname.startsWith('/admin') || location.pathname.startsWith('/employer-admin') || location.pathname.startsWith('/candidates-admin') || location.pathname.startsWith('/posts');
+  if (isAdminRoute) return null;
 
   // Handle scroll events to change header appearance
   useEffect(() => {
@@ -66,7 +52,7 @@ const Header: React.FC = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
-          {/* Logo */}
+          {/*  Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <BriefcaseBusiness className="h-8 w-8 text-primary-500 dark:text-white" />
             <span className="text-xl font-bold text-gray-900 dark:text-white">Job247</span>
@@ -74,37 +60,82 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/create-cv"
-              className="text-gray-700 hover:text-primary-600 font-medium"
-            >
-              Create CV
-            </Link>
-            <Link
-              to="/jobs"
-              className=" dark:text-white hover:text-primary-600 font-medium"
-            >
-              Find Jobs
-            </Link>
-            <Link
-              to="/employers"
-              className=" dark:text-white hover:text-primary-600 font-medium"
-            >
-              For Employers
-            </Link>
-            <Link
-              to="/about"
-              className=" dark:text-white hover:text-primary-600 font-medium"
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className=" dark:text-white hover:text-primary-600 font-medium"
-            >
-              Contact
-            </Link>
+            {user?.role === 'employer' ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/company"
+                  className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium"
+                >
+                  Company
+                </Link>
+                <Link
+                  to="/jobs-posted"
+                  className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium"
+                >
+                  Jobs
+                </Link>
+                <Link
+                  to="/candidates-employer"
+                  className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium"
+                >
+                  Candidates
+                </Link>
+                <Link
+                  to="/applications"
+                  className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium"
+                >
+                  Applications
+                </Link>
+                <Link
+                  to="/interviews"
+                  className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium"
+                >
+                  Interviews
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/create-cv"
+                  className="text-gray-700 dark:text-white hover:text-primary-600 font-medium"
+                >
+                  Create CV
+                </Link>
+
+                <Link
+                  to="/jobs"
+                  className=" dark:text-white hover:text-primary-600 font-medium"
+                >
+                  Find Jobs
+                </Link>
+                <Link
+                  to="/employer-user"
+                  className=" dark:text-white hover:text-primary-600 font-medium"
+                >
+                  For Employers
+                </Link>
+                <Link
+                  to="/about"
+                  className=" dark:text-white hover:text-primary-600 font-medium"
+                >
+                  About
+                </Link>
+                <Link
+                  to="/contact"
+                  className=" dark:text-white hover:text-primary-600 font-medium"
+                >
+                  Contact
+                </Link>
+              </>
+            )}
           </nav>
+
 
           <div className="flex items-center space-x-4">
             <button
@@ -143,12 +174,6 @@ const Header: React.FC = () => {
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         Dashboard
-                      </Link>
-                      <Link
-                        to="/profile"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Profile
                       </Link>
                       {user?.role === 'employer' && (
                         <Link
@@ -200,7 +225,7 @@ const Header: React.FC = () => {
                 Find Jobs
               </Link>
               <Link
-                to="/employers"
+                to="/employer-user"
                 className="text-gray-700 hover:text-primary-600 font-medium py-2"
               >
                 For Employers
@@ -243,12 +268,12 @@ const Header: React.FC = () => {
                     >
                       Dashboard
                     </Link>
-                    <Link
+                    {/* <Link
                       to="/profile"
                       className="text-gray-700 hover:text-primary-600 py-2"
                     >
                       Profile
-                    </Link>
+                    </Link> */}
                     {user?.role === 'employer' && (
                       <Link
                         to="/post-job"
@@ -279,112 +304,6 @@ const Header: React.FC = () => {
           </div>
         )}
       </div>
-
-      {/* Mobile menu button */}
-      <button
-        className="md:hidden text-gray-700 p-2"
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      >
-        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
-
-
-
-      {/* Mobile menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white px-4 py-5 shadow-lg">
-          <nav className="flex flex-col space-y-4">
-            <Link
-              to="/create-cv"
-              className="text-gray-700 hover:text-primary-600 font-medium py-2"
-            >
-              Create CV
-            </Link>
-            <Link
-              to="/jobs"
-              className="text-gray-700 hover:text-primary-600 font-medium py-2"
-            >
-              Find Jobs
-            </Link>
-            <Link
-              to="/employers"
-              className="text-gray-700 hover:text-primary-600 font-medium py-2"
-            >
-              For Employers
-            </Link>
-            <Link
-              to="/about"
-              className="text-gray-700 hover:text-primary-600 font-medium py-2"
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className="text-gray-700 hover:text-primary-600 font-medium py-2"
-            >
-              Contact
-            </Link>
-
-            {/* Auth buttons for mobile */}
-            <div className="pt-4 border-t border-gray-200 flex flex-col space-y-3">
-              {isAuthenticated ? (
-                <>
-                  <div className="flex items-center space-x-3 pb-3">
-                    {user?.avatar ? (
-                      <img
-                        src={user.avatar}
-                        alt="Profile"
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
-                    ) : (
-                      <User className="w-10 h-10 p-2 bg-gray-100 rounded-full" />
-                    )}
-                    <div>
-                      <p className="font-medium">{user?.name}</p>
-                      <p className="text-sm text-gray-500">{user?.email}</p>
-                    </div>
-                  </div>
-                  <Link
-                    to="/dashboard"
-                    className="text-gray-700 hover:text-primary-600 py-2"
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    to="/profile"
-                    className="text-gray-700 hover:text-primary-600 py-2"
-                  >
-                    Profile
-                  </Link>
-                  {user?.role === 'employer' && (
-                    <Link
-                      to="/post-job"
-                      className="text-gray-700 hover:text-primary-600 py-2"
-                    >
-                      Post a Job
-                    </Link>
-                  )}
-                  <button
-                    onClick={handleLogout}
-                    className="text-left text-gray-700 hover:text-primary-600 py-2"
-                  >
-                    Sign Out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link to="/login" className="btn btn-outline w-full">
-                    Sign In
-                  </Link>
-                  <Link to="/register" className="btn btn-primary w-full">
-                    Sign Up
-                  </Link>
-                </>
-              )}
-            </div>
-          </nav>
-        </div>
-      )}
     </header>
   );
 };

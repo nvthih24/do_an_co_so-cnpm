@@ -1,4 +1,4 @@
-import { Candidate, Employer, Post, DashboardStats, Activity } from './types';
+import { Candidate, Employer, Post, DashboardStats, Activity, Company, Job,  Application, Interview } from './types';
 import { format, subDays } from 'date-fns';
 
 // Helper to generate dates
@@ -7,7 +7,7 @@ const generateDate = (daysAgo: number) => {
 };
 
 // Mock candidates
-export const candidates: Candidate[] = [
+export const mockCandidates: Candidate[] = [
   {
     id: '1',
     name: 'Alex Johnson',
@@ -21,7 +21,8 @@ export const candidates: Candidate[] = [
     appliedCount: 12,
     createdAt: generateDate(30),
     updatedAt: generateDate(2),
-    avatarUrl: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+    avatarUrl: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+        profilePicture: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
     id: '2',
@@ -36,6 +37,7 @@ export const candidates: Candidate[] = [
     appliedCount: 8,
     createdAt: generateDate(45),
     updatedAt: generateDate(5),
+        profilePicture: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     avatarUrl: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
   },
   {
@@ -51,6 +53,7 @@ export const candidates: Candidate[] = [
     appliedCount: 5,
     createdAt: generateDate(60),
     updatedAt: generateDate(15),
+        profilePicture: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     avatarUrl: 'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
   },
   {
@@ -66,6 +69,7 @@ export const candidates: Candidate[] = [
     appliedCount: 15,
     createdAt: generateDate(20),
     updatedAt: generateDate(1),
+        profilePicture: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     avatarUrl: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
   },
   {
@@ -81,6 +85,7 @@ export const candidates: Candidate[] = [
     appliedCount: 0,
     createdAt: generateDate(90),
     updatedAt: generateDate(30),
+        profilePicture: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     avatarUrl: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
   }
 ];
@@ -369,4 +374,147 @@ export const jobPostsChartData = [
   { month: 'Oct', pending: 28, approved: 75 },
   { month: 'Nov', pending: 22, approved: 78 },
   { month: 'Dec', pending: 23, approved: 81 }
+];
+
+export const mockCompanies: Company[] = [
+  {
+    id: '1',
+    name: 'TechNova Solutions',
+    logo: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    description: 'Leading technology solutions provider specializing in AI and machine learning applications.',
+    industry: 'Technology',
+    location: 'San Francisco, CA',
+    website: 'www.technovasolutions.com',
+    size: '100-500 employees',
+    founded: 2015,
+  },
+  {
+    id: '2',
+    name: 'GreenEarth Renewables',
+    logo: 'https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    description: 'Sustainable energy company focused on renewable solutions and green technology.',
+    industry: 'Energy',
+    location: 'Boulder, CO',
+    website: 'www.greenearthenergy.com',
+    size: '50-100 employees',
+    founded: 2018,
+  },
+];
+
+export const mockJobs: Job[] = [
+  {
+    id: '1',
+    companyId: '1',
+    title: 'Senior Frontend Developer',
+    description: 'Join our team to build cutting-edge web applications using the latest technologies.',
+    location: 'San Francisco, CA',
+    type: 'Full-time',
+    salary: '$120,000 - $150,000',
+    requirements: [
+      'Proficient in React, TypeScript, and modern frontend frameworks',
+      '5+ years of experience in frontend development',
+      'Experience with state management solutions',
+      'Strong problem-solving skills',
+    ],
+    responsibilities: [
+      'Develop user interfaces for web applications',
+      'Collaborate with designers and backend developers',
+      'Implement responsive designs for all device sizes',
+      'Optimize application performance',
+    ],
+    postedDate: '2023-09-15',
+    deadline: '2023-10-15',
+    status: 'Active',
+  },
+  {
+    id: '2',
+    companyId: '1',
+    title: 'Product Manager',
+    description: 'Lead product strategy and execution for our AI-powered solutions.',
+    location: 'Remote',
+    type: 'Full-time',
+    salary: '$130,000 - $160,000',
+    requirements: [
+      'Proven experience in product management',
+      'Understanding of AI and machine learning concepts',
+      'Strong communication and leadership skills',
+      'Ability to translate business requirements into product features',
+    ],
+    responsibilities: [
+      'Define product vision and strategy',
+      'Create and manage product roadmap',
+      'Work with engineering teams to deliver features',
+      'Analyze market trends and competitor products',
+    ],
+    postedDate: '2023-09-20',
+    deadline: '2023-10-20',
+    status: 'Active',
+  },
+  {
+    id: '3',
+    companyId: '2',
+    title: 'Renewable Energy Engineer',
+    description: 'Design and implement sustainable energy solutions for residential and commercial projects.',
+    location: 'Boulder, CO',
+    type: 'Full-time',
+    salary: '$90,000 - $120,000',
+    requirements: [
+      'Degree in Mechanical or Electrical Engineering',
+      'Experience with renewable energy systems',
+      'Knowledge of energy efficiency standards',
+      'Project management skills',
+    ],
+    responsibilities: [
+      'Design solar and wind energy systems',
+      'Perform energy audits and efficiency analyses',
+      'Coordinate with installation teams',
+      'Ensure compliance with regulations and standards',
+    ],
+    postedDate: '2023-09-10',
+    deadline: '2023-10-10',
+    status: 'Active',
+  },
+];
+
+export const mockApplications: Application[] = [
+  {
+    id: '1',
+    jobId: '1',
+    candidateId: '1',
+    status: 'Interview',
+    appliedDate: '2023-09-20',
+    notes: ['Strong technical skills', 'Good culture fit', 'Passed technical assessment'],
+    rating: 4,
+  },
+  {
+    id: '2',
+    jobId: '2',
+    candidateId: '2',
+    status: 'Reviewing',
+    appliedDate: '2023-09-22',
+    notes: ['Extensive product management experience', 'Previous startup background'],
+    rating: 3,
+  },
+  {
+    id: '3',
+    jobId: '3',
+    candidateId: '3',
+    status: 'Applied',
+    appliedDate: '2023-09-15',
+    notes: ['Relevant experience in renewable energy'],
+    rating: 2,
+  },
+];
+
+export const mockInterviews: Interview[] = [
+  {
+    id: '1',
+    applicationId: '1',
+    date: '2023-10-05',
+    time: '10:00 AM',
+    type: 'Video',
+    notes: 'Prepare technical questions related to React and TypeScript',
+    feedback: '',
+    status: 'Scheduled',
+  },
 ];

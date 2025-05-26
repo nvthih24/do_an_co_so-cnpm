@@ -41,6 +41,7 @@ import PostList from '../pages/posts/PostList_Admin';
 import PostDetails from '../pages/posts/PostDetails_Admin';
 import PostForm from '../pages/posts/PostForm_Admin';
 import JobsPosted from '../pages/dashboard/JobsPosted';
+import CandidatePage_Employer from '../pages/CandidatePage_Employer'
 
 // Route guard component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -64,7 +65,7 @@ const AppRoutes = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
-      <Route path="/employers" element={<EmployersPage />} />
+      <Route path="/employer-user" element={<EmployersPage />} />
       <Route path="/career-resources" element={<CareerResourcesPage />} />
       <Route path="/job-alerts" element={<JobAlertsPage />} />
       <Route path="/privacy" element={<PrivacyPolicyPage />} />
@@ -75,10 +76,10 @@ const AppRoutes = () => {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/saved-jobs" element={<SavedJobsPage />} />
       <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/employer" element={<EmployerList />} />
-      <Route path="employer/:id" element={<EmployerDetails />} />
-      <Route path="candidates" element={<CandidateList />} />
-      <Route path="candidates/:id" element={<CandidateDetails />} />
+      <Route path="/employer-admin" element={<EmployerList />} />
+      <Route path="employer-admin/:id" element={<EmployerDetails />} />
+      <Route path="candidates-admin" element={<CandidateList />} />
+      <Route path="candidates-admin/:id" element={<CandidateDetails />} />
       <Route path="posts" element={<PostList />} />
       <Route path="posts/new" element={<PostForm />} />
       <Route path="posts/:id" element={<PostDetails />} />
@@ -86,6 +87,7 @@ const AppRoutes = () => {
       <Route path="/create-cv" element={<CVTemplates />} />
       <Route path="/edit-cv/:id" element={<EditCVPage />} />
       <Route path="/jobs-posted" element={<JobsPosted />} />
+      <Route path="/candidates-employer" element={<CandidatePage_Employer />} />
 
       {/* Redirects */}
 

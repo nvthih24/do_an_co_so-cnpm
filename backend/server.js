@@ -26,8 +26,6 @@ app.use("/api/employers", employerRoutes); // Sử dụng router cho các route 
 app.use('/api/cv', require('./routes/cv'));
 
 
-
-
 // Kết nối MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,

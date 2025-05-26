@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Building, Users, BarChart2, Clock, Shield, Briefcase } from 'lucide-react';
+import { Users, BarChart2, Clock, Shield } from 'lucide-react';
 
 const EmployersPage: React.FC = () => {
   const features = [
@@ -64,8 +64,8 @@ const EmployersPage: React.FC = () => {
       ]
     }
   ];
-
   return (
+    
     <div className="bg-white">
       {/* Hero section */}
       <section className="relative bg-primary-100 text-black py-24">

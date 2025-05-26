@@ -30,10 +30,10 @@ function App() {
                 {/* Admin Layout */}
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<AdminDashboard />} />
-                  <Route path="candidates" element={<CandidateList />} />
-                  <Route path="candidates/:id" element={<CandidateDetails />} />
-                  <Route path="employer" element={<EmployerList />} />
-                  <Route path="employer/:id" element={<EmployerDetails />} />
+                  <Route path="candidates-admin" element={<CandidateList />} />
+                  <Route path="candidates-admin/:id" element={<CandidateDetails />} />
+                  <Route path="employer-admin" element={<EmployerList />} />
+                  <Route path="employer-admin/:id" element={<EmployerDetails />} />
                   <Route path="posts" element={<PostList />} />
                   <Route path="posts/new" element={<PostForm />} />
                   <Route path="posts/:id" element={<PostDetails />} />

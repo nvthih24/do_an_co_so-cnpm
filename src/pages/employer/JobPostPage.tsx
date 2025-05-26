@@ -102,10 +102,10 @@ const JobPostPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen py-8">
+    <div className="bg-gray-50 dark:bg-gray-800 min-h-screen py-8">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-3xl font-bold mb-6">Post a New Job</h1>
+          <h1 className="text-3xl font-bold mb-6 dark:text-gray-50">Post a New Job</h1>
           
           <div className="bg-white rounded-lg shadow-sm p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -303,7 +303,7 @@ const JobPostPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="btn btn-primary w-full md:w-auto"
+                  className="btn btn-gray-400 bg-gray-50 hover:bg-gray-100 text-black w-full md:w-auto"
                 >
                   {loading ? (
                     <span className="flex items-center justify-center">
