@@ -1,89 +1,102 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Building, MapPin, Clock, DollarSign } from 'lucide-react';
 
 interface Job {
-  id: number;
+  id: string;
   title: string;
   company: string;
   location: string;
   type: string;
   salary: string;
   posted: string;
-  logo: string;
-  featured: boolean;
+  logo?: string;
+  featured?: boolean;
 }
 
+const formatPostedDate = (dateString: string): string => {
+  const now = new Date();
+  const postedDate = new Date(dateString);
+  const diffMs = Math.abs(now.getTime() - postedDate.getTime());
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return 'Hôm nay';
+  if (diffDays === 1) return '1 ngày trước';
+  if (diffDays < 7) return `${diffDays} ngày trước`;
+  if (diffDays < 14) return '1 tuần trước';
+  return `${Math.floor(diffDays / 7)} tuần trước`;
+};
+
 const FeaturedJobs: React.FC = () => {
-  // Mock data for featured jobs
-  const jobs: Job[] = [
-    {
-      id: 1,
-      title: 'Senior Frontend Developer',
-      company: 'TechCorp',
-      location: 'San Francisco, CA',
-      type: 'Full-time',
-      salary: '$120K - $150K',
-      posted: '2 days ago',
-      logo: 'https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      featured: true
-    },
-    {
-      id: 2,
-      title: 'Product Manager',
-      company: 'InnovateLabs',
-      location: 'New York, NY',
-      type: 'Full-time',
-      salary: '$110K - $140K',
-      posted: '3 days ago',
-      logo: 'https://images.pexels.com/photos/3184394/pexels-photo-3184394.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      featured: true
-    },
-    {
-      id: 3,
-      title: 'UX/UI Designer',
-      company: 'DesignWave',
-      location: 'Remote',
-      type: 'Full-time',
-      salary: '$90K - $120K',
-      posted: '1 week ago',
-      logo: 'https://images.pexels.com/photos/3182759/pexels-photo-3182759.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      featured: false
-    },
-    {
-      id: 4,
-      title: 'DevOps Engineer',
-      company: 'CloudSystems',
-      location: 'Austin, TX',
-      type: 'Full-time',
-      salary: '$130K - $160K',
-      posted: '5 days ago',
-      logo: 'https://images.pexels.com/photos/3861943/pexels-photo-3861943.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      featured: true
-    },
-    {
-      id: 5,
-      title: 'Marketing Specialist',
-      company: 'GrowthHub',
-      location: 'Chicago, IL',
-      type: 'Full-time',
-      salary: '$70K - $90K',
-      posted: '1 week ago',
-      logo: 'https://images.pexels.com/photos/935979/pexels-photo-935979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      featured: false
-    },
-    {
-      id: 6,
-      title: 'Data Scientist',
-      company: 'AnalyticsPro',
-      location: 'Boston, MA',
-      type: 'Full-time',
-      salary: '$115K - $145K',
-      posted: '3 days ago',
-      logo: 'https://images.pexels.com/photos/936137/pexels-photo-936137.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-      featured: true
-    },
-  ];
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch('http://localhost:5000/api/jobs/approved?limit=6');
+        if (!response.ok) {
+          throw new Error(`Lỗi HTTP ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+
+        const formattedJobs: Job[] = data.map((job: any) => ({
+          id: job._id,
+          title: job.title,
+          company: job.company,
+          location: job.location,
+          type: job.type,
+          salary: job.salary || 'Thỏa thuận', 
+          posted: formatPostedDate(job.createdAt),
+          logo: job.logo || 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=120', // Logo mặc định
+          featured: job.featured || false,
+        }));
+
+        setJobs(formattedJobs);
+      } catch (err: any) {
+        console.error('Lỗi khi tải công việc:', err);
+        setError(err.message || 'Không thể tải danh sách công việc');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">Đang tải công việc nổi bật...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-500">{error}</p>
+        <Link to="/jobs" className="btn btn-primary mt-4">
+          Xem Tất Cả Công Việc
+        </Link>
+      </div>
+    );
+  }
+
+  if (jobs.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">Không có công việc nổi bật nào.</p>
+        <Link to="/jobs" className="btn btn-primary mt-4">
+          Xem Tất Cả Công Việc
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -103,7 +116,7 @@ const FeaturedJobs: React.FC = () => {
                 />
               </div>
               {job.featured && (
-                <span className="badge badge-success">Featured</span>
+                <span className="badge badge-success">Nổi bật</span>
               )}
             </div>
             
@@ -126,11 +139,11 @@ const FeaturedJobs: React.FC = () => {
               <span>{job.salary}</span>
             </div>
             
-            <div className="flex justify-between border-t border-gray-100 pt-4">
+            <div className="flex justify-between items-center border-t border-gray-100 pt-4">
               <span className="badge bg-blue-100 text-blue-800">
                 {job.type}
               </span>
-              <div className="flex items-center text-gray-500">
+              <div className="flex items-center text-gray-600">
                 <Clock className="h-4 w-4 mr-1" />
                 <span className="text-sm">{job.posted}</span>
               </div>
