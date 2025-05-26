@@ -312,31 +312,37 @@ router.get('/saved', async (req, res) => {
   }
 });
 
+// GET /api/applications/employer/:userId - Lấy danh sách ứng viên ứng tuyển vào bài đăng của nhà tuyển dụng
 router.get('/applications/employer/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
 
     // Kiểm tra userId hợp lệ
     if (!mongoose.Types.ObjectId.isValid(userId)) {
+      console.log('Invalid user ID:', userId);
       return res.status(400).json({ message: 'Invalid user ID' });
     }
 
     // Kiểm tra user tồn tại và là employer
     const user = await User.findById(userId);
     if (!user || user.role !== 'employer') {
+      console.log('User not employer or not found:', user);
       return res.status(403).json({ message: 'User is not an employer' });
     }
 
     // Lấy tất cả bài đăng của nhà tuyển dụng
     const jobs = await Job.find({ userId });
+    console.log('Jobs found:', jobs);
     const jobIds = jobs.map(job => job._id);
+    console.log('Job IDs:', jobIds);
 
     // Lấy tất cả đơn ứng tuyển cho các bài đăng này
     const applications = await Application.find({ jobId: { $in: jobIds } })
-      .populate('jobId', 'title company') // Lấy tiêu đề và công ty của bài đăng
-      .lean(); // Chuyển sang plain JavaScript object
+      .populate('jobId', 'title company')
+      .lean();
+    console.log('Applications found:', applications);
 
-    // Thêm thông tin ứng viên (fullName, email từ Application thay vì populate userId)
+    // Thêm thông tin ứng viên
     const applicationsWithDetails = applications.map(app => ({
       ...app,
       fullName: app.fullName,
