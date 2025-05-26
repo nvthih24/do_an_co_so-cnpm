@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
             {!collapsed && (
               <div className="flex items-center">
                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-teal-500 text-transparent bg-clip-text">
-                  RecruitPro
+                  Job247-3TML
                 </span>
               </div>
             )}
@@ -54,7 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, onToggle }) => {
             <ul className="space-y-2">
               <li>
                 <NavLink
-                  to="/"
+                  to="/admin"
                   className={({ isActive }) =>
                     `flex items-center p-2 text-gray-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group transition-colors ${
                       isActive ? 'bg-blue-50 text-blue-600 dark:bg-gray-700 dark:text-blue-400' : 'dark:text-gray-400'

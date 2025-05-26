@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import { User, FileText, Clock, Award, Mail, Phone } from 'lucide-react';
+import { User, FileText, Clock, Award, Mail, Phone } from "lucide-react";
 
 interface Application {
   _id: string;
@@ -14,8 +14,8 @@ interface Application {
   phone: string;
   resume: string;
   coverLetter?: string;
-  status: 'pending' | 'reviewed' | 'accepted' | 'rejected';
-  createdAt: string;
+  status?: "pending" | "reviewed" | "accepted" | "rejected";
+  submittedAt: string;
 }
 
 const ApplicationsPage: React.FC = () => {
@@ -27,23 +27,19 @@ const ApplicationsPage: React.FC = () => {
   useEffect(() => {
     const fetchApplications = async () => {
       if (!user || !user.id) {
-        setError("User not logged in or missing ID");
         setLoading(false);
         return;
       }
 
       try {
-        setLoading(true);
-        setError(null);
-        const response = await fetch(`http://localhost:5000/api/applications/employer/${user.id}`);
-        console.log("Response:", response);
-        if (!response.ok) {
-          throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
-        }
-        const data = await response.json();
+        const res = await fetch(`http://localhost:5000/api/applications/employer/${user.id}`);
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.message || "Failed to fetch applications");
+
         setApplications(data);
       } catch (err: any) {
-        setError(err.message || "Error fetching applications");
+        setError(err.message);
       } finally {
         setLoading(false);
       }
@@ -57,6 +53,7 @@ const ApplicationsPage: React.FC = () => {
       <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
         Applications for Your Jobs
       </h1>
+
       {loading ? (
         <p className="text-gray-500 dark:text-gray-400 text-center">Loading...</p>
       ) : error ? (
@@ -83,10 +80,6 @@ const ApplicationsPage: React.FC = () => {
                     <span className="truncate">{application.fullName}</span>
                   </div>
                   <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                    <FileText size={16} className="mr-2 text-green-500" />
-                    <span className="truncate">{application.jobId.company}</span>
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                     <Mail size={16} className="mr-2 text-purple-500" />
                     <span className="truncate">{application.email}</span>
                   </div>
@@ -96,29 +89,37 @@ const ApplicationsPage: React.FC = () => {
                   </div>
                   <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                     <Clock size={16} className="mr-2 text-gray-500" />
-                    <span>Applied on {new Date(application.createdAt).toLocaleDateString()}</span>
+                    <span>
+                      Applied on {new Date(application.submittedAt).toLocaleDateString()}
+                    </span>
                   </div>
+
+                  {/* STATUS */}
                   <div className="flex items-center text-sm">
                     <Award size={16} className="mr-2 text-orange-500" />
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        application.status === 'accepted'
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-                          : application.status === 'rejected'
-                          ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300'
-                          : application.status === 'reviewed'
-                          ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300'
-                          : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300'
+                        application.status === "accepted"
+                          ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+                          : application.status === "rejected"
+                          ? "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300"
+                          : application.status === "reviewed"
+                          ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+                          : "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
                       }`}
                     >
-                      {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
+                      {application.status
+                        ? application.status.charAt(0).toUpperCase() + application.status.slice(1)
+                        : "Pending"}
                     </span>
                   </div>
+
+                  {/* RESUME */}
                   {application.resume && (
                     <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                       <FileText size={16} className="mr-2 text-purple-500" />
                       <a
-                        href={`http://localhost:5000/${application.resume}`}
+                        href={`http://localhost:5000/${application.resume.replace(/\\/g, "/")}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-500 hover:underline truncate"
@@ -127,6 +128,8 @@ const ApplicationsPage: React.FC = () => {
                       </a>
                     </div>
                   )}
+
+                  {/* COVER LETTER */}
                   {application.coverLetter && (
                     <div className="text-sm text-gray-600 dark:text-gray-300">
                       <p className="font-medium">Cover Letter:</p>
