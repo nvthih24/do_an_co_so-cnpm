@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { Menu, X, Briefcase as BriefcaseBusiness, User, Search } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -10,11 +10,21 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+
   const [showNotifications, setShowNotifications] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
   const toggleNotifications = () => {
     setShowNotifications(!showNotifications);
+  };
+
+
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
 
@@ -64,6 +74,12 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
+            <Link
+              to="/create-cv"
+              className="text-gray-700 hover:text-primary-600 font-medium"
+            >
+              Create CV
+            </Link>
             <Link
               to="/jobs"
               className=" dark:text-white hover:text-primary-600 font-medium"
@@ -242,18 +258,18 @@ const Header: React.FC = () => {
                       </Link>
                     )}
                     <button
-                      onClick={logout}
-                      className="text-left text-gray-700 hover:text-primary-600 py-2"
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Sign Out
                     </button>
                   </>
                 ) : (
                   <>
-                    <Link to="/login" className="btn btn-outline w-full">
+                    <Link to="/login" className="btn btn-outline">
                       Sign In
                     </Link>
-                    <Link to="/register" className="btn btn-primary w-full">
+                    <Link to="/register" className="btn btn-primary border-t border-gray-200 text-gray-700">
                       Sign Up
                     </Link>
                   </>
@@ -263,6 +279,112 @@ const Header: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Mobile menu button */}
+      <button
+        className="md:hidden text-gray-700 p-2"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      >
+        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+
+
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white px-4 py-5 shadow-lg">
+          <nav className="flex flex-col space-y-4">
+            <Link
+              to="/create-cv"
+              className="text-gray-700 hover:text-primary-600 font-medium py-2"
+            >
+              Create CV
+            </Link>
+            <Link
+              to="/jobs"
+              className="text-gray-700 hover:text-primary-600 font-medium py-2"
+            >
+              Find Jobs
+            </Link>
+            <Link
+              to="/employers"
+              className="text-gray-700 hover:text-primary-600 font-medium py-2"
+            >
+              For Employers
+            </Link>
+            <Link
+              to="/about"
+              className="text-gray-700 hover:text-primary-600 font-medium py-2"
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className="text-gray-700 hover:text-primary-600 font-medium py-2"
+            >
+              Contact
+            </Link>
+
+            {/* Auth buttons for mobile */}
+            <div className="pt-4 border-t border-gray-200 flex flex-col space-y-3">
+              {isAuthenticated ? (
+                <>
+                  <div className="flex items-center space-x-3 pb-3">
+                    {user?.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt="Profile"
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    ) : (
+                      <User className="w-10 h-10 p-2 bg-gray-100 rounded-full" />
+                    )}
+                    <div>
+                      <p className="font-medium">{user?.name}</p>
+                      <p className="text-sm text-gray-500">{user?.email}</p>
+                    </div>
+                  </div>
+                  <Link
+                    to="/dashboard"
+                    className="text-gray-700 hover:text-primary-600 py-2"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/profile"
+                    className="text-gray-700 hover:text-primary-600 py-2"
+                  >
+                    Profile
+                  </Link>
+                  {user?.role === 'employer' && (
+                    <Link
+                      to="/post-job"
+                      className="text-gray-700 hover:text-primary-600 py-2"
+                    >
+                      Post a Job
+                    </Link>
+                  )}
+                  <button
+                    onClick={handleLogout}
+                    className="text-left text-gray-700 hover:text-primary-600 py-2"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="btn btn-outline w-full">
+                    Sign In
+                  </Link>
+                  <Link to="/register" className="btn btn-primary w-full">
+                    Sign Up
+                  </Link>
+                </>
+              )}
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

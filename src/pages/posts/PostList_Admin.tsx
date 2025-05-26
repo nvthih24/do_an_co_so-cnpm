@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { Search, Filter, Plus } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
@@ -6,33 +6,81 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 import Button from '../../components/ui/Button';
 import StatusBadge from '../../components/ui/StatusBadge';
 import Tabs from '../../components/ui/Tab';
-import { posts } from '../../utils/mockData';
 import { formatDate, formatCurrency } from '../../utils/helpers';
 import Header from '../../components/layout/Header_Admin';
 import Sidebar from '../../components/layout/Sidebar';
 import { useTheme } from '../../contexts/ThemeContext';
+
+// Định nghĩa interface Job
+interface Job {
+  _id: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  salary: string;
+  experience: string;
+  description: string;
+  requirements: string;
+  benefits: string;
+  featured: boolean;
+  createdAt: string | Date;
+  isApproved: boolean;
+  applicationCount: number;
+}
 
 const PostList: React.FC = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [jobs, setJobs] = useState<Job[]>([]); // Chỉ định kiểu Job[]
   const { theme } = useTheme();
+
+  // Hàm lấy dữ liệu từ API
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch('/api/jobs');
+        const data = await response.json();
+        console.log('API response:', data);
+        setJobs(data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+    fetchJobs();
+  }, []);
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
   };
+
+  // Cập nhật tabs dựa trên dữ liệu thật
   const tabs = [
-    { id: 'all', label: 'All Posts', count: posts.length },
-    { id: 'pending', label: 'Pending', count: posts.filter(p => p.status === 'pending').length },
-    { id: 'approved', label: 'Approved', count: posts.filter(p => p.status === 'approved').length },
-    { id: 'featured', label: 'Featured', count: posts.filter(p => p.featured).length }
+    { id: 'all', label: 'All Posts', count: jobs.length },
+    {
+      id: 'pending',
+      label: 'Pending',
+      count: jobs.filter((p) => !p.isApproved).length,
+    },
+    {
+      id: 'approved',
+      label: 'Approved',
+      count: jobs.filter((p) => p.isApproved).length,
+    },
+    {
+      id: 'featured',
+      label: 'Featured',
+      count: jobs.filter((p) => p.featured).length,
+    },
   ];
 
-  const filteredPosts = posts.filter(post => {
+  // Lọc bài đăng theo tab và tìm kiếm
+  const filteredPosts = jobs.filter((post) => {
     // Filter by tab
-    if (activeTab === 'pending' && post.status !== 'pending') return false;
-    if (activeTab === 'approved' && post.status !== 'approved') return false;
+    if (activeTab === 'pending' && post.isApproved) return false;
+    if (activeTab === 'approved' && !post.isApproved) return false;
     if (activeTab === 'featured' && !post.featured) return false;
 
     // Filter by search query
@@ -74,26 +122,16 @@ const PostList: React.FC = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-                <Button
-                  variant="outline"
-                  icon={<Filter size={18} />}
-                >
+                <Button variant="outline" icon={<Filter size={18} />}>
                   Filter
                 </Button>
-                <Button
-                  icon={<Plus size={18} />}
-                  onClick={() => navigate('/posts/new')}
-                >
+                <Button icon={<Plus size={18} />} onClick={() => navigate('/posts/new')}>
                   Add Post
                 </Button>
               </div>
             </div>
 
-            <Tabs
-              tabs={tabs}
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-            />
+            <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
             <Card className="overflow-hidden">
               <Table>
@@ -111,10 +149,7 @@ const PostList: React.FC = () => {
                 </TableHead>
                 <TableBody>
                   {filteredPosts.map((post) => (
-                    <TableRow
-                      key={post.id}
-                      onClick={() => navigate(`/posts/${post.id}`)}
-                    >
+                    <TableRow key={post._id} onClick={() => navigate(`/posts/${post._id}`)}>
                       <TableCell>
                         <div className="flex items-center">
                           <div>
@@ -126,21 +161,19 @@ const PostList: React.FC = () => {
                                 </span>
                               )}
                             </div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400">{post.category}</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">{post.experience}</div>
                           </div>
                         </div>
                       </TableCell>
                       <TableCell>{post.company}</TableCell>
                       <TableCell>{post.location}</TableCell>
                       <TableCell>
-                        <span className="capitalize">{post.type.replace('-', ' ')}</span>
+                        <span className="capitalize">{post.type ? post.type.replace('-', ' ') : 'N/A'}</span>
                       </TableCell>
                       <TableCell>{post.applicationCount}</TableCell>
+                      <TableCell>{post.salary}</TableCell>
                       <TableCell>
-                        {formatCurrency(post.salary.min, post.salary.currency)} - {formatCurrency(post.salary.max, post.salary.currency)}
-                      </TableCell>
-                      <TableCell>
-                        <StatusBadge status={post.status} />
+                        <StatusBadge status={post.isApproved ? 'approved' : 'pending'} />
                       </TableCell>
                       <TableCell>{formatDate(post.createdAt)}</TableCell>
                     </TableRow>
@@ -160,7 +193,6 @@ const PostList: React.FC = () => {
         </main>
       </div>
     </div>
-
   );
 };
 

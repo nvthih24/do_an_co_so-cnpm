@@ -2,49 +2,94 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../../contexts/ToastContext';
 import { Building, MapPin, DollarSign, Briefcase, Clock, Award } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+
+// Khai báo interface cho formData
+interface FormData {
+  userId: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  salary: string;
+  experience: string;
+  description: string;
+  requirements: string;
+  benefits: string;
+  featured: boolean;
+}
 
 const JobPostPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { showToast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
+    userId: user?.id || '',
     title: '',
     company: '',
     location: '',
     type: 'Full-time',
     salary: '',
     experience: '',
-    description: '', 
+    description: '',
     requirements: '',
     benefits: '',
-    featured: false
+    featured: false,
   });
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setLoading(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user?.id) {
+      showToast('You must be logged in to post a job', 'error');
+      navigate('/login');
+      return;
+    }
 
-  try {
-    const response = await fetch('http://localhost:5000/api/jobs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+    // Sử dụng keyof FormData để giới hạn các trường
+    const requiredFields: (keyof FormData)[] = [
+      'title',
+      'company',
+      'location',
+      'salary',
+      'experience',
+      'description',
+      'requirements',
+      'benefits',
+    ];
+    const missingFields = requiredFields.filter((field) => !formData[field]);
+    if (missingFields.length > 0) {
+      showToast(`Please fill in all required fields: ${missingFields.join(', ')}`, 'error');
+      return;
+    }
 
-    if (!response.ok) throw new Error('Failed to post job');
+    setLoading(true);
 
-    showToast('Job posted successfully!', 'success');
-    navigate('/dashboard');
-  } catch (error) {
-    console.error(error);
-    showToast('Failed to post job. Please try again.', 'error');
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      console.log('Sending formData:', formData);
+      const response = await fetch('http://localhost:5000/api/jobs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Server response:', errorData);
+        throw new Error(errorData.message || 'Failed to post job');
+      }
+
+      showToast('Job posted successfully!', 'success');
+      navigate('/dashboard');
+    } catch (error: any) {
+      console.error('Error:', error.message);
+      showToast(error.message || 'Failed to post job. Please try again.', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>

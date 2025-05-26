@@ -130,6 +130,32 @@ router.put('/', authenticate, upload.single('resume'), async (req, res) => {
   }
 });
 
+// GET tất cả profile (chỉ admin dùng)
+router.get('/all',  async (req, res) => {
+  try {
+    const profiles = await Profile.find();
+    res.status(200).json(profiles);
+  } catch (error) {
+    console.error('Error fetching all profiles:', error);
+    res.status(500).json({ message: 'Error fetching profiles' });
+  }
+});
+
+// GET profile theo id (chỉ admin dùng)-
+router.get('/:id', authenticate, async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id);
+    if (!profile) {
+      return res.status(404).json({ message: 'Profile not found' });
+    }
+    res.status(200).json(profile);
+  } catch (error) {
+    console.error('Error fetching profile by ID:', error);
+    res.status(500).json({ message: 'Error fetching profile' });
+  }
+});
+
+
 // DELETE xóa profile
 router.delete('/', authenticate, async (req, res) => {
   try {

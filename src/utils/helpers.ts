@@ -17,9 +17,15 @@ export function formatDateTime(date: string | Date): string {
   return format(dateObj, 'MMM d, yyyy h:mm a');
 }
 
-export function formatTimeAgo(date: string | Date): string {
-  const dateObj = typeof date === 'string' ? new Date(date) : date;
-  return formatDistanceToNow(dateObj, { addSuffix: true });
+export function formatTimeAgo(date: string | number | Date): string {
+  const time = new Date(date); // Date constructor hỗ trợ all 3 types
+  const now = new Date();
+  const diff = Math.floor((now.getTime() - time.getTime()) / 1000); // seconds
+
+  if (diff < 60) return `${diff} seconds ago`;
+  if (diff < 3600) return `${Math.floor(diff / 60)} minutes ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`;
+  return `${Math.floor(diff / 86400)} days ago`;
 }
 
 export function formatCurrency(amount: number, currency = 'USD'): string {

@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { Search, Filter, Plus } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../../components/ui/Table';
 import Button from '../../components/ui/Button';
-import StatusBadge from '../../components/ui/StatusBadge';
 import Tabs from '../../components/ui/Tab';
-import { candidates } from '../../utils/mockData';
-import { formatDate } from '../../utils/helpers';
 import Header from '../../components/layout/Header_Admin';
 import Sidebar from '../../components/layout/Sidebar';
 import { useTheme } from '../../contexts/ThemeContext';
+import axios from 'axios';
+
+interface Candidate {
+  _id: string;
+  fullName?: string;
+  email?: string;
+  skills?: string[];
+  location?: string;
+  createdAt?: string;
+}
 
 const CandidateList: React.FC = () => {
   const navigate = useNavigate();
@@ -18,36 +25,42 @@ const CandidateList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { theme } = useTheme();
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
   };
 
+  useEffect(() => {
+    const fetchCandidates = async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/api/profile/all');   
+        console.log(res.data);   
+        setCandidates(res.data);
+      } catch (error) {
+        console.error('Failed to fetch candidates:', error);
+      }
+    };
+    fetchCandidates();
+  }, []);
+
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return 'N/A';
+    return new Date(dateString).toLocaleDateString();
+  };
+
   const tabs = [
     { id: 'all', label: 'All Candidates', count: candidates.length },
-    { id: 'active', label: 'Active', count: candidates.filter(c => c.status === 'active').length },
-    { id: 'inactive', label: 'Inactive', count: candidates.filter(c => c.status === 'inactive').length },
-    { id: 'blacklisted', label: 'Blacklisted', count: candidates.filter(c => c.status === 'blacklisted').length }
   ];
 
-  const filteredCandidates = candidates.filter(candidate => {
-    // Filter by tab
-    if (activeTab !== 'all' && candidate.status !== activeTab) {
-      return false;
-    }
-
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      return (
-        candidate.name.toLowerCase().includes(query) ||
-        candidate.email.toLowerCase().includes(query) ||
-        candidate.skills.some(skill => skill.toLowerCase().includes(query)) ||
-        candidate.location.toLowerCase().includes(query)
-      );
-    }
-
-    return true;
+  const filteredCandidates = candidates.filter((candidate) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      candidate.fullName?.toLowerCase().includes(query) ||
+      candidate.email?.toLowerCase().includes(query) ||
+      candidate.location?.toLowerCase().includes(query) ||
+      candidate.skills?.some(skill => skill.toLowerCase().includes(query))
+    );
   });
 
   return (
@@ -75,17 +88,8 @@ const CandidateList: React.FC = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
-                <Button
-                  variant="outline"
-                  icon={<Filter size={18} />}
-                >
-                  Filter
-                </Button>
-                <Button
-                  icon={<Plus size={18} />}
-                >
-                  Add Candidate
-                </Button>
+                <Button variant="outline" icon={<Filter size={18} />}>Filter</Button>
+                <Button icon={<Plus size={18} />}>Add Candidate</Button>
               </div>
             </div>
 
@@ -103,36 +107,33 @@ const CandidateList: React.FC = () => {
                     <TableHeaderCell>Email</TableHeaderCell>
                     <TableHeaderCell>Skills</TableHeaderCell>
                     <TableHeaderCell>Location</TableHeaderCell>
-                    <TableHeaderCell>Applications</TableHeaderCell>
-                    <TableHeaderCell>Status</TableHeaderCell>
                     <TableHeaderCell>Joined</TableHeaderCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {filteredCandidates.map((candidate) => (
                     <TableRow
-                      key={candidate.id}
-                      onClick={() => navigate(`/candidates/${candidate.id}`)}
+                      key={candidate._id}
+                      onClick={() => navigate(`/candidates/${candidate._id}`)}
                     >
                       <TableCell>
                         <div className="flex items-center">
                           <div className="h-10 w-10 flex-shrink-0">
                             <img
                               className="h-10 w-10 rounded-full object-cover"
-                              src={candidate.avatarUrl || "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100"}
-                              alt={candidate.name}
+                              src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100"
+                              alt={candidate.fullName || 'Candidate'}
                             />
                           </div>
                           <div className="ml-4">
-                            <div className="text-sm font-medium text-gray-900 dark:text-white">{candidate.name}</div>
-                            <div className="text-xs text-gray-500 dark:text-gray-400">{candidate.experience} years exp.</div>
+                            <div className="text-sm font-medium text-gray-900 dark:text-white">{candidate.fullName}</div>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell>{candidate.email}</TableCell>
+                      <TableCell>{candidate.email || 'N/A'}</TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
-                          {candidate.skills.slice(0, 3).map((skill, index) => (
+                          {candidate.skills?.slice(0, 3).map((skill, index) => (
                             <span
                               key={index}
                               className="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded dark:bg-gray-700 dark:text-gray-300"
@@ -140,24 +141,20 @@ const CandidateList: React.FC = () => {
                               {skill}
                             </span>
                           ))}
-                          {candidate.skills.length > 3 && (
+                          {candidate.skills && candidate.skills.length > 3 && (
                             <span className="px-2 py-1 text-xs bg-gray-100 text-gray-800 rounded dark:bg-gray-700 dark:text-gray-300">
                               +{candidate.skills.length - 3}
                             </span>
                           )}
                         </div>
                       </TableCell>
-                      <TableCell>{candidate.location}</TableCell>
-                      <TableCell>{candidate.appliedCount}</TableCell>
-                      <TableCell>
-                        <StatusBadge status={candidate.status} />
-                      </TableCell>
+                      <TableCell>{candidate.location || 'N/A'}</TableCell>
                       <TableCell>{formatDate(candidate.createdAt)}</TableCell>
                     </TableRow>
                   ))}
                   {filteredCandidates.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={7} className="text-center py-8">
+                      <TableCell colSpan={5} className="text-center py-8">
                         <p className="text-gray-500 dark:text-gray-400">No candidates found</p>
                       </TableCell>
                     </TableRow>
@@ -170,7 +167,6 @@ const CandidateList: React.FC = () => {
         </main>
       </div>
     </div>
-
   );
 };
 

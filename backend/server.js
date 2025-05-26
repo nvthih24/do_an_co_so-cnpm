@@ -10,6 +10,7 @@ const forgotPasswordRoutes = require('./routes/forgotPassword');
 const profileRoutes = require('./routes/profile');  
 const jobRoutes = require("./routes/jobs");  
 const companyRoutes = require("./routes/companyRoutes"); // Đường dẫn đến file companyRoutes.js
+const employerRoutes = require('./routes/employer');
 
 
 const app = express();
@@ -21,6 +22,9 @@ app.use('/api/profile', profileRoutes);
 app.use('/uploads', express.static('uploads')); // Để phục vụ file CV từ thư mục uploads
 app.use("/api/jobs", jobRoutes); 
 app.use("/api/company", companyRoutes); // Sử dụng router cho các route liên quan đến công ty
+app.use("/api/employers", employerRoutes); // Sử dụng router cho các route liên quan đến nhà tuyển dụng
+app.use('/api/cv', require('./routes/cv'));
+
 
 
 

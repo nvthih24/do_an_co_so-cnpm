@@ -1,14 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
+import { useSavedJobs } from '../../contexts/SavedJobsContext';
 import { 
   Briefcase, Building, User, File, Bell, MessageSquare, CheckCircle, 
-   Users, BarChart2, Calendar, BookmarkPlus, MapPin, DollarSign, Search, Eye 
+  Users, BarChart2, Calendar, BookmarkPlus, MapPin, DollarSign, Search, Eye 
 } from 'lucide-react';
+
+interface Job {
+  _id: string;
+  title: string;
+  company: string;
+  location: string;
+  salary: string;
+  type: string;
+  createdAt: string;
+}
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const { showToast } = useToast();
+  const { savedJobs } = useSavedJobs();
   const isEmployer = user?.role === 'employer';
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!isEmployer && user?.id) {
+      const fetchSavedJobs = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch(`http://localhost:5000/api/jobs/saved?userId=${user.id}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+          }
+          const data: Job[] = await response.json();
+          setLoading(false);
+        } catch (err: any) {
+          console.error('Fetch saved jobs error:', err);
+          setLoading(false);
+        }
+      };
+      fetchSavedJobs();
+    }
+  }, [user, isEmployer, showToast]);
 
   return (
     <div className="bg-gray-50 min-h-screen py-8">
@@ -109,7 +144,7 @@ const Dashboard: React.FC = () => {
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-gray-500 text-sm ">Interviews</p>
+                    <p className="text-gray-500 text-sm">Interviews</p>
                     <p className="text-3xl font-bold mt-1">3</p>
                   </div>
                   <span className="p-3 bg-purple-100 rounded-full">
@@ -142,14 +177,14 @@ const Dashboard: React.FC = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="text-gray-500 text-sm">Saved Jobs</p>
-                    <p className="text-3xl font-bold mt-1">15</p>
+                    <p className="text-3xl font-bold mt-1">{savedJobs.length}</p>
                   </div>
                   <span className="p-3 bg-green-100 rounded-full">
                     <BookmarkPlus className="h-6 w-6 text-green-600" />
                   </span>
                 </div>
                 <div className="mt-4 text-xs text-yellow-600 flex items-center">
-                  <span className="mr-1">→ 0</span>
+                  <span className="mr-1">→ {savedJobs.length}</span>
                   <span>no change</span>
                 </div>
               </div>
@@ -216,8 +251,8 @@ const Dashboard: React.FC = () => {
                   <div className="p-6 border-b border-gray-100">
                     <div className="flex justify-between items-center">
                       <h2 className="text-lg font-semibold">Job Posts Performance</h2>
-                      <Link to="/analytics" className="text-primary-600 text-sm hover:text-primary-700">
-                        View analytics
+                      <Link to="/applications" className="text-primary-600 text-sm hover:text-primary-700">
+                        View Applications
                       </Link>
                     </div>
                   </div>
@@ -283,6 +318,53 @@ const Dashboard: React.FC = () => {
                         </div>
                       </div>
                     ))}
+                  </div>
+                </div>
+
+                {/* Saved Jobs */}
+                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+                  <div className="p-6 border-b border-gray-100">
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-lg font-semibold">Saved Jobs</h2>
+                      <Link to="/saved-jobs" className="text-primary-600 text-sm hover:text-primary-700">
+                        View all
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="divide-y divide-gray-100">
+                    {loading ? (
+                      <p className="p-6 text-gray-500">Loading saved jobs...</p>
+                    ) : savedJobs.length > 0 ? (
+                      savedJobs.map((job) => (
+                        <div key={job._id} className="p-6">
+                          <div className="flex justify-between mb-2">
+                            <h3 className="font-medium">{job.title}</h3>
+                          </div>
+                          <p className="text-gray-600 mb-2">{job.company}</p>
+                          <div className="flex text-sm text-gray-500 space-x-4">
+                            <span className="flex items-center">
+                              <MapPin className="h-4 w-4 mr-1" />
+                              {job.location}
+                            </span>
+                            <span className="flex items-center">
+                              <DollarSign className="h-4 w-4 mr-1" />
+                              {job.salary}
+                            </span>
+                          </div>
+                          <div className="mt-3 flex space-x-2">
+                            <Link to={`/jobs/${job._id}`} className="btn btn-primary text-gray-400 py-1 px-3 text-sm">
+                              Apply Now
+                            </Link>
+                            <button className="btn btn-outline py-1 px-3 text-sm">
+                              Save
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="p-6 text-gray-500">No saved jobs yet</p>
+                    )}
                   </div>
                 </div>
 
@@ -356,9 +438,9 @@ const Dashboard: React.FC = () => {
                         <span className="text-sm text-center">Post a Job</span>
                       </Link>
 
-                      <Link to="/candidates" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <Link to="/jobs-posted" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <Search className="h-6 w-6 text-primary-600 mb-2" />
-                        <span className="text-sm text-center">Search Candidates</span>
+                        <span className="text-sm text-center">Jobs Posted</span>
                       </Link>
 
                       <Link to="/company-profile" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
@@ -366,9 +448,9 @@ const Dashboard: React.FC = () => {
                         <span className="text-sm text-center">Edit Company</span>
                       </Link>
 
-                      <Link to="/analytics" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                      <Link to="/applications" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <BarChart2 className="h-6 w-6 text-primary-600 mb-2" />
-                        <span className="text-sm text-center">View Analytics</span>
+                        <span className="text-sm text-center">View Applications</span>
                       </Link>
                     </>
                   ) : (

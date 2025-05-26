@@ -1,6 +1,8 @@
+const e = require('express');
 const mongoose = require('mongoose');
 
 const jobSchema = new mongoose.Schema({
+userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   title: String,
   company: String,
   location: String,
@@ -14,6 +16,10 @@ const jobSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  isApproved: {
+    type: Boolean,
+    default: false,
   },
 });
 
