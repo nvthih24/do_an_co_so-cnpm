@@ -3,6 +3,9 @@ const multer = require('multer');
 const path = require('path');
 const Profile = require('../models/Profile'); 
 const authenticate = require('../middleware/auth'); // Đảm bảo đã có middleware auth.js
+const mongoose = require('mongoose');
+const Application = require('../models/Application'); // Import model Application
+const User = require('../models/User'); // Import model User
 
 
 const router = express.Router();
@@ -56,6 +59,12 @@ router.post('/',authenticate ,upload.single('resume'), async (req, res) => {
     });
 
     await profile.save();
+
+    await User.updateOne(
+      { _id: req.user.userId },
+      { $set: { profile: profile._id } }
+    );
+
     res.status(201).json({ message: 'Profile created successfully' });
   } catch (error) {
     console.error('Error creating profile:', error);
@@ -122,6 +131,8 @@ router.put('/', authenticate, upload.single('resume'), async (req, res) => {
     if (!profile) {
       return res.status(404).json({ message: 'Profile not found' });
     }
+    
+    
 
     res.status(200).json({ message: 'Profile updated successfully', profile });
   } catch (error) {
@@ -170,4 +181,74 @@ router.delete('/', authenticate, async (req, res) => {
   }
 });
 
+// GET /api/profile/employer/:employerId
+router.get('/employer/:employerId', async (req, res) => {
+  try {
+    const { employerId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(employerId)) {
+      return res.status(400).json({ message: 'Invalid employer ID' });
+    }
+
+    console.log('Fetching applications for employer:', employerId);
+
+    // Lấy tất cả application, populate jobId và profile
+    const applications = await Application.find()
+      .populate({
+        path: 'jobId',
+        match: { userId: employerId },
+        select: 'title company',
+      })
+      .populate({
+        path: 'userId',
+        select: 'profile',
+        populate: {
+          path: 'profile',
+          model: 'Profile',
+          select: 'fullName email phone location skills title summary degree school gradYear resumeUrl',
+        },
+      })
+      .exec();
+
+    console.log('Applications found:', applications.length);
+    console.log('Applications with jobId:', applications.filter(app => app.jobId !== null).length);
+
+    // Lọc bỏ application không khớp
+    const formattedProfiles = applications
+      .filter(app => {
+        const keep = app.jobId !== null && app.userId && app.userId.profile;
+        console.log(`App ${app._id}: jobId=${!!app.jobId}, userId=${!!app.userId}, profile=${app.userId ? !!app.userId.profile : false}, keep=${keep}`);
+        return keep;
+      })
+      .map(app => {
+        console.log(`Mapping app ${app._id}: profile=`, app.userId.profile); // Debug
+        return {
+          name: app.userId.profile.fullName || app.fullName || 'N/A',
+          email: app.userId.profile.email || app.email || 'N/A',
+          phone: app.userId.profile.phone || app.phone || 'N/A',
+          location: app.userId.profile.location || 'N/A',
+          skills: app.userId.profile.skills || [],
+          experience: app.userId.profile.gradYear
+            ? `${new Date().getFullYear() - parseInt(app.userId.profile.gradYear)} yrs`
+            : 'N/A',
+          profilePicture: 'https://via.placeholder.com/150',
+          rating: 4.5,
+          jobTitle: app.jobId.title || 'N/A',
+          jobCompany: app.jobId.company || 'N/A',
+          summary: app.userId.profile.summary || 'N/A',
+        degree: app.userId.profile.degree || 'N/A',
+        school: app.userId.profile.school || 'N/A',
+        gradYear: app.userId.profile.gradYear || 'N/A',
+        resumeUrl: app.userId.profile.resumeUrl || 'N/A',
+        };
+      });
+
+    console.log('Formatted profiles:', formattedProfiles);
+
+    res.status(200).json(formattedProfiles);
+  } catch (error) {
+    console.error('Error fetching profiles for employer:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
 module.exports = router;

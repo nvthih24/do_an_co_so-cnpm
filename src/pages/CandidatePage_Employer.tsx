@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CandidateList from '../components/jobs/CandidateList_Emlopyer';
 import { mockCandidates } from '../utils/mockData';
-import Header from '../components/layout/Header';
+
 
 const CandidatesPage: React.FC = () => {
     const [candidates] = useState(mockCandidates);

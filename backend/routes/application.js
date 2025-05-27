@@ -6,6 +6,7 @@ const User = require('../models/User');
 const Application = require('../models/Application');
 const multer = require('multer');
 const path = require('path');
+const Profile = require('../models/Profile');
 
 
 // GET /api/applications/employer/:employerId

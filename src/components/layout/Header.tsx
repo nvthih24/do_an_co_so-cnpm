@@ -69,7 +69,7 @@ const Header: React.FC = () => {
                   Dashboard
                 </Link>
                 <Link
-                  to="/company"
+                  to="/company-profile"
                   className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium"
                 >
                   Company

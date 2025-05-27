@@ -3,22 +3,44 @@ import { motion } from 'framer-motion';
 import { Search, SlidersHorizontal } from 'lucide-react';
 import CandidateCard from './CandidateCard';
 import Button from '../ui/Button';
-import { Candidate } from '../../utils/types';
 
-interface CandidateListProps {
-  candidates: Candidate[];
+interface Candidate {
+  profileId: string;
+  name: string;
+  email: string;
+  phone: string;
+  location: string;
+  skills: [String];
+  experience: string;
+  profilePicture: string;
+  jobTitle: string;
+  jobCompany: string;
+  title: string;
+  summary: string;
+  degree: string;
+  school: string;
+  gradYear: string;
+  resumeUrl: string;
 }
 
-const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
+const CandidateList: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
+  const [filters, setFilters] = useState({
+    experience: '',
+    location: '',
+    skills: '',
+  });
 
-  // Tạm chưa xử lý filter nâng cao (filterOpen) - giữ nguyên filter search chính
-  const filteredCandidates = candidates.filter(candidate => 
-    candidate.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    candidate.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  // Handle filter changes
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.value,
+    });
+  };
 
+  // Animation variants
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -29,7 +51,7 @@ const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.3 } },
   };
 
   return (
@@ -37,7 +59,9 @@ const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
       <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
         <div>
           <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white">Candidates</h1>
-          <p className="mt-1 text-gray-600 dark:text-gray-300">Browse and search for potential candidates</p>
+          <p className="mt-1 text-gray-600 dark:text-gray-300">
+            Browse and search for potential candidates
+          </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
@@ -46,7 +70,7 @@ const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
               type="search"
               placeholder="Search candidates by name or skill..."
               value={searchQuery}
-              onChange={e => setSearchQuery(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-800 dark:border-gray-700 dark:placeholder-gray-400 dark:text-white"
               aria-label="Search candidates"
             />
@@ -71,25 +95,31 @@ const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
           className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 mb-8 shadow"
           aria-label="Candidate filters"
         >
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Filter Candidates</h2>
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+            Filter Candidates
+          </h2>
 
           <form
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
-              // Logic apply filter if any
+              // Logic áp dụng filter sẽ được gửi qua query params hoặc context nếu cần
               setFilterOpen(false);
             }}
             className="grid grid-cols-1 md:grid-cols-3 gap-6"
           >
             <div>
-              <label htmlFor="experience" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="experience"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Experience
               </label>
               <select
                 id="experience"
                 name="experience"
+                value={filters.experience}
+                onChange={handleFilterChange}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
-                defaultValue=""
               >
                 <option value="">Any Experience</option>
                 <option value="0-2">0-2 years</option>
@@ -100,7 +130,10 @@ const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
             </div>
 
             <div>
-              <label htmlFor="location" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="location"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Location
               </label>
               <input
@@ -108,12 +141,17 @@ const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
                 name="location"
                 type="text"
                 placeholder="Any location"
+                value={filters.location}
+                onChange={handleFilterChange}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
             </div>
 
             <div>
-              <label htmlFor="skills" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label
+                htmlFor="skills"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              >
                 Skills
               </label>
               <input
@@ -121,6 +159,8 @@ const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
                 name="skills"
                 type="text"
                 placeholder="e.g., React, Python"
+                value={filters.skills}
+                onChange={handleFilterChange}
                 className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-600 focus:ring focus:ring-blue-200 dark:bg-gray-800 dark:border-gray-700 dark:text-white"
               />
             </div>
@@ -130,39 +170,30 @@ const CandidateList: React.FC<CandidateListProps> = ({ candidates }) => {
                 variant="outline"
                 type="reset"
                 onClick={() => {
-                  // Clear filters if implemented
+                  setFilters({ experience: '', location: '', skills: '' });
+                  setSearchQuery('');
                   setFilterOpen(false);
                 }}
               >
                 Clear
               </Button>
-              <Button type="submit">
-                Apply Filters
-              </Button>
+              <Button type="submit">Apply Filters</Button>
             </div>
           </form>
         </section>
       )}
 
-      {filteredCandidates.length === 0 ? (
-        <div className="text-center py-16 bg-gray-50 dark:bg-gray-900 rounded-lg">
-          <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300">No candidates found</h3>
-          <p className="mt-2 text-gray-500 dark:text-gray-400">Try changing your search criteria.</p>
-        </div>
-      ) : (
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="show"
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-        >
-          {filteredCandidates.map(candidate => (
-            <motion.div key={candidate.id} variants={item}>
-              <CandidateCard candidate={candidate} />
-            </motion.div>
-          ))}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+      >
+        {/* Vì CandidateCard tự fetch, chúng ta chỉ render nhiều CandidateCard */}
+        <motion.div variants={item}>
+          <CandidateCard />
         </motion.div>
-      )}
+      </motion.div>
     </div>
   );
 };
