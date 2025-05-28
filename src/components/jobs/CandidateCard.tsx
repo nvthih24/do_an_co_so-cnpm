@@ -56,6 +56,7 @@ const CandidateCard: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
           to: contactCandidate.email,
@@ -86,15 +87,32 @@ const CandidateCard: React.FC = () => {
       }
 
       try {
-        const res = await fetch(`http://localhost:5000/api/profile/employer/${user.id}`);
-        console.log('Fetching candidates for user:', user.id);
+        const res = await fetch(`http://localhost:5000/api/profile/employer/${user.id}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        });
+
+        const contentType = res.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Response is not JSON. Server might have returned an HTML page.');
+        }
+
         const data = await res.json();
 
-        if (!res.ok) throw new Error(data.message || 'Failed to fetch candidates');
+        if (!res.ok) {
+          throw new Error(data.message || 'Failed to fetch candidates');
+        }
 
         setCandidates(data);
       } catch (err: any) {
-        setError(err.message);
+        console.error('Error fetching candidates:', err);
+        setError(
+          err.message.includes('Unexpected token')
+            ? 'Failed to parse response. The server might have returned an HTML page instead of JSON. Please check the API endpoint and authentication.'
+            : err.message
+        );
       } finally {
         setLoading(false);
       }
@@ -115,73 +133,93 @@ const CandidateCard: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
-      <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
-        Candidates
-      </h1>
+      <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Candidates</h1>
 
       {loading ? (
-        <p className="text-gray-500 dark:text-gray-400 text-center">Loading...</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {[...Array(2)].map((_, index) => (
+            <div key={index} className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 animate-pulse">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="h-3 w-1/2 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       ) : error ? (
-        <p className="text-red-500 text-center">{error}</p>
+        <p className="text-red-500 text-center text-lg">{error}</p>
       ) : candidates.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400 text-center">No candidates found.</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center text-lg">No candidates found.</p>
       ) : (
         <>
-          <p className="text-gray-600 dark:text-gray-300 mb-6">
+          <p className="text-gray-600 dark:text-gray-300 mb-6 text-lg">
             Total candidates: {candidates.length}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {candidates.map((candidate, index) => (
-              <motion.div key={index} whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
-                <Card hoverable className="overflow-hidden w-full sm:w-[500px]">
-                  <CardContent className="p-0">
-                    <div className="flex flex-col">
-                      <div className="sm:w-1/3 md:w-1/4 p-4">
-                        {/* Placeholder for profile picture */}
+              <motion.div
+                key={index}
+                whileHover={{ y: -5, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Card className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-4 mb-3">
+                      <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
+                        {candidate.profilePicture ? (
+                          <img
+                            src={candidate.profilePicture}
+                            alt={candidate.name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-gray-500">{candidate.name.charAt(0)}</span>
+                        )}
                       </div>
-                      <div className="sm:w-2/3 md:w-3/4 p-4">
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="text-lg font-semibold text-slate-800">{candidate.name}</h3>
-                          <Badge variant="primary">{candidate.experience}</Badge>
-                        </div>
-                        <div className="flex items-center text-slate-500 text-sm mb-3">
-                          <MapPin size={14} className="mr-1" />
-                          <span>{candidate.location}</span>
-                        </div>
-                        <div className="mb-3">
-                          <div className="flex flex-wrap gap-1 mb-2">
-                            {candidate.skills.slice(0, 4).map((skill, idx) => (
-                              <Badge key={idx} variant="secondary" className="mr-1 mb-1">
-                                {skill}
-                              </Badge>
-                            ))}
-                            {candidate.skills.length > 4 && (
-                              <Badge className="mr-1 mb-1">+{candidate.skills.length - 4} more</Badge>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-sm text-slate-500 mb-4">
-                          <div className="flex items-center mb-2 sm:mb-0">
-                            <Mail size={14} className="mr-1" />
-                            <span>{candidate.email}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Phone size={14} className="mr-1" />
-                            <span>{candidate.phone}</span>
-                          </div>
-                        </div>
-                        <div className="text-sm text-slate-500 mb-4">
-                          <p><strong>Applied for:</strong> {candidate.jobTitle} at {candidate.jobCompany}</p>
-                        </div>
-                        <div className="flex flex-wrap gap-2">
-                          <Button size="sm" onClick={() => handleViewProfile(candidate)}>
-                            View Profile
-                          </Button>
-                          <Button size="sm" variant="outline" onClick={() => handleContact(candidate)}>
-                            Contact
-                          </Button>
-                        </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                          {candidate.name}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {candidate.jobTitle || 'N/A'}
+                        </p>
                       </div>
+                    </div>
+                    <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                      <div className="flex items-center">
+                        <MapPin size={16} className="mr-2 text-gray-400" />
+                        <span>{candidate.location || 'N/A'}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Mail size={16} className="mr-2 text-gray-400" />
+                        <span>{candidate.email || 'N/A'}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Phone size={16} className="mr-2 text-gray-400" />
+                        <span>{candidate.phone || 'N/A'}</span>
+                      </div>
+                    </div>
+                    <div className="mt-4 flex gap-2">
+                      <Button
+                        size="sm"
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                        onClick={() => handleViewProfile(candidate)}
+                        aria-label={`View profile of ${candidate.name}`}
+                      >
+                        View Profile
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1 border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900 rounded-md"
+                        onClick={() => handleContact(candidate)}
+                        aria-label={`Contact ${candidate.name}`}
+                      >
+                        Contact
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
@@ -225,6 +263,7 @@ const CandidateCard: React.FC = () => {
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
+              aria-label="Close modal"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -263,7 +302,7 @@ const CandidateCard: React.FC = () => {
                 <div className="flex flex-wrap gap-2">
                   {selectedCandidate.skills.length > 0 ? (
                     selectedCandidate.skills.map((skill, idx) => (
-                      <Badge key={idx} variant="secondary">
+                      <Badge key={idx} variant="secondary" className="text-sm">
                         {skill}
                       </Badge>
                     ))
@@ -294,8 +333,22 @@ const CandidateCard: React.FC = () => {
                 )}
               </div>
             </div>
-            <div className="mt-6 flex justify-end">
-              <Button onClick={closeModal}>Close</Button>
+            <div className="mt-6 flex justify-end gap-2">
+              <Button
+                variant="outline"
+                className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900 rounded-md"
+                onClick={() => handleContact(selectedCandidate)}
+                aria-label={`Contact ${selectedCandidate.name}`}
+              >
+                Contact
+              </Button>
+              <Button
+                className="bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                onClick={closeModal}
+                aria-label="Close modal"
+              >
+                Close
+              </Button>
             </div>
           </div>
         </div>
