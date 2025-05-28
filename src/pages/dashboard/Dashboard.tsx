@@ -18,15 +18,95 @@ interface Job {
   createdAt: string;
 }
 
+interface Application {
+  _id: string;
+  jobId: {
+    _id: string;
+    title: string;
+    company: string;
+  };
+  userId: {
+    _id: string;
+    name: string;
+    profile?: {
+      avatar?: string;
+    };
+  };
+  createdAt: string;
+}
+
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const { showToast } = useToast();
   const { savedJobs } = useSavedJobs();
   const isEmployer = user?.role === 'employer';
   const [loading, setLoading] = useState(false);
+  const [activeJobCount, setActiveJobCount] = useState(0);
+  const [totalApplications, setTotalApplications] = useState(0);
+  const [applications, setApplications] = useState<Application[]>([]); // State mới cho applications
 
   useEffect(() => {
-    if (!isEmployer && user?.id) {
+    if (isEmployer && user?.id) {
+      // Lấy Active Job Posts
+      const fetchActiveJobs = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch(`http://localhost:5000/api/jobs/employer/${user.id}/active`);
+          if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+          }
+          const data = await response.json();
+          setActiveJobCount(data.activeJobCount);
+          setLoading(false);
+        } catch (err: any) {
+          console.error('Fetch active jobs error:', err);
+          showToast('Error fetching active jobs', 'error');
+          setLoading(false);
+        }
+      };
+
+      // Lấy Total Applications
+      const fetchTotalApplications = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch(`http://localhost:5000/api/applications/employer/${user.id}/count`);
+          if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+          }
+          const data = await response.json();
+          setTotalApplications(data.totalApplications);
+          setLoading(false);
+        } catch (err: any) {
+          console.error('Fetch applications error:', err);
+          showToast('Error fetching applications', 'error');
+          setLoading(false);
+        }
+      };
+
+      // Lấy Recent Applications
+      const fetchRecentApplications = async () => {
+        try {
+          setLoading(true);
+         const response = await fetch(`http://localhost:5000/api/applications/employer/${user.id}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+          }
+          const data: Application[] = await response.json();
+          // Lấy 4 applications mới nhất
+          setApplications(data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 4));
+          setLoading(false);
+        } catch (err: any) {
+          console.error('Fetch recent applications error:', err);
+          showToast('Error fetching recent applications', 'error');
+          setLoading(false);
+        }
+      };
+
+      fetchActiveJobs();
+      fetchTotalApplications();
+      fetchRecentApplications();
+    } else if (!isEmployer && user?.id) {
+      // Lấy Saved Jobs cho ứng viên (candidate)
       const fetchSavedJobs = async () => {
         try {
           setLoading(true);
@@ -38,6 +118,7 @@ const Dashboard: React.FC = () => {
           setLoading(false);
         } catch (err: any) {
           console.error('Fetch saved jobs error:', err);
+          showToast('Error fetching saved jobs', 'error');
           setLoading(false);
         }
       };
@@ -56,13 +137,12 @@ const Dashboard: React.FC = () => {
         {/* Stats overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {isEmployer ? (
-            // Employer stats
             <>
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="text-gray-500 text-sm">Active Job Posts</p>
-                    <p className="text-3xl font-bold mt-1">7</p>
+                    <p className="text-3xl font-bold mt-1">{activeJobCount}</p>
                   </div>
                   <span className="p-3 bg-blue-100 rounded-full">
                     <Briefcase className="h-6 w-6 text-blue-600" />
@@ -78,7 +158,7 @@ const Dashboard: React.FC = () => {
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="text-gray-500 text-sm">Total Applications</p>
-                    <p className="text-3xl font-bold mt-1">43</p>
+                    <p className="text-3xl font-bold mt-1">{totalApplications}</p>
                   </div>
                   <span className="p-3 bg-purple-100 rounded-full">
                     <File className="h-6 w-6 text-purple-600" />
@@ -123,7 +203,7 @@ const Dashboard: React.FC = () => {
               </div>
             </>
           ) : (
-            // Candidate stats
+            // Candidate stats (giữ nguyên)
             <>
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
@@ -196,9 +276,8 @@ const Dashboard: React.FC = () => {
           {/* Main content column */}
           <div className="lg:col-span-2 space-y-8">
             {isEmployer ? (
-              // Employer content
               <>
-                {/* Recent applications */}
+                {/* Recent Applications */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                   <div className="p-6 border-b border-gray-100">
                     <div className="flex justify-between items-center">
@@ -210,43 +289,49 @@ const Dashboard: React.FC = () => {
                   </div>
 
                   <div className="divide-y divide-gray-100">
-                    {[1, 2, 3, 4].map((_, index) => (
-                      <div key={index} className="p-6 flex items-start">
-                        <div className="mr-4">
-                          <img
-                            src={`https://randomuser.me/api/portraits/${index % 2 === 0 ? 'women' : 'men'}/${index + 1}.jpg`}
-                            alt="Applicant"
-                            className="h-10 w-10 rounded-full object-cover"
-                          />
-                        </div>
-                        <div className="flex-grow">
-                          <div className="flex justify-between">
-                            <h3 className="font-medium">
-                              {index === 0 ? 'Sarah Johnson' : index === 1 ? 'Michael Chen' : index === 2 ? 'Emily Rodriguez' : 'David Kim'}
-                            </h3>
-                            <span className="text-sm text-gray-500">2 days ago</span>
+                    {loading ? (
+                      <p className="p-6 text-gray-500">Loading applications...</p>
+                    ) : applications.length > 0 ? (
+                      applications.map((app) => (
+                        <div key={app._id} className="p-6 flex items-start">
+                          <div className="mr-4">
+                            <img
+                              src={app.userId.profile?.avatar || 'https://randomuser.me/api/portraits/men/1.jpg'} // Sử dụng avatar từ profile hoặc fallback
+                              alt="Applicant"
+                              className="h-10 w-10 rounded-full object-cover"
+                            />
                           </div>
-                          <p className="text-gray-600">
-                            Applied for{' '}
-                            <Link to="/jobs/1" className="text-primary-600 hover:text-primary-700">
-                              {index === 0 ? 'Senior Frontend Developer' : index === 1 ? 'Product Manager' : index === 2 ? 'UX/UI Designer' : 'DevOps Engineer'}
-                            </Link>
-                          </p>
-                          <div className="mt-2 flex gap-2">
-                            <button className="text-xs bg-primary-50 text-primary-700 px-2 py-1 rounded-full">
-                              View Profile
-                            </button>
-                            <button className="text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-full">
-                              Schedule Interview
-                            </button>
+                          <div className="flex-grow">
+                            <div className="flex justify-between">
+                              <h3 className="font-medium">{app.userId.name}</h3>
+                              <span className="text-sm text-gray-500">
+                                {new Date(app.createdAt).toLocaleDateString()} {/* Hiển thị ngày ứng tuyển */}
+                              </span>
+                            </div>
+                            <p className="text-gray-600">
+                              Applied for{' '}
+                              <Link to={`/jobs/${app.jobId._id}`} className="text-primary-600 hover:text-primary-700">
+                                {app.jobId.title}
+                              </Link>
+                            </p>
+                            <div className="mt-2 flex gap-2">
+                              <button className="text-xs bg-primary-50 text-primary-700 px-2 py-1 rounded-full">
+                                View Profile
+                              </button>
+                              <button className="text-xs bg-gray-50 text-gray-600 px-2 py-1 rounded-full">
+                                Schedule Interview
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    ) : (
+                      <p className="p-6 text-gray-500">No recent applications</p>
+                    )}
                   </div>
                 </div>
 
-                {/* Job posts performance */}
+                {/* Job posts performance (giữ nguyên) */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                   <div className="p-6 border-b border-gray-100">
                     <div className="flex justify-between items-center">
@@ -280,7 +365,7 @@ const Dashboard: React.FC = () => {
                 </div>
               </>
             ) : (
-              // Candidate content
+              // Candidate content (giữ nguyên)
               <>
                 {/* Application status */}
                 <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -420,7 +505,7 @@ const Dashboard: React.FC = () => {
             )}
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar (giữ nguyên) */}
           <div className="space-y-8">
             {/* Quick actions */}
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -431,7 +516,6 @@ const Dashboard: React.FC = () => {
               <div className="p-4">
                 <div className="grid grid-cols-2 gap-4">
                   {isEmployer ? (
-                    // Employer quick actions
                     <>
                       <Link to="/post-job" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <Briefcase className="h-6 w-6 text-primary-600 mb-2" />
@@ -454,7 +538,6 @@ const Dashboard: React.FC = () => {
                       </Link>
                     </>
                   ) : (
-                    // Candidate quick actions
                     <>
                       <Link to="/jobs" className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                         <Search className="h-6 w-6 text-primary-600 mb-2" />
@@ -519,7 +602,6 @@ const Dashboard: React.FC = () => {
 
               <div className="p-4 divide-y divide-gray-100">
                 {isEmployer ? (
-                  // Employer upcoming interviews
                   [
                     { candidate: 'Sarah Johnson', position: 'Senior Frontend Developer', date: 'Oct 25, 2025', time: '10:00 AM' },
                     { candidate: 'Michael Chen', position: 'Product Manager', date: 'Oct 27, 2025', time: '2:30 PM' }
@@ -538,7 +620,6 @@ const Dashboard: React.FC = () => {
                     </div>
                   ))
                 ) : (
-                  // Candidate upcoming events
                   [
                     { title: 'Interview with TechCorp', type: 'Video Interview', date: 'Oct 25, 2025', time: '10:00 AM' },
                     { title: 'Technical Assessment', type: 'Online Test', date: 'Oct 23, 2025', time: '2:00 PM' }

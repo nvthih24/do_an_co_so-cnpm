@@ -25,6 +25,10 @@ router.get('/employer/:employerId', async (req, res) => {
         match: { userId: employerId }, // chỉ job do employer đó đăng
         select: 'title company userId'
       })
+      .populate({
+        path: 'userId',
+        select: 'name profile.avatar' // Lấy name và avatar của ứng viên
+      })
       .exec();
 
     // Lọc bỏ application không khớp (do jobId bị null vì không match userId)
@@ -36,6 +40,33 @@ router.get('/employer/:employerId', async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
+
+// GET /api/applications/employer/:employerId/count
+router.get('/employer/:employerId/count', async (req, res) => {
+  try {
+    const { employerId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(employerId)) {
+      return res.status(400).json({ message: 'Invalid employer ID' });
+    }
+
+    const applications = await Application.find()
+      .populate({
+        path: 'jobId',
+        match: { userId: employerId },
+        select: '_id userId'
+      })
+      .exec();
+
+    const filtered = applications.filter(app => app.jobId !== null);
+
+    res.status(200).json({ totalApplications: filtered.length });
+  } catch (error) {
+    console.error('Error counting applications:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
 
 // routes/applicationRoutes.js hoặc tương đương
 router.get("/job/:jobId", async (req, res) => {

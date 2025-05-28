@@ -101,6 +101,37 @@ router.get('/employer/:userId', async (req, res) => {
   }
 });
 
+// GET /api/jobs/employer/:userId/active
+router.get('/employer/:userId/active', async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'Invalid or missing userId' });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    if (user.role !== 'employer') {
+      return res.status(403).json({ message: 'User is not an employer' });
+    }
+
+    const activeJobs = await Job.find({ userId, isApproved: true });
+    const activeJobCount = activeJobs.length;
+
+    res.status(200).json({
+      jobs: activeJobs,
+      activeJobCount
+    });
+  } catch (error) {
+    console.error('Error fetching active jobs by employer:', error);
+    res.status(500).json({ message: 'Error fetching active jobs', error: error.message });
+  }
+});
+
+
 
 // GET /api/jobs/approved - Lấy các công việc đã được duyệt
 router.get('/approved', async (req, res) => {
@@ -131,6 +162,7 @@ router.get('/approved', async (req, res) => {
     res.status(500).json({ message: 'Error fetching approved jobs', error: error.message });
   }
 });
+
 
 // GET /api/jobs/:id - Lấy thông tin bài đăng theo ID
 router.get('/:id', async (req, res) => {
