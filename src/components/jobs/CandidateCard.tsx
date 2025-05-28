@@ -7,7 +7,7 @@ import Button from '../ui/Button';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface Candidate {
-  profileId: string; // Thêm profileId
+  profileId: string;
   name: string;
   email: string;
   phone: string;
@@ -30,8 +30,52 @@ const CandidateCard: React.FC = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null); // State cho modal
+  const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [contactCandidate, setContactCandidate] = useState<Candidate | null>(null);
+  const [message, setMessage] = useState('');
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const [sendSuccess, setSendSuccess] = useState<string | null>(null);
+
+  const handleContact = (candidate: Candidate) => {
+    setContactCandidate(candidate);
+    setIsContactModalOpen(true);
+    setMessage('');
+    setSendError(null);
+    setSendSuccess(null);
+  };
+
+  const sendEmail = async () => {
+    if (!contactCandidate || !user) return;
+
+    try {
+      setSending(true);
+      const res = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: contactCandidate.email,
+          from: user.email,
+          subject: `Job Opportunity from ${user.email}`,
+          message,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || 'Failed to send email');
+
+      setSendSuccess('Email sent successfully!');
+    } catch (err: any) {
+      setSendError(err.message);
+    } finally {
+      setSending(false);
+    }
+  };
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -69,8 +113,6 @@ const CandidateCard: React.FC = () => {
     setSelectedCandidate(null);
   };
 
-
-
   return (
     <div className="container mx-auto px-4 py-8 max-w-7xl">
       <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
@@ -95,20 +137,17 @@ const CandidateCard: React.FC = () => {
                   <CardContent className="p-0">
                     <div className="flex flex-col">
                       <div className="sm:w-1/3 md:w-1/4 p-4">
-
+                        {/* Placeholder for profile picture */}
                       </div>
-
                       <div className="sm:w-2/3 md:w-3/4 p-4">
                         <div className="flex justify-between items-start mb-2">
                           <h3 className="text-lg font-semibold text-slate-800">{candidate.name}</h3>
                           <Badge variant="primary">{candidate.experience}</Badge>
                         </div>
-
                         <div className="flex items-center text-slate-500 text-sm mb-3">
                           <MapPin size={14} className="mr-1" />
                           <span>{candidate.location}</span>
                         </div>
-
                         <div className="mb-3">
                           <div className="flex flex-wrap gap-1 mb-2">
                             {candidate.skills.slice(0, 4).map((skill, idx) => (
@@ -121,7 +160,6 @@ const CandidateCard: React.FC = () => {
                             )}
                           </div>
                         </div>
-
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center text-sm text-slate-500 mb-4">
                           <div className="flex items-center mb-2 sm:mb-0">
                             <Mail size={14} className="mr-1" />
@@ -132,16 +170,16 @@ const CandidateCard: React.FC = () => {
                             <span>{candidate.phone}</span>
                           </div>
                         </div>
-
                         <div className="text-sm text-slate-500 mb-4">
                           <p><strong>Applied for:</strong> {candidate.jobTitle} at {candidate.jobCompany}</p>
                         </div>
-
                         <div className="flex flex-wrap gap-2">
                           <Button size="sm" onClick={() => handleViewProfile(candidate)}>
                             View Profile
                           </Button>
-                          <Button size="sm" variant="outline">Contact</Button>
+                          <Button size="sm" variant="outline" onClick={() => handleContact(candidate)}>
+                            Contact
+                          </Button>
                         </div>
                       </div>
                     </div>
@@ -153,7 +191,34 @@ const CandidateCard: React.FC = () => {
         </>
       )}
 
-      {/* Modal thủ công */}
+      {/* Contact Modal */}
+      {isContactModalOpen && contactCandidate && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-xl mx-4">
+            <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+              Contact {contactCandidate.name}
+            </h2>
+            <textarea
+              className="w-full h-40 p-3 border rounded text-gray-700 dark:bg-gray-700 dark:text-white"
+              placeholder="Write your message here..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            {sendError && <p className="text-red-500 mt-2">{sendError}</p>}
+            {sendSuccess && <p className="text-green-500 mt-2">{sendSuccess}</p>}
+            <div className="mt-4 flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setIsContactModalOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={sendEmail} disabled={sending}>
+                {sending ? 'Sending...' : 'Send'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Profile Modal */}
       {isModalOpen && selectedCandidate && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-2xl w-full mx-4 relative max-h-[90vh] overflow-y-auto">

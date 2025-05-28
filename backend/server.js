@@ -13,6 +13,7 @@ const companyRoutes = require("./routes/companyRoutes"); // Đường dẫn đ�
 const employerRoutes = require('./routes/employer');
 const applicationRoutes = require('./routes/application');
 const dashboardRoutes = require('./routes/dashboardRoutes');
+const contactRoutes = require('./routes/contact'); // Đường dẫn đến file contact.js nếu cần sử dụng
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/employers", employerRoutes); // Sử dụng router cho các route 
 app.use('/api/cv', require('./routes/cv'));
 app.use('/api/applications', applicationRoutes); // Sử dụng router cho các route liên quan đến ứng tuyển
 app.use('/api/dashboard', dashboardRoutes); // Sử dụng router cho các route liên quan đến dashboard 
+app.use('/api/contact', contactRoutes); // Sử dụng router cho các route liên quan đến liên hệ
 
 
 // Kết nối MongoDB Atlas
