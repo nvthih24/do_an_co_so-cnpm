@@ -357,4 +357,7 @@ router.get('/applications/employer/:userId', async (req, res) => {
   }
 });
 
+
+
+
 module.exports = router;

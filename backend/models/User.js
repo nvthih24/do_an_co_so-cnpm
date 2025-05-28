@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   password: String,
   role: { type: String, enum: ['candidate', 'employer'] },
   profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('User', userSchema);
