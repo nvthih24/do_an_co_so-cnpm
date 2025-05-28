@@ -38,11 +38,11 @@ const CandidateDetails: React.FC = () => {
   const { theme } = useTheme();
   const allowedStatuses = ["active", "inactive", "pending", "approved", "rejected", "blacklisted"] as const;
   const token = localStorage.getItem('token');
-type AllowedStatus = typeof allowedStatuses[number];
+  type AllowedStatus = typeof allowedStatuses[number];
 
-function isAllowedStatus(status: string | undefined): status is AllowedStatus {
-  return allowedStatuses.includes(status as AllowedStatus);
-}
+  function isAllowedStatus(status: string | undefined): status is AllowedStatus {
+    return allowedStatuses.includes(status as AllowedStatus);
+  }
 
   const toggleSidebar = () => setSidebarCollapsed(!sidebarCollapsed);
 
@@ -50,13 +50,17 @@ function isAllowedStatus(status: string | undefined): status is AllowedStatus {
     const fetchCandidate = async () => {
       try {
         const res = await axios.get(`/api/profile/${id}`, {
-  headers: {
-    Authorization: `Bearer ${token}`
-  }
-});
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
         console.log(res.data);
         setCandidate(res.data);
       } catch (err) {
+        if (axios.isAxiosError(err) && err.response?.status === 401) {
+          // token hết hạn hoặc không hợp lệ
+          navigate('/login');
+        }
         console.error('Failed to fetch candidate', err);
         setCandidate(null);
       } finally {
@@ -73,7 +77,7 @@ function isAllowedStatus(status: string | undefined): status is AllowedStatus {
   const handleDelete = async () => {
     try {
       await axios.delete(`/api/profile/${id}`);
-      navigate('/candidates');
+      navigate('/candidates-admin');
     } catch (err) {
       console.error('Delete failed', err);
     }
@@ -93,7 +97,7 @@ function isAllowedStatus(status: string | undefined): status is AllowedStatus {
       <div className="flex flex-col items-center justify-center p-8">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Candidate Not Found</h2>
         <p className="text-gray-500 dark:text-gray-400 mb-6">The candidate you're looking for doesn't exist.</p>
-        <Button onClick={() => navigate('/candidates')}>Back to Candidates</Button>
+        <Button onClick={() => navigate('/candidates-admin')}>Back to Candidates</Button>
       </div>
     );
   }
@@ -111,7 +115,7 @@ function isAllowedStatus(status: string | undefined): status is AllowedStatus {
                   variant="ghost"
                   size="sm"
                   className="mr-4"
-                  onClick={() => navigate('/candidates')}
+                  onClick={() => navigate('/candidates-admin')}
                   icon={<ArrowLeft size={18} />}
                 >
                   Back

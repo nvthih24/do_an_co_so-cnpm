@@ -59,7 +59,7 @@ const EmployerDetails: React.FC = () => {
       <div className="flex flex-col items-center justify-center p-8">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Không tìm thấy nhà tuyển dụng</h2>
         <p className="text-gray-500 dark:text-gray-400 mb-6">Nhà tuyển dụng bạn đang tìm không tồn tại.</p>
-        <Button onClick={() => navigate('/employer')}>Quay lại danh sách</Button>
+        <Button onClick={() => navigate('/employer-admin')}>Quay lại danh sách</Button>
       </div>
     );
   }
@@ -77,7 +77,7 @@ const EmployerDetails: React.FC = () => {
     try {
       await axios.delete(`/api/employers/${id}`);
       setIsDeleteModalOpen(false);
-      navigate('/employer');
+      navigate('/employer-admin');
     } catch (err) {
       console.error('Lỗi khi xóa:', err);
     }
@@ -97,7 +97,7 @@ const EmployerDetails: React.FC = () => {
                   variant="ghost"
                   size="sm"
                   className="mr-4"
-                  onClick={() => navigate('/employer')}
+                  onClick={() => navigate('/employer-admin')}
                   icon={<ArrowLeft size={18} />}
                 >
                   Quay lại

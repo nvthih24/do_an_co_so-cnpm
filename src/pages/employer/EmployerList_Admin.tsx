@@ -133,7 +133,7 @@ const EmployerList: React.FC = () => {
                       <TableRow
                         key={employer.id}
                         className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
-                        onClick={() => navigate(`/employer/${employer.id}`)}
+                        onClick={() => navigate(`/employer-admin/${employer.id}`)}
                       >
                         <TableCell>
                           <div className="flex items-center">

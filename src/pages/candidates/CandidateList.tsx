@@ -114,7 +114,7 @@ const CandidateList: React.FC = () => {
                   {filteredCandidates.map((candidate) => (
                     <TableRow
                       key={candidate._id}
-                      onClick={() => navigate(`/candidates/${candidate._id}`)}
+                      onClick={() => navigate(`/candidates-admin/${candidate._id}`)}
                     >
                       <TableCell>
                         <div className="flex items-center">
