@@ -200,7 +200,7 @@ const ContactPage: React.FC = () => {
 
           {/* FAQ section */}
           <div className="mt-12">
-            <h2 className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-bold text-center mb-8 dark:text-gray-50">Frequently Asked Questions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {

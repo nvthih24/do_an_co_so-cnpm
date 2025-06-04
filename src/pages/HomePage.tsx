@@ -64,8 +64,8 @@ const HomePage: React.FC = () => {
                 <div className="flex justify-center mb-3">
                   {stat.icon}
                 </div>
-                <p className="text-3xl font-bold text-gray-800 mb-1">{stat.value}</p>
-                <p className="text-gray-600">{stat.label}</p>
+                <p className="text-3xl font-bold text-gray-800 dark:text-gray-50 mb-1">{stat.value}</p>
+                <p className="text-gray-600 dark:text-gray-400">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -168,7 +168,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* CTA section */}
-      <section className="py-16 bg-secondary-600 text-gray-400">
+      <section className="py-16 bg-secondary-600 text-gray-400 dark:bg-gray-800">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6 dark:text-gray-50">Ready to Take the Next Step in Your Career?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">

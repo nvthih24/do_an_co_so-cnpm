@@ -66,7 +66,7 @@ const EmployersPage: React.FC = () => {
   ];
   return (
     
-    <div className="bg-white">
+    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       {/* Hero section */}
       <section className="relative bg-primary-100 text-black py-24">
         <div className="absolute inset-0 overflow-hidden">
@@ -76,7 +76,7 @@ const EmployersPage: React.FC = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl dark:text-gray-50 font-bold mb-6">
               Find Your Next Great Hire
             </h1>
             <p className="text-xl text-gray-400 mb-8">
@@ -98,7 +98,7 @@ const EmployersPage: React.FC = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Why Choose Job247?</h2>
+            <h2 className="text-3xl dark:text-gray-50 font-bold mb-4">Why Choose Job247?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Our platform provides everything you need to streamline your recruitment process and find the best talent.
             </p>
@@ -110,7 +110,7 @@ const EmployersPage: React.FC = () => {
                 <div className="flex justify-center mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <h3 className="text-xl dark:text-gray-50 font-semibold mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
@@ -119,10 +119,10 @@ const EmployersPage: React.FC = () => {
       </section>
 
       {/* Pricing section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Simple, Transparent Pricing</h2>
+            <h2 className="text-3xl font-bold mb-4 dark:text-gray-50">Simple, Transparent Pricing</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Choose the plan that best fits your recruitment needs
             </p>
@@ -143,14 +143,14 @@ const EmployersPage: React.FC = () => {
                 <div className="text-center mb-6">
                   <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
                   <div className="flex items-baseline justify-center">
-                    <span className="text-4xl font-bold">{plan.price}</span>
+                    <span className="text-4xl dark:text-gray-950 font-bold">{plan.price}</span>
                     {plan.period && (
                       <span className="text-gray-500 ml-1">{plan.period}</span>
                     )}
                   </div>
                 </div>
 
-                <ul className="space-y-3 mb-6">
+                <ul className="space-y-3 mb-6 dark:text-gray-950">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center">
                       <svg className="h-5 w-5 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,7 +174,7 @@ const EmployersPage: React.FC = () => {
       {/* CTA section */}
       <section className="py-16 bg-primary-700 text-black">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Find Your Next Great Hire?</h2>
+          <h2 className="text-3xl font-bold mb-6 dark:text-gray-50">Ready to Find Your Next Great Hire?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-500">
             Join thousands of companies who have found exceptional talent through Job247
           </p>

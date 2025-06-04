@@ -84,7 +84,7 @@ const RegisterPage: React.FC = () => {
       <div className="max-w-md w-full bg-white dark:bg-gray-900 rounded-lg shadow-md p-8">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <BriefcaseBusiness className="h-12 w-12 text-primary-500" />
+            <BriefcaseBusiness className="h-12 w-12 text-primary-500 dark:text-gray-50" />
           </div>
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">Create your account</h2>
           <p className="mt-2 text-sm text-gray-600">
@@ -214,8 +214,8 @@ const RegisterPage: React.FC = () => {
               <div className="grid grid-cols-2 gap-4">
                 <label className={`flex items-center justify-center p-4 border rounded-md cursor-pointer transition-colors ${
                   role === 'candidate' 
-                    ? 'bg-primary-50 border-primary-500 text-primary-700' 
-                    : 'border-gray-300 hover:bg-gray-50'
+                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:text-gray-50' 
+                    : 'border-gray-300 hover:bg-gray-50 dark:hover:text-gray-700 dark:text-gray-300'
                 }`}>
                   <input
                     type="radio"
@@ -230,8 +230,8 @@ const RegisterPage: React.FC = () => {
                 </label>
                 <label className={`flex items-center justify-center p-4 border rounded-md cursor-pointer transition-colors ${
                   role === 'employer' 
-                    ? 'bg-primary-50 border-primary-500 text-primary-700' 
-                    : 'border-gray-300 hover:bg-gray-50'
+                    ? 'bg-primary-50 border-primary-500 text-primary-700 dark:text-gray-50' 
+                    : 'border-gray-300 hover:bg-gray-50 dark:hover:text-gray-700 dark:text-gray-300'
                 }`}>
                   <input
                     type="radio"
@@ -272,7 +272,7 @@ const RegisterPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn btn-primary py-3 flex justify-center text-black border-t border-gray-300 hover:bg-gray-50"
+              className="w-full btn btn-primary py-3 flex justify-center text-black border-t border-gray-300 hover:bg-gray-50 dark:text-gray-50 dark:hover:text-gray-900"
             >
               {loading ? (
                 <span className="inline-flex items-center">

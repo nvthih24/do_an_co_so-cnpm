@@ -65,7 +65,7 @@ const Header: React.FC = () => {
                 <Link to="/jobs-posted" className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium">Jobs</Link>
                 <Link to="/candidates-employer" className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium">Candidates</Link>
                 <Link to="/applications" className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium">Applications</Link>
-                <Link to="/interviews" className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium">Interviews</Link>
+                {/* <Link to="/interviews" className="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 rounded font-medium">Interviews</Link> */}
               </>
             ) : (
               <>

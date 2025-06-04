@@ -106,7 +106,7 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+              {/* <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <div>
                     <p className="text-gray-500 text-sm">Interviews</p>
@@ -120,7 +120,7 @@ const Dashboard: React.FC = () => {
                   <span className="mr-1">↑ 16%</span>
                   <span>from last month</span>
                 </div>
-              </div>
+              </div> */}
             </>
           ) : (
             // Candidate stats

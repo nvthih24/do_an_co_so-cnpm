@@ -187,7 +187,7 @@ const CandidateList: React.FC = () => {
         variants={container}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+        className="grid grid-cols-1 lg:grid-cols-1 gap-8"
       >
         {/* Vì CandidateCard tự fetch, chúng ta chỉ render nhiều CandidateCard */}
         <motion.div variants={item}>

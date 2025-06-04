@@ -104,7 +104,7 @@ const FeaturedJobs: React.FC = () => {
         <Link 
           key={job.id} 
           to={`/jobs/${job.id}`}
-          className="card group hover:border-primary-500 dark:border-gray-800 dark:hover:border-gray-900 transition-all duration-300"
+          className="card group dark:bg-gray-900 hover:border-primary-500 dark:border-gray-800 dark:hover:border-gray-900 transition-all duration-300"
         >
           <div className="p-6 dark:bg-gray-900 dark:text-gray-200 ">
             <div className="flex items-start justify-between mb-4">

@@ -34,7 +34,7 @@ const AboutPage: React.FC = () => {
   ];
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       {/* Hero section */}
       <section className="relative bg-primary-700 text-black py-24">
         <div className="absolute inset-0 overflow-hidden">
@@ -44,7 +44,7 @@ const AboutPage: React.FC = () => {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 dark:text-gray-50">
               Transforming the Way People Find Their Dream Careers
             </h1>
             <p className="text-xl text-gray-400 mb-8">
@@ -63,7 +63,7 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* Stats section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -71,8 +71,8 @@ const AboutPage: React.FC = () => {
                 <div className="flex justify-center mb-4">
                   {stat.icon}
                 </div>
-                <p className="text-4xl font-bold text-gray-900 mb-2">{stat.value}</p>
-                <p className="text-gray-600">{stat.label}</p>
+                <p className="text-4xl font-bold text-gray-900 dark:text-gray-50 mb-2">{stat.value}</p>
+                <p className="text-gray-600 dark:text-gray-400">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -83,7 +83,7 @@ const AboutPage: React.FC = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
+            <h2 className="text-3xl font-bold mb-4 dark:text-gray-50">Our Mission</h2>
             <p className="text-xl text-gray-600">
               To create meaningful connections between employers and job seekers, fostering growth and success in the global workforce through innovative technology and personalized experiences.
             </p>
@@ -92,13 +92,13 @@ const AboutPage: React.FC = () => {
       </section>
 
       {/* Values section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Values</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 dark:text-gray-50">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-sm text-center">
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-4 dark:text-gray-600">
                   {value.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{value.title}</h3>
@@ -112,15 +112,15 @@ const AboutPage: React.FC = () => {
       {/* CTA section */}
       <section className="py-16 bg-primary-700 text-black">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Start Your Journey?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold mb-6 dark:text-gray-50">Ready to Start Your Journey?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto dark:text-gray-50">
             Join millions of professionals who have found their dream careers through Job247
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to="/register" className="btn bg-white text-primary-600 hover:bg-gray-100">
               Create an Account
             </Link>
-            <Link to="/contact" className="btn border-white text-gray-500 hover:bg-primary-600">
+            <Link to="/contact" className="btn border-white text-gray-500 dark:hover:text-gray-50 hover:bg-primary-600">
               Contact Us
             </Link>
           </div>

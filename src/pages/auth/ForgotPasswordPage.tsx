@@ -62,7 +62,7 @@ const ForgotPasswordPage: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white p-8 shadow rounded-md">
+      <div className="max-w-md w-full bg-white p-8 shadow rounded-md ">
         <h2 className="text-2xl font-bold mb-6 text-center">Forgot your password?</h2>
 
         {/* Step 1: Enter Email */}
