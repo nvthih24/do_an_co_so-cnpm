@@ -10,7 +10,6 @@ interface Job {
   type: string;
   salary: string;
   posted: string;
-  logo?: string;
   featured?: boolean;
 }
 
@@ -50,9 +49,8 @@ const FeaturedJobs: React.FC = () => {
           company: job.company,
           location: job.location,
           type: job.type,
-          salary: job.salary || 'Thỏa thuận', 
+          salary: job.salary || 'Thỏa thuận',
           posted: formatPostedDate(job.createdAt),
-          logo: job.logo || 'https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=120', // Logo mặc định
           featured: job.featured || false,
         }));
 
@@ -101,44 +99,37 @@ const FeaturedJobs: React.FC = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {jobs.map(job => (
-        <Link 
-          key={job.id} 
+        <Link
+          key={job.id}
           to={`/jobs/${job.id}`}
           className="card group dark:bg-gray-900 hover:border-primary-500 dark:border-gray-800 dark:hover:border-gray-900 transition-all duration-300"
         >
           <div className="p-6 dark:bg-gray-900 dark:text-gray-200 ">
             <div className="flex items-start justify-between mb-4">
-              <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0">
-                <img 
-                  src={job.logo} 
-                  alt={job.company} 
-                  className="w-full h-full object-cover"
-                />
-              </div>
               {job.featured && (
                 <span className="badge badge-success">Nổi bật</span>
               )}
             </div>
-            
+
             <h3 className="text-xl font-semibold mb-2 group-hover:text-primary-600 transition-colors dark:text-gray-300">
               {job.title}
             </h3>
-            
+
             <div className="flex items-center text-gray-500 mb-2">
               <Building className="h-4 w-4 mr-2" />
               <span>{job.company}</span>
             </div>
-            
+
             <div className="flex items-center text-gray-500 mb-2">
               <MapPin className="h-4 w-4 mr-2" />
               <span>{job.location}</span>
             </div>
-            
+
             <div className="flex items-center text-gray-500 mb-4">
               <DollarSign className="h-4 w-4 mr-2" />
               <span>{job.salary}</span>
             </div>
-            
+
             <div className="flex justify-between items-center border-t border-gray-100 pt-4">
               <span className="badge bg-blue-100 text-blue-800">
                 {job.type}

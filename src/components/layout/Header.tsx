@@ -13,6 +13,7 @@ const Header: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+  const mockLogo = 'z6672634025100_6048eb4e71a8b329f70df21c3aeae90f.jpg'
 
   const isEmployer = user?.role === 'employer';
 
@@ -52,7 +53,11 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <BriefcaseBusiness className="h-8 w-8 text-primary-500 dark:text-white" />
+            <img
+              src={mockLogo}
+              alt="Job247 Logo"
+              className="w-10 h-10 rounded-full object-cover"
+            />
             <span className="text-xl font-bold text-gray-900 dark:text-white">Job247</span>
           </Link>
 

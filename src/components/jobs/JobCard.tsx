@@ -41,13 +41,13 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       <div className="p-6">
         <div className="flex flex-col sm:flex-row sm:items-start gap-4">
           {/* Company logo */}
-          <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0">
+          {/* <div className="w-12 h-12 rounded-md overflow-hidden flex-shrink-0">
             <img
               src="https://images.pexels.com/photos/3182812/pexels-photo-3182812.jpeg?auto=compress&cs=tinysrgb&w=120" // Placeholder vì API không có logo
               alt={job.company}
               className="w-full h-full object-cover"
             />
-          </div>
+          </div> */}
 
           {/* Job details */}
           <div className="flex-1">
