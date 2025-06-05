@@ -168,17 +168,7 @@ const CandidateCard: React.FC = () => {
                 <Card className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-4 mb-3">
-                      <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center overflow-hidden">
-                        {candidate.profilePicture ? (
-                          <img
-                            src={candidate.profilePicture}
-                            alt={candidate.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <span className="text-gray-500">{candidate.name.charAt(0)}</span>
-                        )}
-                      </div>
+
                       <div className="flex-1">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                           {candidate.name}

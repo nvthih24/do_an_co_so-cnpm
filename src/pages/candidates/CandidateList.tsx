@@ -59,7 +59,8 @@ const CandidateList: React.FC = () => {
       candidate.fullName?.toLowerCase().includes(query) ||
       candidate.email?.toLowerCase().includes(query) ||
       candidate.location?.toLowerCase().includes(query) ||
-      candidate.skills?.some(skill => skill.toLowerCase().includes(query))
+      candidate.skills?.some(skill => skill.toLowerCase().includes(query))||
+      candidate.createdAt?.toLowerCase().includes(query)
     );
   });
 
@@ -119,10 +120,8 @@ const CandidateList: React.FC = () => {
                       <TableCell>
                         <div className="flex items-center">
                           <div className="h-10 w-10 flex-shrink-0">
-                            <img
-                              className="h-10 w-10 rounded-full object-cover"
-                              src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=100"
-                              alt={candidate.fullName || 'Candidate'}
+                            <p
+                              className="h-10 w-10 rounded-full object-cover"                                                            
                             />
                           </div>
                           <div className="ml-4">

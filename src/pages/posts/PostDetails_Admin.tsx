@@ -391,7 +391,7 @@ useEffect(() => {
                     <div className="space-y-4">
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Views</p>
-                        <p className="text-2xl font-semibold text-gray-900 dark:text-white">145</p> {/* Giá trị này cần API hỗ trợ */}
+                        <p className="text-2xl font-semibold text-gray-900 dark:text-white">0</p> {/* Giá trị này cần API hỗ trợ */}
                       </div>
                       <div>
                         <p className="text-sm text-gray-500 dark:text-gray-400">Applications</p>
