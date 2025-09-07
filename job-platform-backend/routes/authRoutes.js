@@ -71,7 +71,7 @@ router.post("/google-login", async (req, res) => {
   
       let user = await User.findOne({ email });
   
-      // Nếu user chưa tồn tại, tạo user mới
+      // Nếu user chưa tồn tại, tạo user mớid
       if (!user) {
         user = new User({ name, email, googleId });
         await user.save();
